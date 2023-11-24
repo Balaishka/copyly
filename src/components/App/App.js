@@ -9,6 +9,7 @@ import Preloader from "../Preloader/Preloader";
 import mainApi from "../../utils/MainApi";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useTranslation } from 'react-i18next';
+import Main from "../Main/Main";
 
 function App() {
 
@@ -67,7 +68,7 @@ function App() {
           <main className="content">
             <Switch>
               <Route exact path="/">
-                
+                <Main />
               </Route>
 
               <ProtectedRoute path="/movies" loggedIn={loggedIn}>
