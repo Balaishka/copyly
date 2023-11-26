@@ -1,0 +1,17 @@
+.graph {
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    font-weight: 400;
+}
+
+.yAxis .recharts-cartesian-axis-ticks .recharts-layer.recharts-cartesian-axis-tick:first-child {
+    opacity: 0;
+  }
+
+  .custom-tooltip {
+    background-color: #fff;
+    padding: 20px;
+  }
+
+  .recharts-tooltip-cursor {
+    opacity: 0;
+  }

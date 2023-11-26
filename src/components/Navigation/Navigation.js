@@ -18,11 +18,11 @@ function Navigation() {
           </li>
           <li className="navigation__item_name_auth">
             <NavLink
-              to="/movies"
+              to="/test-graph"
               className="navigation__link_name_auth"
               activeClassName="navigation__link_active"
             >
-              Фильмы
+              Тестовый график
             </NavLink>
           </li>
         </ul>

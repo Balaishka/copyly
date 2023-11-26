@@ -10,6 +10,9 @@ import mainApi from "../../utils/MainApi";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useTranslation } from 'react-i18next';
 import Main from "../Main/Main";
+import Balance from "../Balance/Balance";
+import PnL from "../PnL/PnL";
+import Cumulative from "../Сumulative/Сumulative";
 
 function App() {
 
@@ -31,15 +34,30 @@ function App() {
   const history = useHistory();
   const { pathname } = useLocation();
 
+  const months = [
+    t("jan"),
+    t("feb"),
+    t("mar"),
+    t("apr"),
+    t("may"),
+    t("jun"),
+    t("jul"),
+    t("aug"),
+    t("sep"),
+    t("oct"),
+    t("nov"),
+    t("dec")
+  ];
+
   useEffect(() => {
-    if (loggedIn && (pathname === "/signin" || pathname === "/signup")) {
+    /* if (loggedIn && (pathname === "/signin" || pathname === "/signup")) {
       history.push("/movies");
     }
-    setIsError(false);
+    setIsError(false); */
   }, [loggedIn, history, pathname]);
 
   useEffect(() => {
-    checkToken();
+    //checkToken();
   }, []);
 
   function checkToken() {
@@ -71,8 +89,20 @@ function App() {
                 <Main />
               </Route>
 
-              <ProtectedRoute path="/movies" loggedIn={loggedIn}>
-                
+              <Route exact path="/balance">
+                <Balance months={months} />
+              </Route>
+
+              <Route exact path="/pnl">
+                <PnL months={months} />
+              </Route>
+
+              <Route exact path="/cumulative">
+                <Cumulative months={months} />
+              </Route>
+
+              <ProtectedRoute path="/test">
+                <Balance />
               </ProtectedRoute>
 
               <Route path="*">
