@@ -1,7 +1,7 @@
 import "./Сumulative.css";
 import { useEffect, useState } from "react";
 import {
-    ComposedChart,
+  ComposedChart,
   Bar,
   Area,
   XAxis,
@@ -10,29 +10,15 @@ import {
   Tooltip,
   Cell,
 } from "recharts";
-import { testData2 } from "../../configs/constants";
+import { testData } from "../../configs/constants";
+import QuarterTick from "../QuarterTick/QuarterTick";
 
-function Cumulative({ months }) {
+function Cumulative({ recordingData }) {
   const [cum, setCum] = useState([]);
   let month = 12;
 
   useEffect(() => {
-    let res = [];
-
-    testData2.daily_pnl.map((pnl, index) => {
-      const newDate = new Date(Number(pnl.date) * 1000);
-      let newDay = newDate.getDate() + " " + months[newDate.getMonth()];
-
-      res.push({
-        date: newDay,
-        value: pnl.value,
-        cumValue: testData2.cumulative_pnl[index].value,
-      });
-    });
-
-    console.log(res);
-
-    setCum(res);
+    setCum(recordingData(testData, "daily_pnl", true));
   }, []);
 
   const renderQuarterTick = (tickProps) => {
@@ -44,30 +30,18 @@ function Cumulative({ months }) {
 
     if (month !== arr[1]) {
       month = arr[1];
-      newDay = value;
+      newDay = `${arr[0]} ${arr[1]}`;
     } else {
       newDay = arr[0];
     }
 
-    return (<text
-      orientation="bottom"
-      stroke="none"
-      x={x}
-      y={y}
-      className="recharts-text recharts-cartesian-axis-tick-value"
-      textAnchor="middle"
-      fill="#666"
-    >
-      <tspan x={x} dy="0.71em">
-        {newDay}
-      </tspan>
-    </text>);
+    return <QuarterTick x={x} y={y} newDay={newDay} />;
   };
 
   return (
     <ComposedChart
       className="graph"
-      width={550}
+      width={1550}
       height={500}
       data={cum}
       margin={{
@@ -95,9 +69,14 @@ function Cumulative({ months }) {
       />
       <YAxis />
       <Tooltip />
-      <Bar dataKey="value" name="Daily">
+      <Bar dataKey="value" name="Daily" activeBar={{stroke:'#ccc'}}>
         {cum.map((entry, index) => {
-          return (<Cell fill={entry.value < 0 ? '#d0554d' : '#53a76c'} key={`cell-${index}`} />);
+          return (
+            <Cell
+              fill={entry.value < 0 ? "#d0554d" : "#53a76c"}
+              key={`cell-${index}`}
+            />
+          );
         })}
       </Bar>
 

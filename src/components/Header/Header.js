@@ -3,8 +3,11 @@ import { NavLink } from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
 import { useTranslation } from 'react-i18next';
 
-function Header() {
+function Header({ loggedIn }) {
   const { t, i18n } = useTranslation()
+  
+  if (!loggedIn) return (<></>); 
+
   return (
     <header className="header">
       <div className="header__container">

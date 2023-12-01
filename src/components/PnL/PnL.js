@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
-  Area,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -11,27 +10,14 @@ import {
   Cell,
 } from "recharts";
 import { testData } from "../../configs/constants";
+import QuarterTick from "../QuarterTick/QuarterTick";
 
-function PnL({ months }) {
+function PnL({ recordingData }) {
   const [pnls, setPnls] = useState([]);
   let month = 12;
 
   useEffect(() => {
-    let res = [];
-
-    testData.daily_pnl.map((pnl) => {
-      const newDate = new Date(Number(pnl.date) * 1000);
-      let newDay = newDate.getDate() + " " + months[newDate.getMonth()];
-
-      res.push({
-        date: newDay,
-        value: pnl.value,
-      });
-    });
-
-    console.log(res);
-
-    setPnls(res);
+    setPnls(recordingData(testData, "daily_pnl", false));
   }, []);
 
   const renderQuarterTick = (tickProps) => {
@@ -43,24 +29,12 @@ function PnL({ months }) {
 
     if (month !== arr[1]) {
       month = arr[1];
-      newDay = value;
+      newDay = `${arr[0]} ${arr[1]}`;
     } else {
       newDay = arr[0];
     }
 
-    return (<text
-      orientation="bottom"
-      stroke="none"
-      x={x}
-      y={y}
-      className="recharts-text recharts-cartesian-axis-tick-value"
-      textAnchor="middle"
-      fill="#666"
-    >
-      <tspan x={x} dy="0.71em">
-        {newDay}
-      </tspan>
-    </text>);
+    return <QuarterTick x={x} y={y} newDay={newDay} />;
   };
 
   return (
@@ -88,18 +62,16 @@ function PnL({ months }) {
       />
       <YAxis />
       <Tooltip />
-      <Bar dataKey="value" name="Значение">
+      <Bar dataKey="value" name="Значение" activeBar={{stroke:'#ccc'}}>
         {pnls.map((entry, index) => {
-          return (<Cell fill={entry.value < 0 ? '#d0554d' : '#53a76c'} key={`cell-${index}`} />);
+          return (
+            <Cell
+              fill={entry.value < 0 ? "#d0554d" : "#53a76c"}
+              key={`cell-${index}`}
+            />
+          );
         })}
       </Bar>
-
-      {/* <Area
-        name="Значение"
-        dataKey="value"
-        stroke="#315aad"
-        fill="red"
-      /> */}
     </BarChart>
   );
 }
