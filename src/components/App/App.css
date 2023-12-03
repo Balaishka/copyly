@@ -1,19 +1,74 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100vh;
+  height: max-content;
+}
+
 body {
   font-family: "Nunito Sans", Arial, Helvetica, sans-serif;
   font-weight: 400;
   background-color: #0D1317;
+  min-height: 100vh;
+  height: max-content;
+}
+
+#root {
+  min-height: 100vh;
+  height: max-content;
 }
 
 .page {
   min-height: 100vh;
   height: max-content;
+}
+
+.page_name_auth {
   background: url(../../images/bg.svg) no-repeat;
-  background-size: 100% auto;
+  background-size: 100% 100%;
   background-position: center;
 }
 
 .content {
-  min-height: max-content;
-  height: 100vh;
-  width: 100vw;
+  min-height: calc(100vh - 65px);
+  height: max-content;
+  width: 100%;
+  padding: 32px 40px 74px;
+}
+
+.content__btn {
+  padding: 8px 16px;
+  background-color: #89D2DC;
+  border-radius: 30px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #314D6B;
+  border: 0;
+  transition: all .2s ease-in-out;
+  cursor: pointer;
+}
+
+.content__btn:hover {
+  background-color: #5DA6B0;
+}
+
+@media (orientation: portrait) {
+  .page_name_auth {
+    background-image: url(../../images/bg-v.svg);
+  }
+}
+
+@media screen and (max-width:768px) {
+  .content {
+    padding-bottom: 50px;
+  }
+}
+
+@media screen and (max-width:500px) {
+  .content {
+    padding: 20px 16px 40px;
+    min-height: calc(100vh - 54px);
+  }
 }

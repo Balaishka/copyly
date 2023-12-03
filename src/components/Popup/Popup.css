@@ -1,0 +1,170 @@
+.popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(22, 32, 39, .8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup__container {
+    border: 1px solid #314D6B;
+    padding: 24px;
+    border-radius: 16px;
+    max-width: 500px;
+    background-color: #202D36;
+    width: calc(100% - 40px);
+}
+
+.popup__header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+}
+
+.popup__title {
+    font-family: 'Unbounded';
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 25px;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+.popup__close {
+    width: 24px;
+    height: 24px;
+    background: url(../../images/close.svg) no-repeat;
+    background-size: 100% 100%;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity .2s ease-in-out;
+}
+
+.popup__close:hover {
+    opacity: .7;
+}
+
+.popup__text {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #FFFFFF;
+    margin: 0 0 8px;
+}
+
+.popup__link {
+    color: #89D2DC;
+    text-decoration: underline;
+}
+
+.popup__link:hover {
+    color: #89D2DC;
+    text-decoration: none;
+}
+
+.popup__qr {
+    text-align: center;
+    padding: 16px 12px;
+}
+
+.popup__qr_name_sub {
+    display: none;
+}
+
+.popup__qr-code {
+    width: 266px;
+    height: 274px;
+}
+
+.popup__wallet {
+    margin-right: 4px;
+    cursor: pointer;
+    word-break: break-word;
+}
+
+.popup__copy {
+    width: 24px;
+    height: 24px;
+    background: url(../../images/copy.svg) no-repeat;
+    background-size: 100% 100%;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity .2s ease-in-out;
+    display: inline-block;
+    position: relative;
+    top: 6px;
+}
+
+.popup__copy:hover {
+    opacity: .7;
+}
+
+.popup__footer {
+    text-align: right;
+    padding-top: 32px;
+}
+
+@media screen and (max-width:500px) {
+    .popup__container {
+        width: calc(100% - 32px);
+        padding: 16px;
+        position: relative;
+    }
+
+    .popup__header {
+        display: block;
+        padding-bottom: 0;
+        margin-bottom: 12px;
+    }
+    
+    .popup__title {
+        font-size: 16px;
+        line-height: 24px;
+    }
+    
+    .popup__close {
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        top: -32px;
+        right: 0;
+    }
+    
+    .popup__text {
+        font-size: 14px;
+        line-height: 1.4;
+        margin-bottom: 4px;
+    }
+
+    .popup__body_name_sub .popup__text {
+        margin-bottom: 8px;
+    }
+    
+    .popup__qr-code {
+        width: 100%;
+        height: auto;
+    }
+
+    .popup__copy {
+        width: 16px;
+        height: 16px;
+        top: 3px;
+    }
+
+    .popup__footer {
+        padding-top: 24px;
+    }
+
+    .popup__btn {
+        width: 100%;
+        text-align: center;
+    }
+}

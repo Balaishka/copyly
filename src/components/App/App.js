@@ -14,13 +14,33 @@ import Cumulative from "../Сumulative/Сumulative";
 import Profile from "../Profile/Profile";
 import Auth from "../Auth/Auth";
 import setMonths from "../../configs/translate";
+import PopupTG from "../PopupTG/PopupTG";
+import { linkTG, walletNum } from "../../configs/constants";
+import PopupSub from "../PopupSub/PopupSub";
 
 function App() {
   // Загрузка
   const [isLoading, setIsLoading] = useState(false);
 
   // Авторизация
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
+
+  // Кошелек
+  const [walletIn, setWalletIn] = useState(true);
+
+  // Телеграм
+  const [telegramIn, setTelegramIn] = useState(true);
+  const [userName, setUserName] = useState("Username");
+
+  // Подписка
+  const [subscriptionIn, setSubscriptionIn] = useState(true);
+
+  // Попапы
+  const [isPopupTG, setIsPopupTG] = useState(false);
+  const [isPopupSub, setPopupSub] = useState(false);
+
+  // Язык
+  const [lang, setLang] = useState("ru");
 
   const [currentUser, setCurrentUser] = useState({
     name: "",
@@ -29,9 +49,24 @@ function App() {
   });
 
   const history = useHistory();
-  const { t } = useTranslation();
+  const { pathname } = useLocation();
+  const { t, i18n } = useTranslation();
 
   const months = setMonths(t);
+
+  useEffect(() => {
+    if (loggedIn && pathname === "/auth") {
+      history.push("/");
+    }
+  }, [loggedIn]);
+
+  useEffect(() => {
+    if (walletIn && telegramIn && subscriptionIn) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+  }, [walletIn, telegramIn, subscriptionIn]);
 
   function addZero(num) {
     return String(num).length === 1 ? `0${num}` : String(num);
@@ -67,50 +102,128 @@ function App() {
     return res;
   }
 
+  function closeAllPopups() {
+    setIsPopupTG(false);
+    setPopupSub(false);
+  }
+
+  function addWallet() {
+    setWalletIn(true);
+
+    if (!telegramIn) {
+      setIsPopupTG(true);
+    }
+  }
+
+  function addSubscription() {
+    setSubscriptionIn(true);
+    closeAllPopups();
+    history.push("/");
+  }
+
+  function openPopupTG() {
+    setIsPopupTG(true);
+  }
+
+  function openPopupSub() {
+    setPopupSub(true);
+  }
+
+  function logout() {
+    setLoggedIn(false);
+    setWalletIn(false);
+    setTelegramIn(false);
+    setSubscriptionIn(false);
+  }
+
+  function changeLangToRu() {
+    i18n.changeLanguage("ru");
+  }
+
+  function changeLangToEn() {
+    i18n.changeLanguage("en");
+  }
+
   return (
-      <CurrentUserContext.Provider value={{ currentUser }}>
-        <div className="page">
-          <Header loggedIn={loggedIn} />
+    <CurrentUserContext.Provider value={{ currentUser }}>
+      <div className={`page ${loggedIn ? "" : "page_name_auth"}`}>
+        <Header
+          t={t}
+          i18n={i18n}
+          loggedIn={loggedIn}
+          link={linkTG}
+          logout={logout}
+          changeLangToRu={changeLangToRu}
+          changeLangToEn={changeLangToEn}
+        />
 
-          <main className="content">
-            <Switch>
-              <Route exact path="/auth">
-                <Auth />
-              </Route>
+        <main className="content">
+          <Switch>
+            <Route exact path="/auth">
+              {!loggedIn && (
+                <Auth
+                  t={t}
+                  walletIn={walletIn}
+                  telegramIn={telegramIn}
+                  userName={userName}
+                  addWallet={addWallet}
+                  openPopupTG={openPopupTG}
+                  subscriptionIn={subscriptionIn}
+                  openPopupSub={openPopupSub}
+                />
+              )}
+            </Route>
 
-              <Route exact path="/">
-                <Main />
-              </Route>
+            <ProtectedRoute loggedIn={loggedIn} path="/">
+              <Main t={t} />
+            </ProtectedRoute>
 
-              <Route exact path="/balance">
-                <Balance recordingData={recordingData} />
-              </Route>
+            <Route exact path="/balance">
+              <Balance recordingData={recordingData} />
+            </Route>
 
-              <Route exact path="/pnl">
-                <PnL recordingData={recordingData} />
-              </Route>
+            <Route exact path="/pnl">
+              <PnL recordingData={recordingData} />
+            </Route>
 
-              <Route exact path="/cumulative">
-                <Cumulative recordingData={recordingData} />
-              </Route>
+            <Route exact path="/cumulative">
+              <Cumulative recordingData={recordingData} />
+            </Route>
 
-              <Route exact path="/profile">
-                  <Profile />
-              </Route>
+            <Route exact path="/profile">
+              <Profile />
+            </Route>
 
-              <ProtectedRoute loggedIn={loggedIn} path="/test">
-                <div>Test</div>
-              </ProtectedRoute>
+            <Route path="*">
+              <PageNotFound history={history} />
+            </Route>
+          </Switch>
+        </main>
 
-              <Route path="*">
-                <PageNotFound history={history} />
-              </Route>
-            </Switch>
-          </main>
+        <Preloader isLoading={isLoading} />
 
-          <Preloader isLoading={isLoading} />
-        </div>
-      </CurrentUserContext.Provider>
+        <PopupTG
+          isPopupOpen={isPopupTG}
+          title={t("popup_tg_title")}
+          closeAllPopups={closeAllPopups}
+          text={t("popup_tg_text")}
+          textLink={t("popup_tg_link")}
+          link={linkTG}
+        />
+
+        <PopupSub
+          isPopupOpen={isPopupSub}
+          title={t("popup_sub_title")}
+          closeAllPopups={closeAllPopups}
+          text_1={t("popup_sub_text_1")}
+          text_2={t("popup_sub_text_2")}
+          text_3={t("popup_sub_text_3")}
+          link={walletNum}
+          textBtn={t("popup_sub_btn")}
+          addSubscription={addSubscription}
+        />
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 

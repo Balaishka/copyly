@@ -1,45 +1,237 @@
 .header {
-  background-color: #000;
-  color: #fff;
-}
-
-.header_name_main {
-  background-color: #465dff;
-}
-
-.header__container {
-  width: 100%;
-  max-width: 1200px;
-  padding: 16px 14px;
+  background-color: #162027;
+  padding: 12px 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 0 auto;
-  box-sizing: border-box;
 }
 
 .header__logo {
-  display: block;
-  width: 38px;
-  height: 38px;
+  width: 120px;
+}
+
+.header__logo-img {
+  width: 100%;
+}
+
+.header__burger {
+  display: none;
+  background: url(../../images/burger.svg) no-repeat;
+  background-size: 100% 100%;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  cursor: pointer;
   opacity: 1;
-  transition: opacity 0.2s ease-in-out;
+  transition: opacity .2s ease-in-out;
 }
 
-.header__logo:hover {
-  opacity: 0.8;
+.header__burger_opened {
+  background-image: url(../../images/close-menu.svg);
 }
 
-/* Mobile */
+.header__burger:hover {
+  opacity: .7;
+}
 
-@media screen and (min-width: 768px) {
-  .header__container {
-    padding: 16px 30px;
+.header__container {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.header__link {
+  display: block;
+  opacity: 1;
+  transition: opacity .2s ease-in-out;
+  margin-right: 16px;
+  text-decoration: none;
+}
+
+.header__link:hover {
+  opacity: .7;
+}
+
+.header__link-img {
+  width: 24px;
+}
+
+.header__link-text {
+  display: none;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #FFFFFF;
+}
+
+.header__lang {
+  position: relative;
+  margin-right: 16px;
+}
+
+.header__lang-btn {
+  border: 1px solid #95B0B4;
+  border-radius: 30px;
+  padding: 6px 16px;
+  position: relative;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #95B0B4;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: transparent;
+}
+
+.header__lang-img {
+  width: 16px;
+  margin-left: 8px;
+}
+
+.header__lang-img_opened {
+  transform: rotate(180deg);
+}
+
+.header__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: none;
+  border-radius: 6px;
+  padding: 16px;
+  position: absolute;
+  width: 100%;
+  top: calc(100% + 4px);
+  left: 0;
+  background-color: #162027;
+  border: 1px solid #95B0B4;
+}
+
+.header__list_opened {
+  display: block;
+}
+
+.header__item {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #95B0B4;
+  margin-bottom: 8px;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity .2s ease-in-out;
+}
+
+.header__item:last-child {
+  margin-bottom: 0;
+}
+
+.header__item:hover {
+  opacity: .7;
+}
+
+.header__test {
+  width: 118px;
+  height: 36px;
+  background-color: #202D36;
+  margin-right: 16px;
+}
+
+.header__logout {
+  opacity: 1;
+  transition: opacity .2s ease-in-out;
+  border: 0;
+  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.header__logout:hover {
+  opacity: .7;
+}
+
+.header__logout-img {
+  width: 24px;
+}
+
+.header__logout-text {
+  display: none;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #FFFFFF;
+}
+
+@media screen and (max-width:550px) {
+  .header {
+    padding: 12px 16px;
+    position: relative;
   }
-}
 
-@media screen and (min-width: 1024px) {
+  .header__burger {
+    display: block;
+  }
+
   .header__container {
-    padding: 18px 30px;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    background-color: #162027;
+    padding: 24px 16px 32px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header__container_opened {
+    display: flex;
+  }
+
+  .header__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 16px;
+  }
+  
+  .header__link-img {
+    margin-right: 8px;
+  }
+  
+  .header__link-text {
+    display: block;
+  }
+
+  .header__lang {
+    width: 100%;
+    margin: 0 0 16px;
+  }
+  
+  .header__lang-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .header__item {
+    text-align: center;
+  }
+
+  .header__test {
+    margin: 0 0 16px;
+  }
+
+  .header__logout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header__logout-img {
+    margin-right: 8px;
+  }
+
+  .header__logout-text {
+    display: block;
   }
 }

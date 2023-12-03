@@ -1,3 +1,6 @@
+const linkTG = "https://t.me/balaishka";
+const walletNum = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045";
+
 const testData = {
   "balances": [
       {
@@ -384,4 +387,167 @@ const testData2 = {
   ]
 };
 
-module.exports = { testData, testData2 };
+const table = [
+    {
+        wallet: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96011",
+        pl: "72.49",
+        dep: "+0.7%",
+        proc: "66",
+        tokens: "160",
+        last: "01.12.2023 14:09"
+    },
+    {
+        wallet: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96012",
+        pl: "72.49",
+        dep: "+0.7%",
+        proc: "66",
+        tokens: "160",
+        last: "01.12.2023 14:09"
+    },
+    {
+        wallet: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96013",
+        pl: "72.49",
+        dep: "+0.7%",
+        proc: "66",
+        tokens: "160",
+        last: "01.12.2023 14:09"
+    },
+    {
+        wallet: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96014",
+        pl: "72.49",
+        dep: "+0.7%",
+        proc: "66",
+        tokens: "160",
+        last: "01.12.2023 14:09"
+    },
+    {
+        wallet: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96015",
+        pl: "72.49",
+        dep: "+0.7%",
+        proc: "66",
+        tokens: "160",
+        last: "01.12.2023 14:09"
+    },
+    {
+        wallet: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96016",
+        pl: "72.49",
+        dep: "+0.7%",
+        proc: "66",
+        tokens: "160",
+        last: "01.12.2023 14:09"
+    },
+    {
+        wallet: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96017",
+        pl: "72.49",
+        dep: "+0.7%",
+        proc: "66",
+        tokens: "160",
+        last: "01.12.2023 14:09"
+    },
+    {
+        wallet: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96018",
+        pl: "72.49",
+        dep: "+0.7%",
+        proc: "66",
+        tokens: "160",
+        last: "01.12.2023 14:09"
+    },
+    {
+        wallet: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96019",
+        pl: "72.49",
+        dep: "+0.7%",
+        proc: "66",
+        tokens: "160",
+        last: "01.12.2023 14:09"
+    },
+    {
+        wallet: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96020",
+        pl: "72.49",
+        dep: "+0.7%",
+        proc: "66",
+        tokens: "160",
+        last: "01.12.2023 14:09"
+    },
+    {
+        wallet: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96021",
+        pl: "72.49",
+        dep: "+0.7%",
+        proc: "66",
+        tokens: "160",
+        last: "01.12.2023 14:09"
+    },
+    {
+        wallet: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96022",
+        pl: "72.49",
+        dep: "+0.7%",
+        proc: "66",
+        tokens: "160",
+        last: "01.12.2023 14:09"
+    },
+    {
+        wallet: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96023",
+        pl: "72.49",
+        dep: "+0.7%",
+        proc: "66",
+        tokens: "160",
+        last: "01.12.2023 14:09"
+    },
+    {
+        wallet: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96024",
+        pl: "72.49",
+        dep: "+0.7%",
+        proc: "66",
+        tokens: "160",
+        last: "01.12.2023 14:09"
+    },
+    {
+        wallet: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96025",
+        pl: "72.49",
+        dep: "+0.7%",
+        proc: "66",
+        tokens: "160",
+        last: "01.12.2023 14:09"
+    },
+    {
+        wallet: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96026",
+        pl: "72.49",
+        dep: "+0.7%",
+        proc: "66",
+        tokens: "160",
+        last: "01.12.2023 14:09"
+    },
+    {
+        wallet: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA960272",
+        pl: "72.49",
+        dep: "+0.7%",
+        proc: "66",
+        tokens: "160",
+        last: "01.12.2023 14:09"
+    },
+    {
+        wallet: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96028",
+        pl: "72.49",
+        dep: "+0.7%",
+        proc: "66",
+        tokens: "160",
+        last: "01.12.2023 14:09"
+    },
+    {
+        wallet: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96029",
+        pl: "72.49",
+        dep: "+0.7%",
+        proc: "66",
+        tokens: "160",
+        last: "01.12.2023 14:09"
+    },
+    {
+        wallet: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96030",
+        pl: "72.49",
+        dep: "+0.7%",
+        proc: "66",
+        tokens: "160",
+        last: "01.12.2023 14:09"
+    }
+];
+
+module.exports = { testData, testData2, linkTG, walletNum, table };

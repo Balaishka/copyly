@@ -22,6 +22,7 @@
     line-height: 69px;
     color: #FFFFFF;
     margin: 0 0 36px;
+    max-width: 750px;
 }
 
 .auth__text {
@@ -31,18 +32,45 @@
     margin: 0 0 6.36vh;
 }
 
-.auth__btn {
-    padding: 8px 16px;
-    background-color: #89D2DC;
-    border-radius: 30px;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #314D6B;
-    border: 0;
-    transition: all .2s ease-in-out;
-    cursor: pointer;
+@media screen and (max-width:768px) {
+    .auth {
+        padding: 9.77vh 40px;
+    }
+
+    .auth__logo {
+        margin-bottom: 19.73vh;
+    }
+
+    .auth__title {
+        font-size: 52px;
+        line-height: 65px;
+    }
+
+    .auth__text {
+        max-width: 570px;
+        margin: 0 auto 4.69vh;
+    }
 }
 
-.auth__btn:hover {
-    background-color: #5DA6B0;
+@media screen and (max-width:500px) {
+    .auth {
+        padding: 8.45vh 16px;
+    }
+
+    .auth__logo {
+        width: 106px;
+        margin-bottom: 11.27vh;
+    }
+
+    .auth__title {
+        font-weight: 500;
+        font-size: 30px;
+        line-height: 37px;
+        margin-bottom: 28px;
+    }
+
+    .auth__text {
+        max-width: 100%;
+        margin-bottom: 5.63vh;
+    }
 }
