@@ -1,0 +1,54 @@
+.tokens {
+    background-color: #162027;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.tokens__header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #314D6B;
+    margin-bottom: 12px;
+}
+
+.tokens__title {
+    font-family: 'Unbounded';
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    margin: 0;
+    color: #fff;
+}
+
+.tokens__switch {
+    background-color: #202D36;
+    border-radius: 100px;
+    width: 64px;
+    height: 24px;
+    padding: 2px;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.tokens__case {
+    border-radius: 100px;
+    background-color: transparent;
+    width: 30px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tokens__case_active {
+    background-color: #89D2DC;
+}
+
+.tokens__case_active svg path {
+    fill: #314D6B;
+}

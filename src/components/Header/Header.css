@@ -6,6 +6,10 @@
   justify-content: space-between;
 }
 
+.header_type_auth {
+  background-color: transparent;
+}
+
 .header__logo {
   width: 120px;
 }
@@ -66,6 +70,10 @@
 .header__lang {
   position: relative;
   margin-right: 16px;
+}
+
+.header_type_auth .header__lang {
+  margin-right: 0;
 }
 
 .header__lang-btn {
@@ -129,11 +137,18 @@
   opacity: .7;
 }
 
-.header__test {
-  width: 118px;
-  height: 36px;
+.header__wallet {
   background-color: #202D36;
-  margin-right: 16px;
+  border: 0;
+  border-radius: 30px;
+  padding: 6px 20px;
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #FFFFFF;
+  cursor: pointer;
 }
 
 .header__logout {
@@ -170,7 +185,7 @@
     display: block;
   }
 
-  .header__container {
+  .header__container:not(.header_type_auth .header__container) {
     display: none;
     position: absolute;
     top: 100%;
@@ -182,10 +197,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    z-index: 10;
   }
 
   .header__container_opened {
-    display: flex;
+    display: flex !important;
   }
 
   .header__link {
@@ -203,22 +219,18 @@
     display: block;
   }
 
-  .header__lang {
+  .header__lang:not(.header_type_auth .header__lang) {
     width: 100%;
     margin: 0 0 16px;
   }
   
-  .header__lang-btn {
+  .header__lang-btn:not(.header_type_auth .header__lang-btn) {
     width: 100%;
     justify-content: center;
   }
 
-  .header__item {
+  .header__item:not(.header_type_auth .header__item) {
     text-align: center;
-  }
-
-  .header__test {
-    margin: 0 0 16px;
   }
 
   .header__logout {

@@ -33,14 +33,7 @@
 
 .main__table {
   max-width: 100%;
-  overflow: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* хром, сафари */
-.main__table::-webkit-scrollbar {
-  width: 0;
+  position: relative;
 }
 
 @media screen and (max-width: 768px) {

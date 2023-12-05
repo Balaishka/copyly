@@ -17,6 +17,9 @@ import setMonths from "../../configs/translate";
 import PopupTG from "../PopupTG/PopupTG";
 import { linkTG, walletNum } from "../../configs/constants";
 import PopupSub from "../PopupSub/PopupSub";
+import { useAccount, useSignMessage } from "wagmi";
+import { ethers } from "ethers";
+import Wallet from "../Wallet/Wallet";
 
 function App() {
   // Загрузка
@@ -26,7 +29,12 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(true);
 
   // Кошелек
-  const [walletIn, setWalletIn] = useState(true);
+  const [walletIn, setWalletIn] = useState(localStorage.getItem("wallet") ? true:false);
+  const { address, status } = useAccount();
+  const myMessage = "Предоставить доступ Copyly";
+  const { data, isError, isSuccess, signMessage } = useSignMessage({
+    message: myMessage,
+  });
 
   // Телеграм
   const [telegramIn, setTelegramIn] = useState(true);
@@ -40,18 +48,16 @@ function App() {
   const [isPopupSub, setPopupSub] = useState(false);
 
   // Язык
-  const [lang, setLang] = useState("ru");
+  const [lang, setLang] = useState(localStorage.getItem("lang") ? localStorage.getItem("lang"):"ru");
 
   const [currentUser, setCurrentUser] = useState({
     name: "",
-    email: "",
-    _id: "",
+    wallet: ""
   });
 
   const history = useHistory();
   const { pathname } = useLocation();
   const { t, i18n } = useTranslation();
-
   const months = setMonths(t);
 
   useEffect(() => {
@@ -59,6 +65,39 @@ function App() {
       history.push("/");
     }
   }, [loggedIn]);
+
+  useEffect(() => {
+    if (status === "disconnected") {
+      removeWallet();
+    }
+    if (!localStorage.getItem("wallet") && !walletIn && status === "connected") {
+      signMessage();
+    }
+  }, [status, walletIn]);
+
+  useEffect(() => {
+    if (address && isSuccess) {
+      const newAddress = ethers.verifyMessage(myMessage, data);
+      if (address === newAddress) {
+        addWallet();
+      }
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (isError) {
+      console.log("Ошибка!");
+    }
+  }, [isError]);
+
+  /* useEffect(() => {
+    const wallet = localStorage.getItem("wallet");
+    if (!wallet) {
+      setWalletIn(false);
+    } else {
+      setWalletIn(true);
+    }
+  }, []); */
 
   useEffect(() => {
     if (walletIn && telegramIn && subscriptionIn) {
@@ -109,10 +148,20 @@ function App() {
 
   function addWallet() {
     setWalletIn(true);
+    localStorage.setItem("wallet", address);
 
     if (!telegramIn) {
       setIsPopupTG(true);
     }
+
+    if (telegramIn && !subscriptionIn) {
+      setPopupSub(true);
+    }
+  }
+
+  function removeWallet() {
+    setWalletIn(false);
+    localStorage.removeItem("wallet");
   }
 
   function addSubscription() {
@@ -130,18 +179,17 @@ function App() {
   }
 
   function logout() {
+    localStorage.removeItem("wallet");
     setLoggedIn(false);
     setWalletIn(false);
     setTelegramIn(false);
     setSubscriptionIn(false);
   }
 
-  function changeLangToRu() {
-    i18n.changeLanguage("ru");
-  }
-
-  function changeLangToEn() {
-    i18n.changeLanguage("en");
+  function changeLang(newLang) {
+    i18n.changeLanguage(newLang);
+    setLang(newLang);
+    localStorage.setItem("lang", newLang);
   }
 
   return (
@@ -153,8 +201,8 @@ function App() {
           loggedIn={loggedIn}
           link={linkTG}
           logout={logout}
-          changeLangToRu={changeLangToRu}
-          changeLangToEn={changeLangToEn}
+          changeLang={changeLang}
+          setWalletIn={setWalletIn}
         />
 
         <main className="content">
@@ -166,7 +214,6 @@ function App() {
                   walletIn={walletIn}
                   telegramIn={telegramIn}
                   userName={userName}
-                  addWallet={addWallet}
                   openPopupTG={openPopupTG}
                   subscriptionIn={subscriptionIn}
                   openPopupSub={openPopupSub}
@@ -174,8 +221,16 @@ function App() {
               )}
             </Route>
 
-            <ProtectedRoute loggedIn={loggedIn} path="/">
+            <Route path="/table">
               <Main t={t} />
+            </Route>
+
+            <ProtectedRoute loggedIn={loggedIn} exact path="/">
+              <Main t={t} />
+            </ProtectedRoute>
+
+            <ProtectedRoute loggedIn={loggedIn} exact path="/wallet">
+              <Wallet t={t} addZero={addZero} recordingData={recordingData} />
             </ProtectedRoute>
 
             <Route exact path="/balance">

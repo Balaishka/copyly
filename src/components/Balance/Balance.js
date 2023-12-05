@@ -7,11 +7,12 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
+  ResponsiveContainer,
 } from "recharts";
 import { testData } from "../../configs/constants";
 import QuarterTick from "../QuarterTick/QuarterTick";
 
-function Balance({ recordingData }) {
+function Balance({ recordingData, title }) {
   const [balances, setBalances] = useState([]);
   let month = 12;
 
@@ -37,43 +38,48 @@ function Balance({ recordingData }) {
   }
 
   return (
-    <AreaChart
-      className="graph"
-      width={1550}
-      height={500}
-      data={balances}
-      margin={{
-        top: 10,
-        right: 50,
-        left: 0,
-        bottom: 0,
-      }}
-    >
-      <defs>
-        <linearGradient id="gradient1" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="5%" stopColor="#315aad" stopOpacity={0.8} />
-          <stop offset="95%" stopColor="#315aad" stopOpacity={0.2} />
-        </linearGradient>
-      </defs>
-      <CartesianGrid
-        strokeDasharray="0 0"
-        vertical={false}
-        stroke="rgba(255, 255, 255, 0.3)"
-      />
-      <XAxis
-        dataKey="date"
-        padding={{ left: 0, right: 0 }}
-        tick={renderQuarterTick}
-      />
-      <YAxis />
-      <Tooltip />
-      <Area
-        name="Значение"
-        dataKey="value"
-        stroke="#315aad"
-        fill="url(#gradient1)"
-      />
-    </AreaChart>
+    <div className="content__graph">
+      <h2 className="content__graph-title">{title}</h2>
+      <ResponsiveContainer height="80%">
+        <AreaChart
+          width={500}
+          height={216}
+          className="graph"
+          data={balances}
+          margin={{
+            top: 10,
+            right: 50,
+            left: 0,
+            bottom: 0,
+          }}
+        >
+          <defs>
+            <linearGradient id="gradient1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#315aad" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#315aad" stopOpacity={0.2} />
+            </linearGradient>
+          </defs>
+          <CartesianGrid
+            strokeDasharray="0 0"
+            vertical={false}
+            stroke="rgba(255, 255, 255, 0.3)"
+          />
+          <XAxis
+            dataKey="date"
+            padding={{ left: 0, right: 0 }}
+            tick={renderQuarterTick}
+          />
+          <YAxis />
+          <Tooltip />
+          <Area
+            name="Значение"
+            dataKey="value"
+            stroke="#315aad"
+            fill="url(#gradient1)"
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
 

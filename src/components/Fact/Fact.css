@@ -1,0 +1,46 @@
+.fact {
+    background-color: #162027;
+    border-radius: 8px;
+    padding: 16px;
+    min-width: calc((100% - 100px)/6);
+}
+
+.fact_type_desctop-hidden {
+    display: none;
+}
+
+.fact__title {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #FFFFFF;
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #314D6B;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.fact__info {
+    font-family: 'Unbounded';
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 25px;
+    margin: 0;
+    padding-bottom: 4px;
+    color: #fff;
+    max-width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+@media screen and (max-width:1024px) {
+    .fact_type_mobile-hidden {
+        display: none;
+    }
+
+    .fact_type_desctop-hidden {
+        display: block;
+    }
+}

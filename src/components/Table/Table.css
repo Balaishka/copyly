@@ -18,6 +18,10 @@
     text-align: left;
 }
 
+.table tbody tr {
+    cursor: pointer;
+}
+
 .table td {
     background-color: #162027;
     padding: 12px;
@@ -35,6 +39,10 @@
 
 .table td:last-child {
     border-radius: 0 8px 8px 0;
+}
+
+.table tbody tr:hover td {
+    background-color: rgba(22, 32, 39, .7);
 }
 
 @media screen and (max-width:768px) {

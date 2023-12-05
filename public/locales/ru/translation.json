@@ -36,5 +36,21 @@
     "table_th_3": "Прирост к депозиту",
     "table_th_4": "Процент успешных сделок",
     "table_th_5": "Количество токенов",
-    "table_th_6": "Последняя активность"
+    "table_th_6": "Последняя активность",
+    "table_pages": "Перейти на:",
+    "wallet_last_activity": "Последняя активность",
+    "day": "д",
+    "hours": "ч",
+    "ago": "назад",
+    "wallet_button_add": "Подписаться",
+    "wallet_button_remove": "Отписаться",
+    "balance": "Баланс",
+    "succesfull": "Успешных сделок",
+    "amount": "Количество сделок",
+    "profit": "Профит",
+    "losts": "Потери",
+    "profit_factor": "Профит фактор",
+    "graph_balance": "Баланс ETH",
+    "scam": "Скам сделок",
+    "tokens": "Токены"
 }

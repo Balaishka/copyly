@@ -5,23 +5,16 @@ import { useEffect, useState } from "react";
 import telegram from "../../images/telegram.svg";
 import arrow from "../../images/arrow-down.svg";
 import logoutImg from "../../images/logout.svg";
+import { ConnectKitButton } from "connectkit";
 
-function Header({
-  t,
-  i18n,
-  loggedIn,
-  link,
-  logout,
-  changeLangToRu,
-  changeLangToEn,
-}) {
+function Header({ t, i18n, loggedIn, link, logout, changeLang, setWalletIn }) {
   const [langOpened, setLangOpened] = useState(false);
   const [menuOpened, setMenuOpened] = useState(false);
 
   useEffect(() => {
     if (langOpened) {
       window.addEventListener("click", closeLang);
-      return () =>  window.removeEventListener("click", closeLang);
+      return () => window.removeEventListener("click", closeLang);
     }
   }, [langOpened]);
 
@@ -40,35 +33,49 @@ function Header({
     setLangOpened(!langOpened);
   }
 
-  function changeLangToRussian() {
-    changeLangToRu();
+  function changeLangToRu() {
+    changeLang("ru");
     setLangOpened(false);
   }
 
-  function changeLangToEnglish() {
-    changeLangToEn();
+  function changeLangToEn() {
+    changeLang("en");
     setLangOpened(false);
   }
 
   function toggleMenu() {
+    console.log("Я тут");
+    console.log(menuOpened);
     setMenuOpened(!menuOpened);
   }
 
-  if (!loggedIn) return <></>;
-
   return (
-    <header className="header">
+    <header className={`header ${!loggedIn ? "header_type_auth" : ""}`}>
       <NavLink to="/" className="header__logo">
         <img src={logo} alt={t("logo")} className="header__logo-img" />
       </NavLink>
 
-      <button className={`header__burger ${menuOpened ? "header__burger_opened":""}`} type="button" onClick={toggleMenu}></button>
+      {loggedIn && (
+        <button
+          className={`header__burger ${
+            menuOpened ? "header__burger_opened" : ""
+          }`}
+          type="button"
+          onClick={toggleMenu}
+        ></button>
+      )}
 
-      <div className={`header__container ${menuOpened ? "header__container_opened":""}`}>
-        <a href={link} className="header__link">
-          <img alt="Telegram" src={telegram} className="header__link-img" />
-          <span className="header__link-text">Telegram</span>
+      <div
+        className={`header__container ${
+          menuOpened ? "header__container_opened" : ""
+        }`}
+      >
+        {loggedIn && (
+          <a href={link} className="header__link">
+            <img alt="Telegram" src={telegram} className="header__link-img" />
+            <span className="header__link-text">Telegram</span>
           </a>
+        )}
 
         <div className="header__lang">
           <button
@@ -77,32 +84,48 @@ function Header({
             type="button"
           >
             {i18n.language === "ru" ? "Russian" : "English"}
-            <img className={`header__lang-img ${langOpened ? "header__lang-img_opened":""}`} alt="Стрелка" src={arrow} />
+            <img
+              className={`header__lang-img ${
+                langOpened ? "header__lang-img_opened" : ""
+              }`}
+              alt="Стрелка"
+              src={arrow}
+            />
           </button>
           <ul
             className={`header__list ${
               langOpened ? "header__list_opened" : ""
             }`}
           >
-            <li className="header__item" onClick={changeLangToRussian}>
+            <li className="header__item" onClick={changeLangToRu}>
               Russian
             </li>
-            <li className="header__item" onClick={changeLangToEnglish}>
+            <li className="header__item" onClick={changeLangToEn}>
               English
             </li>
           </ul>
         </div>
 
-        <div className="header__test"></div>
+        {loggedIn && (
+          <ConnectKitButton.Custom>
+            {({ isConnected, show, truncatedAddress }) => {
+              return (
+                <button onClick={show} className="header__wallet">
+                  {isConnected ? truncatedAddress : t("auth_btn_wallet")}
+                </button>
+              );
+            }}
+          </ConnectKitButton.Custom>
+        )}
 
-        <button
-          className="header__logout"
-          onClick={logout}
-          type="button"
-        >
-          <img alt={t("logout")} src={logoutImg} className="header__logout-img" />
+        {/* <button className="header__logout" onClick={logout} type="button">
+          <img
+            alt={t("logout")}
+            src={logoutImg}
+            className="header__logout-img"
+          />
           <span className="header__logout-text">{t("logout")}</span>
-        </button>
+        </button> */}
       </div>
     </header>
   );
