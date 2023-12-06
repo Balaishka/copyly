@@ -68,6 +68,13 @@ body {
   width: 0;
 }
 
+.content__table_name_tokens {
+  max-height: calc(100vh - 340px);
+  height: calc(100vh - 340px);
+  max-width: 50.29vw;
+  min-width: 100%;
+}
+
 .content__graph {/* 
   width: 100% !important;
   max-width: 100% !important;

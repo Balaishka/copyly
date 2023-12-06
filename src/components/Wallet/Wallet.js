@@ -124,7 +124,7 @@ function Wallet({ t, addZero, recordingData }) {
             <PnL recordingData={recordingData} title={"Profit and Loss"}/>
         </div>
         <div className="wallet__right">
-            <Tokens title={t("tokens")} />
+            <Tokens t={t} tokens={testWallet.tokens} />
 
             <div className="wallet__info wallet__info_type_bottom">
                 <Fact title={t("profit")} info={testWallet.profits} type="desctop" />

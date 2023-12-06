@@ -11,6 +11,10 @@
     z-index: 10;
 }
 
+.content__table_name_tokens .pages {
+    background-color: #162027;
+}
+
 .pages__container {
     display: flex;
     align-items: center;

@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { table, table2 } from "../../configs/constants";
 import "./Table.css";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import Pages from "../Pages/Pages";
 
-function Table({ t }) {
+function Table({ t, table, classTable, tableHead,setTableBody, lines }) {
     const [pages, setPages] = useState([]);
     const [activePage, setActivePage] = useState(1);
     const [valuesPerPage, setValuesPerPage] = useState([]);
@@ -52,9 +51,12 @@ function Table({ t }) {
 
     useEffect(() => {
         // Высчитываем количество строк на странице
-        const heightRow = width > 500 ? 52 : 30;
+        /* const heightRow = width > 500 ? 52 : 30;
         const heightTitle = 74;
-        setRows(Math.floor((heightTable.current.clientHeight - heightTitle) / heightRow));
+        setRows(Math.floor((heightTable.current.clientHeight - heightTitle) / heightRow)); */
+
+        // Не высчитываем количество строк, а берем статичное lines
+        setRows(lines);
     }, [table]);
 
     useEffect(() => {
@@ -102,36 +104,20 @@ function Table({ t }) {
             setValuesPerPage(res);
         }
     }, [table, activePage, rows]);
-
-    function reductionWallet(w) {
-        return `${w[0]}${w[1]}${w[2]}${w[3]}...${w[w.length - 2]}${w[w.length - 1]}`;
-    }
         
     return (
-        <div className="content__table" ref={heightTable}>
-            <table className="table">
+        <div className={`content__table ${classTable !== "" ? `content__table_name_${classTable}`:""}`} ref={heightTable}>
+            <table className={`table ${classTable !== "" ? `table-${classTable}`:""}`}>
                 <thead>
                     <tr>
-                        <th>{t("table_th_1")}</th>
-                        <th>{t("table_th_2")}</th>
-                        <th>{t("table_th_3")}</th>
-                        <th>{t("table_th_4")}</th>
-                        <th>{t("table_th_5")}</th>
-                        <th>{t("table_th_6")}</th>
+                        {tableHead.map((th) => {
+                            return <th key={th}>{th}</th>;
+                        })}
                     </tr>
                 </thead>
 
                 <tbody>
-                    {valuesPerPage.map((item) => {
-                        return (<tr key={item.wallet}>
-                            <td>{reductionWallet(item.wallet)}</td>
-                            <td>{item.pl}</td>
-                            <td>{item.dep}</td>
-                            <td>{item.proc}</td>
-                            <td>{item.tokens}</td>
-                            <td>{item.last}</td>
-                        </tr>);
-                    })}
+                    {setTableBody(valuesPerPage)}
                 </tbody>
             </table>
 

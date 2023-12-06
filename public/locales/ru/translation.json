@@ -52,5 +52,12 @@
     "profit_factor": "Профит фактор",
     "graph_balance": "Баланс ETH",
     "scam": "Скам сделок",
-    "tokens": "Токены"
+    "tokens": "Токены",
+    "name": "Название",
+    "purchased": "Куплено",
+    "sales": "Продано",
+    "date": "Дата",
+    "scam_title": "Скам",
+    "yes": "да",
+    "no": "нет"
 }

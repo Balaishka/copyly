@@ -552,8 +552,9 @@ const table = [
 
 const testWallet = {
   num: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
-  tokens: {
-    "0xcb454adae2595ac182fc1807b0c59ef3f31496be": {
+  tokens: [
+    {
+      address: "0xcb454adae2595ac182fc1807b0c59ef3f31496be",
       bought: 0.2010883324647998,
       amount: 0.0,
       sold: 0.1688483542807498,
@@ -568,7 +569,8 @@ const testWallet = {
       pnl: -0.03223997818405,
       roi: -16.032744311355586,
     },
-    "0x0c21638d4bcb88568f88bc84a50e317715f8de8a": {
+    {
+      address: "0x0c21638d4bcb88568f88bc84a50e317715f8de8a",
       bought: 0.10790029237836368,
       amount: 0.0,
       sold: 0.04967981463544657,
@@ -583,7 +585,8 @@ const testWallet = {
       pnl: -0.05822047774291711,
       roi: -53.95766448784115,
     },
-    "0x6d5777dce2541175adf6d49cadd666f3ab0ac142": {
+    {
+      address: "0x6d5777dce2541175adf6d49cadd666f3ab0ac142",
       bought: 0.38223168532987506,
       amount: 0,
       sold: 0.20763602760035205,
@@ -599,7 +602,8 @@ const testWallet = {
       pnl: -0.174595657729523,
       roi: -45.677965597970456,
     },
-    "0x8c9cfafdd13d718dc97011293d159bb4f2494237": {
+    {
+      address: "0x8c9cfafdd13d718dc97011293d159bb4f2494237",
       bought: 0.21233561637473397,
       amount: 0,
       sold: 0.25672310946081733,
@@ -615,7 +619,8 @@ const testWallet = {
       pnl: 0.04438749308608336,
       roi: 20.90440305961081,
     },
-    "0xd45c3ac233d66f12b600f439585a5ae1cd0b9408": {
+    {
+      address: "0xd45c3ac233d66f12b600f439585a5ae1cd0b9408",
       bought: 0.12305960923151826,
       amount: 0.0,
       sold: 0.12920053712016488,
@@ -630,7 +635,8 @@ const testWallet = {
       pnl: 0.006140927888646619,
       roi: 4.990205906710934,
     },
-    "0xbe6be64e9e5042b6e84e4c27956cce6353efa5f5": {
+    {
+      address: "0xbe6be64e9e5042b6e84e4c27956cce6353efa5f5",
       bought: 0.2067824967547573,
       amount: 0,
       sold: 0.15134860013293117,
@@ -642,7 +648,8 @@ const testWallet = {
       pnl: -0.05543389662182613,
       roi: -26.807828269706196,
     },
-    "0x3ad9d01c8a0bb9130a3e021304b81e1294dc53a8": {
+    {
+      address: "0x3ad9d01c8a0bb9130a3e021304b81e1294dc53a8",
       bought: 0.1518672392161764,
       amount: 0.0,
       sold: 0.04844060226609742,
@@ -657,7 +664,8 @@ const testWallet = {
       pnl: -0.10342663695007898,
       roi: -68.10332332627425,
     },
-    "0x34ff2b0ff7be56936e66974e996067b4b706c028": {
+    {
+      address: "0x34ff2b0ff7be56936e66974e996067b4b706c028",
       bought: 0.2101046818275185,
       amount: 0,
       sold: 0.18799104779716005,
@@ -673,7 +681,8 @@ const testWallet = {
       pnl: -0.02211363403035846,
       roi: -10.525055338134841,
     },
-    "0xf3850b34adb941271b93f8e841cd373b342ab0b7": {
+    {
+      address: "0xf3850b34adb941271b93f8e841cd373b342ab0b7",
       bought: 0.13006306490904856,
       amount: 0,
       sold: 0.17793924919241583,
@@ -689,7 +698,8 @@ const testWallet = {
       pnl: 0.04787618428336726,
       roi: 36.80997700373005,
     },
-    "0x4e668aed22f5d84a80229bb4c00e4e00e2c94837": {
+    {
+      address: "0x4e668aed22f5d84a80229bb4c00e4e00e2c94837",
       bought: 0.054143312302054825,
       amount: 3047266.971057069,
       first_block: 18524505,
@@ -704,7 +714,8 @@ const testWallet = {
       pnl: -0.054143312302054825,
       roi: -100.0,
     },
-    "0x608e2531bcaf81451958f0f4f6fb8307ab3d1b95": {
+    {
+      address: "0x608e2531bcaf81451958f0f4f6fb8307ab3d1b95",
       bought: 0.05939043554586909,
       amount: 0,
       sold: 0.15716353911135145,
@@ -720,7 +731,8 @@ const testWallet = {
       pnl: 0.09777310356548236,
       roi: 164.62769243369016,
     },
-    "0xc9524dad5e04a86a338800dcb0519bb6a09df5ba": {
+    {
+      address: "0xc9524dad5e04a86a338800dcb0519bb6a09df5ba",
       bought: 0.11327934097684789,
       amount: 0.0,
       sold: 0.05158981108283045,
@@ -735,7 +747,7 @@ const testWallet = {
       pnl: -0.061689529894017436,
       roi: -54.45788204808287,
     },
-  },
+  ],
   last_activity: 1701609863,
   timestamp2balance: {
     1699189535: 0.31045873563015014,

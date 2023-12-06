@@ -18,7 +18,7 @@
     text-align: left;
 }
 
-.table tbody tr {
+.table:not(.table-tokens) tbody tr {
     cursor: pointer;
 }
 
@@ -30,6 +30,8 @@
     color: #FFFFFF;
     text-align: right;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .table td:first-child {
@@ -41,8 +43,42 @@
     border-radius: 0 8px 8px 0;
 }
 
-.table tbody tr:hover td {
+.table:not(.table-tokens) tbody tr:hover td {
     background-color: rgba(22, 32, 39, .7);
+}
+
+/* Tokens */
+
+.table-tokens th {
+    padding: 4px 12px;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: normal;
+}
+
+.table-tokens td {
+    padding: 7px 12px;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.table-tokens__green td {
+    background-color: rgba(41, 178, 119, 0.1);
+}
+
+.table-tokens__red td {
+    background-color: rgba(221, 57, 62, 0.1);
+}
+
+.table-tokens td a {
+    color: #89D2DC;
+    text-decoration: underline;
+}
+
+.table-tokens td a:hover {
+    color: #89D2DC;
+    text-decoration: none;
 }
 
 @media screen and (max-width:768px) {

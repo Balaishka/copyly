@@ -52,3 +52,7 @@
 .tokens__case_active svg path {
     fill: #314D6B;
 }
+
+.tokens__body {
+    position: relative;
+}
