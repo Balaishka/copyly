@@ -100,6 +100,8 @@ function App() {
   }, [walletIn, telegramIn, subscriptionIn]);
 
   useEffect(() => {
+    console.log(crypto.randomUUID());
+    //localStorage.setItem("jwt", "7afc375615454b0a9a8522a73be5c277ef51e457");
     setIsLoading(true);
     mainApi
       .getWalletsTable()
