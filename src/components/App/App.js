@@ -20,6 +20,7 @@ import PopupSub from "../PopupSub/PopupSub";
 import { useAccount, useSignMessage } from "wagmi";
 import { ethers } from "ethers";
 import Wallet from "../Wallet/Wallet";
+import mainApi from "../../utils/MainApi";
 
 function App() {
   // Загрузка
@@ -90,15 +91,6 @@ function App() {
     }
   }, [isError]);
 
-  /* useEffect(() => {
-    const wallet = localStorage.getItem("wallet");
-    if (!wallet) {
-      setWalletIn(false);
-    } else {
-      setWalletIn(true);
-    }
-  }, []); */
-
   useEffect(() => {
     if (walletIn && telegramIn && subscriptionIn) {
       setLoggedIn(true);
@@ -106,6 +98,22 @@ function App() {
       setLoggedIn(false);
     }
   }, [walletIn, telegramIn, subscriptionIn]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    mainApi
+      .getWalletsTable()
+      .then((res) => {
+        console.log(res.results);
+      })
+      .catch((err) => {
+        console.log("Ошибка");
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
 
   function addZero(num) {
     return String(num).length === 1 ? `0${num}` : String(num);

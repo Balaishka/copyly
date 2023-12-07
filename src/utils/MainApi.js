@@ -89,15 +89,24 @@ class MainApi {
       },
     }).then(this._checkResponse);
   };
+
+  // Получаем таблицу
+  getWalletsTable() {
+    this._headers = {
+      ...this._headers,
+      authorization: `Token ${localStorage.getItem("jwt")}`,
+    };
+    return this._fetch("/top", "GET");
+  }
 }
 
 // Создаем класс апи
 const mainApi = new MainApi({
-  baseUrl: "https://api.balaimovie.nomoredomains.sbs",
+  baseUrl: "https://0c9a-178-70-163-195.ngrok-free.app/api",
   //baseUrl: "http://localhost:3005",
   headers: {
     "content-type": "application/json",
-    authorization: `Bearer ${localStorage.getItem("jwt")}`,
+    authorization: `Token ${localStorage.getItem("jwt")}`,
   },
 });
 
