@@ -21,10 +21,21 @@ import { useAccount, useSignMessage } from "wagmi";
 import { ethers } from "ethers";
 import Wallet from "../Wallet/Wallet";
 import mainApi from "../../utils/MainApi";
+import PopupError from "../PopupError/PopupError";
 
 function App() {
+
+  const history = useHistory();
+  const { pathname } = useLocation();
+  const { t, i18n } = useTranslation();
+  const months = setMonths(t);
+
   // Загрузка
   const [isLoading, setIsLoading] = useState(false);
+
+  // Ошибка
+  const [isPopupError, setIsPopupError] = useState(false);
+  const [errorText, setErrorText] = useState(t("error_text"));
 
   // Авторизация
   const [loggedIn, setLoggedIn] = useState(true);
@@ -46,20 +57,18 @@ function App() {
 
   // Попапы
   const [isPopupTG, setIsPopupTG] = useState(false);
-  const [isPopupSub, setPopupSub] = useState(false);
+  const [isPopupSub, setIsPopupSub] = useState(false);
 
   // Язык
   const [lang, setLang] = useState(localStorage.getItem("lang") ? localStorage.getItem("lang"):"ru");
+
+  // Кошельки
+  const [allWallets, setAllWallets] = useState([]);
 
   const [currentUser, setCurrentUser] = useState({
     name: "",
     wallet: ""
   });
-
-  const history = useHistory();
-  const { pathname } = useLocation();
-  const { t, i18n } = useTranslation();
-  const months = setMonths(t);
 
   useEffect(() => {
     if (loggedIn && pathname === "/auth") {
@@ -87,7 +96,8 @@ function App() {
 
   useEffect(() => {
     if (isError) {
-      console.log("Ошибка!");
+      setIsPopupError(true);
+      setErrorText(t("error_wallet"));
     }
   }, [isError]);
 
@@ -99,23 +109,21 @@ function App() {
     }
   }, [walletIn, telegramIn, subscriptionIn]);
 
-  useEffect(() => {
-    console.log(crypto.randomUUID());
-    //localStorage.setItem("jwt", "7afc375615454b0a9a8522a73be5c277ef51e457");
+  function getAllWallets() {
     setIsLoading(true);
     mainApi
       .getWalletsTable()
       .then((res) => {
-        console.log(res.results);
+        setAllWallets(res.results);
       })
       .catch((err) => {
-        console.log("Ошибка");
-        console.log(err);
+        setIsPopupError(true);
+        setErrorText(t("error_table"));
       })
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  }
 
   function addZero(num) {
     return String(num).length === 1 ? `0${num}` : String(num);
@@ -153,7 +161,8 @@ function App() {
 
   function closeAllPopups() {
     setIsPopupTG(false);
-    setPopupSub(false);
+    setIsPopupSub(false);
+    setIsPopupError(false);
   }
 
   function addWallet() {
@@ -165,7 +174,7 @@ function App() {
     }
 
     if (telegramIn && !subscriptionIn) {
-      setPopupSub(true);
+      setIsPopupSub(true);
     }
   }
 
@@ -185,7 +194,7 @@ function App() {
   }
 
   function openPopupSub() {
-    setPopupSub(true);
+    setIsPopupSub(true);
   }
 
   function logout() {
@@ -200,6 +209,10 @@ function App() {
     i18n.changeLanguage(newLang);
     setLang(newLang);
     localStorage.setItem("lang", newLang);
+  }
+
+  function roundData(str) {
+    return Number(str).toFixed(2);
   }
 
   return (
@@ -231,12 +244,8 @@ function App() {
               )}
             </Route>
 
-            <Route path="/table">
-              <Main t={t} />
-            </Route>
-
             <ProtectedRoute loggedIn={loggedIn} exact path="/">
-              <Main t={t} />
+              <Main t={t} getAllWallets={getAllWallets} allWallets={allWallets} roundData={roundData} />
             </ProtectedRoute>
 
             <ProtectedRoute loggedIn={loggedIn} exact path="/wallet">
@@ -266,6 +275,13 @@ function App() {
         </main>
 
         <Preloader isLoading={isLoading} />
+
+        <PopupError 
+          isPopupOpen={isPopupError}
+          title={t("error_title")}
+          closeAllPopups={closeAllPopups}
+          text={errorText}
+        />
 
         <PopupTG
           isPopupOpen={isPopupTG}

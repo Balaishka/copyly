@@ -35,7 +35,7 @@ body {
   min-height: calc(100vh - 65px);
   height: max-content;
   width: 100%;
-  padding: 32px 40px 74px;
+  padding: 32px 40px 70px;
 }
 
 .content__btn {
@@ -55,8 +55,8 @@ body {
 }
 
 .content__table {
-  max-height: calc(100vh - 360px);
-  height: calc(100vh - 360px);
+  max-height: calc(100vh - 354px);
+  height: calc(100vh - 354px);
   overflow: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;

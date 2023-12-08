@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Main.css";
 import Table from "../Table/Table";
 import { table, table2 } from "../../configs/constants";
 
-function Main({ t }) {
+function Main({ t, getAllWallets, allWallets, roundData }) {
+
+  useEffect(() => {
+    getAllWallets();
+  }, []);
+
   const [wallet, setWallet] = useState("");
   const tableHead = [
     t("table_th_1"),
@@ -27,13 +32,13 @@ function Main({ t }) {
   function setTableBody(data) {
     return data.map((item) => {
       return (
-        <tr key={item.wallet}>
-          <td>{reductionWallet(item.wallet)}</td>
-          <td>{item.pl}</td>
-          <td>{item.dep}</td>
-          <td>{item.proc}</td>
-          <td>{item.tokens}</td>
-          <td>{item.last}</td>
+        <tr key={item.pnl}>
+          <td>{/*reductionWallet(item.wallet)*/}</td>
+          <td>{roundData(item.pnl)}</td>
+          <td>{roundData(item.profit_factor)}%</td>
+          <td>{roundData(Number(item.win_rate_perc) * 100)}</td>
+          <td>{roundData(item.overall_tokens)}</td>
+          <td>{item.last_activity}</td>
         </tr>
       );
     });
@@ -54,11 +59,12 @@ function Main({ t }) {
       <div className="main__table">
         <Table
           t={t}
-          table={table}
+          table={allWallets}
           classTable=""
           tableHead={tableHead}
           setTableBody={setTableBody}
           lines={10}
+          allWallets={allWallets}
         />
       </div>
     </div>

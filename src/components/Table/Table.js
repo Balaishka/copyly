@@ -3,13 +3,11 @@ import "./Table.css";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import Pages from "../Pages/Pages";
 
-function Table({ t, table, classTable, tableHead,setTableBody, lines }) {
+function Table({ t, table, classTable, tableHead, setTableBody, lines, allWallets }) {
     const [pages, setPages] = useState([]);
     const [activePage, setActivePage] = useState(1);
     const [valuesPerPage, setValuesPerPage] = useState([]);
     const [rows, setRows] = useState();
-
-    const width = window.screen.width;
 
     const heightTable = useRef(null);
     const { pathname } = useLocation();
@@ -117,7 +115,7 @@ function Table({ t, table, classTable, tableHead,setTableBody, lines }) {
                 </thead>
 
                 <tbody>
-                    {setTableBody(valuesPerPage)}
+                    {valuesPerPage.length !== 0 && setTableBody(valuesPerPage)}
                 </tbody>
             </table>
 
