@@ -8,10 +8,6 @@ import Preloader from "../Preloader/Preloader";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useTranslation } from "react-i18next";
 import Main from "../Main/Main";
-import Balance from "../Balance/Balance";
-import PnL from "../PnL/PnL";
-import Cumulative from "../Сumulative/Сumulative";
-import Profile from "../Profile/Profile";
 import Auth from "../Auth/Auth";
 import setMonths from "../../configs/translate";
 import PopupTG from "../PopupTG/PopupTG";
@@ -22,6 +18,7 @@ import { ethers } from "ethers";
 import Wallet from "../Wallet/Wallet";
 import mainApi from "../../utils/MainApi";
 import PopupError from "../PopupError/PopupError";
+import Repair from "../Repair/Repair";
 
 function App() {
 
@@ -29,6 +26,9 @@ function App() {
   const { pathname } = useLocation();
   const { t, i18n } = useTranslation();
   const months = setMonths(t);
+
+  // Заглушка
+  const [isRepair, setIsRepair] = useState(true);
 
   // Загрузка
   const [isLoading, setIsLoading] = useState(false);
@@ -76,6 +76,12 @@ function App() {
       history.push("/");
     }
   }, [loggedIn]);
+
+  useEffect(() => {
+    if (isRepair) {
+        history.push("/repair");
+    }
+  }, [isRepair]);
 
   useEffect(() => {
     //checkToken();
@@ -305,6 +311,8 @@ function App() {
               <Wallet t={t} addZero={addZero} recordingData={recordingData} />
             </ProtectedRoute>
 
+            <Route exact path="/repair" />
+
             {/* <Route exact path="/balance">
               <Balance recordingData={recordingData} />
             </Route>
@@ -356,6 +364,9 @@ function App() {
           textBtn={t("popup_sub_btn")}
           addSubscription={addSubscription}
         />
+        
+        {isRepair && <Repair />}
+        
       </div>
     </CurrentUserContext.Provider>
   );
