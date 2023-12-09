@@ -41,7 +41,7 @@
 .header__container {
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .header__link {

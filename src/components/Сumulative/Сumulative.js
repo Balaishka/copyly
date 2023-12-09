@@ -19,7 +19,7 @@ function Cumulative({ recordingData }) {
 
   useEffect(() => {
     setCum(recordingData(testData, "daily_pnl", true));
-  }, []);
+  }, [recordingData]);
 
   const renderQuarterTick = (tickProps) => {
     const { x, y, payload } = tickProps;

@@ -42,8 +42,9 @@ function App() {
 
   // Кошелек
   const [walletIn, setWalletIn] = useState(localStorage.getItem("wallet") ? true:false);
+  const [myMessage, setMyMessage] = useState("");
+
   const { address, status } = useAccount();
-  const myMessage = "Предоставить доступ Copyly";
   const { data, isError, isSuccess, signMessage } = useSignMessage({
     message: myMessage,
   });
@@ -77,11 +78,18 @@ function App() {
   }, [loggedIn]);
 
   useEffect(() => {
+    //checkToken();
+  }, []);
+
+  useEffect(() => {
     if (status === "disconnected") {
       removeWallet();
     }
     if (!localStorage.getItem("wallet") && !walletIn && status === "connected") {
-      signMessage();
+      console.log("Задаем вопрос:");
+      console.log(address);
+      handleRegister(address);
+      //signMessage();
     }
   }, [status, walletIn]);
 
@@ -109,14 +117,58 @@ function App() {
     }
   }, [walletIn, telegramIn, subscriptionIn]);
 
+  function login({ wallet }) {
+    console.log(wallet);
+  }
+
+  function handleRegister(wallet) {
+    setIsLoading(true);
+    mainApi
+      .register(wallet)
+      .then((res) => {
+        console.log(res);
+        //login({ wallet: wallet });
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsPopupError(true);
+        setErrorText(t("error_register"));
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
+
+  function checkToken() {
+    localStorage.setItem("jwt", "7afc375615454b0a9a8522a73be5c277ef51e457");
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      mainApi
+        .getContent(jwt)
+        .then((res) => {
+          console.log(res);
+          /* setCurrentUser(res);
+          setLoggedIn(true);
+          history.push(pathname); */
+        })
+        .catch((err) => {
+          //handleLogout();
+          console.log(`Ошибка`);
+          console.log(err);
+        });
+    }
+  }
+
   function getAllWallets() {
     setIsLoading(true);
     mainApi
       .getWalletsTable()
       .then((res) => {
+        //console.log(res);
         setAllWallets(res.results);
       })
       .catch((err) => {
+        console.log(err);
         setIsPopupError(true);
         setErrorText(t("error_table"));
       })
@@ -166,8 +218,9 @@ function App() {
   }
 
   function addWallet() {
-    setWalletIn(true);
-    localStorage.setItem("wallet", address);
+    //setWalletIn(true);
+    //localStorage.setItem("wallet", address);
+    console.log("Добавляем кошелек");
 
     if (!telegramIn) {
       setIsPopupTG(true);
@@ -252,7 +305,7 @@ function App() {
               <Wallet t={t} addZero={addZero} recordingData={recordingData} />
             </ProtectedRoute>
 
-            <Route exact path="/balance">
+            {/* <Route exact path="/balance">
               <Balance recordingData={recordingData} />
             </Route>
 
@@ -266,7 +319,7 @@ function App() {
 
             <Route exact path="/profile">
               <Profile />
-            </Route>
+            </Route> */}
 
             <Route path="*">
               <PageNotFound history={history} />

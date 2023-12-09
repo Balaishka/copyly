@@ -5,7 +5,7 @@
     background-color: #0D1317;
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
     padding-top: 12px;
     width: 100%;
     z-index: 10;
@@ -18,7 +18,7 @@
 .pages__container {
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
     margin-right: 12px;
 }
 
@@ -88,7 +88,7 @@
     color: #95B0B4;
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
     position: relative;
 }
 
@@ -139,6 +139,6 @@
     .pages {
         right: auto;
         left: 0;
-        justify-content: start;
+        justify-content: flex-start;
     }
 }

@@ -63,11 +63,9 @@ class MainApi {
   }
 
   // Регистрация
-  register({ name, email, password }) {
-    return this._fetchWithBody("/signup", "POST", {
-      name: name,
-      email: email,
-      password: password,
+  register(wallet) {
+    return this._fetchWithBody("/sign-up", "POST", {
+      wallet: wallet
     });
   }
 
@@ -111,3 +109,5 @@ const mainApi = new MainApi({
 });
 
 export default mainApi;
+
+// 7afc375615454b0a9a8522a73be5c277ef51e457

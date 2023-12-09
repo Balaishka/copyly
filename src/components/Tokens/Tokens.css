@@ -6,7 +6,7 @@
 
 .tokens__header {
     display: flex;
-    align-items: start;
+    align-items: flex-start;
     justify-content: space-between;
     padding-bottom: 8px;
     border-bottom: 1px solid #314D6B;

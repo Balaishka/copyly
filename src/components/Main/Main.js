@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Main.css";
 import Table from "../Table/Table";
-import { table, table2 } from "../../configs/constants";
 
 function Main({ t, getAllWallets, allWallets, roundData }) {
 
@@ -32,8 +31,8 @@ function Main({ t, getAllWallets, allWallets, roundData }) {
   function setTableBody(data) {
     return data.map((item) => {
       return (
-        <tr key={item.pnl}>
-          <td>{/*reductionWallet(item.wallet)*/}</td>
+        <tr key={item.address}>
+          <td>{reductionWallet(item.address)}</td>
           <td>{roundData(item.pnl)}</td>
           <td>{roundData(item.profit_factor)}%</td>
           <td>{roundData(Number(item.win_rate_perc) * 100)}</td>

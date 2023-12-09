@@ -8,7 +8,7 @@ function Tokens({ t, tokens }) {
   const tableHead = [
     t("name"),
     t("purchased"),
-    t("sales"),
+    t("sells"),
     "P&L",
     "ROI",
     t("date"),

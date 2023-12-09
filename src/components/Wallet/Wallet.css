@@ -1,7 +1,7 @@
 .wallet__header {
     display: flex;
     justify-content: space-between;
-    align-items: start;
+    align-items: flex-start;
     margin-bottom: 16px;
 }
 
@@ -37,7 +37,7 @@
 
 .wallet__header-info {
     display: flex;
-    align-items: start;
+    align-items: flex-start;
     margin: 0 0 8px;
 }
 
@@ -111,7 +111,7 @@
 
 @media screen and (max-width:768px) {
     .wallet__header {
-        align-items: end;
+        align-items: flex-end;
     }
 
     .wallet__back {
