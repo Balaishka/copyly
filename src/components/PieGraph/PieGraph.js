@@ -1,8 +1,9 @@
+import "./PieGraph.css";
 import React, { PureComponent } from "react";
 import { useState, useEffect } from "react";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip } from "recharts";
 
-function PieGraph({ tokens }) {
+function PieGraph({ tokens, roundData }) {
   const [pnls, setPnls] = useState([]);
   const colors = { green: "#53a76c", red: "#d0554d" };
 
@@ -18,6 +19,17 @@ function PieGraph({ tokens }) {
     setPnls(arr);
   }, [tokens]);
 
+  function renderTooltip({ active, payload, label }) {
+    if (active && payload && payload.length) {
+      const myPayload = payload[0].payload;
+      return (
+        <div className="custom-tooltip">
+          <span className="custom-tooltip__name">{myPayload.name}: </span>
+          <span className="custom-tooltip__value" style={{ color: myPayload.isGreen ? colors.green:colors.red}}>{!myPayload.isGreen ? "-":""}{roundData(myPayload.value)}</span>
+        </div>
+      );
+    }
+  }
 
   return (
     <PieChart width={331} height={331}>
@@ -32,10 +44,12 @@ function PieGraph({ tokens }) {
         {pnls.map((entry, index) => (
           <Cell
             key={`cell-${index}`}
+            stroke={entry.isGreen ? colors["green"] : colors["red"]}
             fill={entry.isGreen ? colors["green"] : colors["red"]}
           />
         ))}
       </Pie>
+      <Tooltip content={renderTooltip} />
     </PieChart>
   );
 }

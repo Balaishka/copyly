@@ -1,13 +1,20 @@
 .graph {
-    font-family: "Inter", Arial, Helvetica, sans-serif;
-    font-weight: 400;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
 }
 
-.yAxis .recharts-cartesian-axis-ticks .recharts-layer.recharts-cartesian-axis-tick:first-child {
-    opacity: 0;
-  }
+.yAxis
+  .recharts-cartesian-axis-ticks
+  .recharts-layer.recharts-cartesian-axis-tick:first-child {
+  opacity: 0;
+}
 
-  .custom-tooltip {
-    background-color: #fff;
-    padding: 20px;
-  }
+.custom-tooltip {
+  background-color: #fff;
+  padding: 20px;
+}
+
+.recharts-responsive-container {
+  margin-left: -16px;
+}

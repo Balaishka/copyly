@@ -36,6 +36,34 @@
   position: relative;
 }
 
+.main__table-address {
+  position: relative;
+}
+
+.main__table-link {
+  text-decoration: none;
+  color: #fff;
+  display: block;
+}
+
+/* .main__table-address .main__table-whole,
+.main__table-address:hover .main__table-reduction {
+  display: none;
+}
+
+.main__table-address:hover .main__table-whole,
+.main__table-address .main__table-reduction {
+  display: block;
+}
+
+.main__table-whole {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 12px;
+  z-index: 100;
+} */
+
 @media screen and (max-width: 768px) {
   .main__title {
     font-size: 28px;

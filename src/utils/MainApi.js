@@ -96,6 +96,15 @@ class MainApi {
     };
     return this._fetch("/top", "GET");
   }
+
+  // Получаем информацию о конкретном кошельке
+  getWalletInfo(address) {
+    this._headers = {
+      ...this._headers,
+      authorization: `Token ${localStorage.getItem("jwt")}`,
+    };
+    return this._fetch(`/insider/${address}`, "GET");
+  }
 }
 
 // Создаем класс апи

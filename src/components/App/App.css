@@ -69,8 +69,8 @@ body {
 }
 
 .content__table_name_tokens {
-  max-height: calc(100vh - 340px);
-  height: calc(100vh - 340px);
+  max-height: calc(100vh - 565px);
+  height: calc(100vh - 565px);
   max-width: 50.29vw;
   min-width: 100%;
 }

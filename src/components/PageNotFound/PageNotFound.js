@@ -1,13 +1,13 @@
 import React from "react";
 import "./PageNotFound.css";
 
-function PageNotFound({ history }) {
+function PageNotFound({ history, t }) {
   return (
     <section className="error">
       <div className="error__cap"></div>
       <div className="error__info">
         <h1 className="error__title">404</h1>
-        <p className="error__subtitle">Страница не найдена</p>
+        <p className="error__subtitle">{t("page_not_found")}</p>
       </div>
       <nav className="error__nav">
         <button
@@ -15,7 +15,7 @@ function PageNotFound({ history }) {
           onClick={() => history.push("/")}
           className="error__link"
         >
-          Назад
+          {t("back")}
         </button>
       </nav>
     </section>

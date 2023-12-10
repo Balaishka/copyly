@@ -3,7 +3,7 @@ import "./Table.css";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import Pages from "../Pages/Pages";
 
-function Table({ t, table, classTable, tableHead, setTableBody, lines, allWallets }) {
+function Table({ t, table, classTable, tableHead, setTableBody, lines }) {
     const [pages, setPages] = useState([]);
     const [activePage, setActivePage] = useState(1);
     const [valuesPerPage, setValuesPerPage] = useState([]);
@@ -101,6 +101,10 @@ function Table({ t, table, classTable, tableHead, setTableBody, lines, allWallet
             
             setValuesPerPage(res);
         }
+
+        if (table.length === 0) {
+            setValuesPerPage([]);
+        }
     }, [table, activePage, rows]);
         
     return (
@@ -115,7 +119,7 @@ function Table({ t, table, classTable, tableHead, setTableBody, lines, allWallet
                 </thead>
 
                 <tbody>
-                    {valuesPerPage.length !== 0 && setTableBody(valuesPerPage)}
+                    {valuesPerPage.length !== 0 ? setTableBody(valuesPerPage):<tr><td className="table__empty" colSpan={tableHead.length}>Ничего не найдено</td></tr>}
                 </tbody>
             </table>
 

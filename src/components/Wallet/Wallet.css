@@ -103,6 +103,14 @@
     grid-gap: 20px;
 }
 
+.wallet-error {
+    padding-top: 100px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #FFFFFF;
+    text-align: center;
+}
+
 @media screen and (max-width:1024px) {
     .wallet__info {
         grid-template-columns: repeat(3, 1fr);

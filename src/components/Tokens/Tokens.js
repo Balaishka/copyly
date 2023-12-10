@@ -3,7 +3,7 @@ import "./Tokens.css";
 import Table from "../Table/Table";
 import PieGraph from "../PieGraph/PieGraph";
 
-function Tokens({ t, tokens }) {
+function Tokens({ t, tokens, getDate, roundData }) {
   const [isTable, setIsTable] = useState(true);
   const tableHead = [
     t("name"),
@@ -29,15 +29,15 @@ function Tokens({ t, tokens }) {
           }`}
         >
           <td>
-            <a href={`https://etherscan.io/token/${item.address}`}>
+            <a href={`https://etherscan.io/token/${item.address}`} target="_blank">
               {item["info"]["token_name"]}
             </a>
           </td>
-          <td>{item.bought}</td>
-          <td>{item.sold}</td>
-          <td>{item.pnl}</td>
-          <td>{item.roi}</td>
-          <td>{item.timestamp}</td>
+          <td>{roundData(item.bought)}</td>
+          <td>{roundData(item.sold)}</td>
+          <td>{roundData(item.pnl)}</td>
+          <td>{roundData(item.roi)}</td>
+          <td>{getDate(item.timestamp)}</td>
           <td>{item.rugpulled ? t("yes") : t("no")}</td>
         </tr>
       );
@@ -89,7 +89,7 @@ function Tokens({ t, tokens }) {
         </button>
       </div>
       <div className="tokens__body">
-        {isTable ? (
+        {isTable && tokens.length !== 0 ? (
           <Table
             t={t}
             table={tokens}
@@ -99,7 +99,9 @@ function Tokens({ t, tokens }) {
             lines={10}
           />
         ) : (
-          <PieGraph tokens={tokens} />
+          <div className="tokens__pie">
+            <PieGraph tokens={tokens} roundData={roundData} />
+          </div>
         )}
       </div>
     </div>

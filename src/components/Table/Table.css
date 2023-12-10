@@ -12,6 +12,7 @@
     color: #95B0B4;
     text-align: right;
     white-space: nowrap;
+    width: calc(100% / 6);
 }
 
 .table th:first-child {
@@ -47,6 +48,12 @@
     background-color: rgba(22, 32, 39, .7);
 }
 
+table .table__empty {
+    background-color: #162027 !important;
+    cursor: default;
+    text-align: center !important;
+}
+
 /* Tokens */
 
 .table-tokens th {
@@ -55,6 +62,7 @@
     font-size: 12px;
     line-height: 16px;
     letter-spacing: normal;
+    width: calc(100% / 7);
 }
 
 .table-tokens td {
@@ -74,6 +82,9 @@
 .table-tokens td a {
     color: #89D2DC;
     text-decoration: underline;
+    max-width: 200px;
+    overflow: hidden;
+    display: block;
 }
 
 .table-tokens td a:hover {

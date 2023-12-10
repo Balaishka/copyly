@@ -64,5 +64,8 @@
     "error_text": "An unknown error has occurred",
     "error_wallet": "Failed to link wallet",
     "error_table": "Error while receiving data",
-    "error_register": "Registration error"
+    "error_register": "Registration error",
+    "wallet_not_found": "Wallet not found",
+    "page_not_found": "Page not found",
+    "back": "Back"
 }

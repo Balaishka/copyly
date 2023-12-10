@@ -1,5 +1,5 @@
-const linkTG = "https://t.me/balaishka";
-const walletNum = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045";
+const linkTG = "https://t.me/Copyly_bot?start=";
+const walletNum = "0xBaAdB527c4b1B5C360b4aC905F31AEf01b5B3CE6";
 
 const testData = {
   balances: [

@@ -1,0 +1,10 @@
+.custom-tooltip {
+    max-width: 300px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.custom-tooltip__name {
+    max-width: 100%;
+    overflow: hidden;
+}

@@ -10,15 +10,14 @@ import {
   Cell,
   ResponsiveContainer,
 } from "recharts";
-import { testData } from "../../configs/constants";
 import QuarterTick from "../QuarterTick/QuarterTick";
 
-function PnL({ recordingData, title }) {
+function PnL({ recordingData, title, data }) {
   const [pnls, setPnls] = useState([]);
   let month = 12;
 
   useEffect(() => {
-    setPnls(recordingData(testData, "daily_pnl", false));
+    setPnls(recordingData(data, false));
   }, []);
 
   const renderQuarterTick = (tickProps) => {

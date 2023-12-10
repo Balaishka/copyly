@@ -55,4 +55,12 @@
 
 .tokens__body {
     position: relative;
+    height: calc(100% - 45px);
+}
+
+.tokens__pie {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }

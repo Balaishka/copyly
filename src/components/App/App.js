@@ -21,14 +21,13 @@ import PopupError from "../PopupError/PopupError";
 import Repair from "../Repair/Repair";
 
 function App() {
-
   const history = useHistory();
   const { pathname } = useLocation();
   const { t, i18n } = useTranslation();
   const months = setMonths(t);
 
   // Заглушка
-  const [isRepair, setIsRepair] = useState(true);
+  const [isRepair, setIsRepair] = useState(false);
 
   // Загрузка
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +40,10 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(true);
 
   // Кошелек
-  const [walletIn, setWalletIn] = useState(localStorage.getItem("wallet") ? true:false);
+  const [walletIn, setWalletIn] = useState(
+    //localStorage.getItem("wallet") ? true : false
+    true
+  );
   const [myMessage, setMyMessage] = useState("");
 
   const { address, status } = useAccount();
@@ -61,14 +63,32 @@ function App() {
   const [isPopupSub, setIsPopupSub] = useState(false);
 
   // Язык
-  const [lang, setLang] = useState(localStorage.getItem("lang") ? localStorage.getItem("lang"):"ru");
+  const [lang, setLang] = useState(
+    localStorage.getItem("lang") ? localStorage.getItem("lang") : "ru"
+  );
 
   // Кошельки
   const [allWallets, setAllWallets] = useState([]);
+  const [allFilteredWallets, setAllFilteredWallets] = useState([]);
+  const [wallet, setWallet] = useState({
+    pnl: 0,
+    profit_factor: "",
+    win_rate_perc: "",
+    overall_tokens: "",
+    win_rate_amount: "",
+    profits: "",
+    losses: "",
+    last_activity: 0,
+    address: "",
+    tokens: [],
+    balance_chart: [],
+    pnl_chart: [],
+  });
 
+  // Пользователь
   const [currentUser, setCurrentUser] = useState({
     name: "",
-    wallet: ""
+    wallet: "",
   });
 
   useEffect(() => {
@@ -79,7 +99,7 @@ function App() {
 
   useEffect(() => {
     if (isRepair) {
-        history.push("/repair");
+      history.push("/repair");
     }
   }, [isRepair]);
 
@@ -91,7 +111,11 @@ function App() {
     if (status === "disconnected") {
       removeWallet();
     }
-    if (!localStorage.getItem("wallet") && !walletIn && status === "connected") {
+    if (
+      !localStorage.getItem("wallet") &&
+      !walletIn &&
+      status === "connected"
+    ) {
       console.log("Задаем вопрос:");
       console.log(address);
       handleRegister(address);
@@ -99,32 +123,39 @@ function App() {
     }
   }, [status, walletIn]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (address && isSuccess) {
       const newAddress = ethers.verifyMessage(myMessage, data);
       if (address === newAddress) {
         addWallet();
       }
     }
-  }, [data]);
+  }, [data]); */
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (isError) {
       setIsPopupError(true);
       setErrorText(t("error_wallet"));
     }
-  }, [isError]);
+  }, [isError]); */
 
   useEffect(() => {
     if (walletIn && telegramIn && subscriptionIn) {
       setLoggedIn(true);
     } else {
-      setLoggedIn(false);
+      //setLoggedIn(false);
     }
   }, [walletIn, telegramIn, subscriptionIn]);
 
-  function login({ wallet }) {
-    console.log(wallet);
+  function askMessage() {
+    console.log("Задаем сообщение");
+    signMessage();
+
+    if (data && isSuccess) {
+      console.log("Подписал сообщение!");
+      console.log(data);
+      return data;
+    }
   }
 
   function handleRegister(wallet) {
@@ -133,7 +164,8 @@ function App() {
       .register(wallet)
       .then((res) => {
         console.log(res);
-        //login({ wallet: wallet });
+        setMyMessage(res.unique_code);
+        askMessage();
       })
       .catch((err) => {
         console.log(err);
@@ -166,17 +198,34 @@ function App() {
   }
 
   function getAllWallets() {
+    localStorage.setItem("jwt", "7afc375615454b0a9a8522a73be5c277ef51e457");
     setIsLoading(true);
     mainApi
       .getWalletsTable()
       .then((res) => {
-        //console.log(res);
         setAllWallets(res.results);
       })
       .catch((err) => {
+        console.log("Я в ошибке");
         console.log(err);
         setIsPopupError(true);
         setErrorText(t("error_table"));
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
+
+  function getWallet(address) {
+    setIsLoading(true);
+    mainApi
+      .getWalletInfo(address)
+      .then((res) => {
+        setWallet(res);
+      })
+      .catch((err) => {
+        console.log("Я в ошибке");
+        console.log(err);
       })
       .finally(() => {
         setIsLoading(false);
@@ -187,10 +236,10 @@ function App() {
     return String(num).length === 1 ? `0${num}` : String(num);
   }
 
-  function recordingData(data, name, isCumulative) {
+  function recordingData(data, isCumulative) {
     let res = [];
 
-    data[name].map((item, index) => {
+    data.map((item, index) => {
       const newDate = new Date(Number(item.date) * 1000);
 
       const hours = addZero(newDate.getHours());
@@ -203,13 +252,13 @@ function App() {
       if (isCumulative) {
         res.push({
           date: newDay,
-          value: item.value,
-          cumValue: data.cumulative_pnl[index].value,
+          value: roundData(item.value),
+          cumValue: roundData(data.cumulative_pnl[index].value),
         });
       } else {
         res.push({
           date: newDay,
-          value: item.value,
+          value: roundData(item.value),
         });
       }
     });
@@ -274,6 +323,15 @@ function App() {
     return Number(str).toFixed(2);
   }
 
+  function getDate(str) {
+    const date = new Date(str);
+    const strDate = `${addZero(date.getDate())}.${addZero(
+      date.getMonth()
+    )}.${addZero(date.getFullYear())}`;
+    const strTime = `${addZero(date.getHours())}:${addZero(date.getMinutes())}`;
+    return `${strDate} ${strTime}`;
+  }
+
   return (
     <CurrentUserContext.Provider value={{ currentUser }}>
       <div className={`page ${loggedIn ? "" : "page_name_auth"}`}>
@@ -304,11 +362,28 @@ function App() {
             </Route>
 
             <ProtectedRoute loggedIn={loggedIn} exact path="/">
-              <Main t={t} getAllWallets={getAllWallets} allWallets={allWallets} roundData={roundData} />
+              <Main
+                t={t}
+                getAllWallets={getAllWallets}
+                allWallets={allWallets}
+                roundData={roundData}
+                allFilteredWallets={allFilteredWallets}
+                setAllFilteredWallets={setAllFilteredWallets}
+                getDate={getDate}
+              />
             </ProtectedRoute>
 
-            <ProtectedRoute loggedIn={loggedIn} exact path="/wallet">
-              <Wallet t={t} addZero={addZero} recordingData={recordingData} />
+            <ProtectedRoute loggedIn={loggedIn} path="/wallet/:id">
+              <Wallet
+                t={t}
+                addZero={addZero}
+                recordingData={recordingData}
+                getWallet={getWallet}
+                wallet={wallet}
+                getDate={getDate}
+                roundData={roundData}
+                setWallet={setWallet}
+              />
             </ProtectedRoute>
 
             <Route exact path="/repair" />
@@ -330,14 +405,14 @@ function App() {
             </Route> */}
 
             <Route path="*">
-              <PageNotFound history={history} />
+              <PageNotFound history={history} t={t} />
             </Route>
           </Switch>
         </main>
 
         <Preloader isLoading={isLoading} />
 
-        <PopupError 
+        <PopupError
           isPopupOpen={isPopupError}
           title={t("error_title")}
           closeAllPopups={closeAllPopups}
@@ -364,9 +439,8 @@ function App() {
           textBtn={t("popup_sub_btn")}
           addSubscription={addSubscription}
         />
-        
+
         {isRepair && <Repair />}
-        
       </div>
     </CurrentUserContext.Provider>
   );

@@ -9,15 +9,14 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { testData } from "../../configs/constants";
 import QuarterTick from "../QuarterTick/QuarterTick";
 
-function Balance({ recordingData, title }) {
+function Balance({ recordingData, title, data }) {
   const [balances, setBalances] = useState([]);
   let month = 12;
 
   useEffect(() => {
-    setBalances(recordingData(testData, "balances", false));
+    setBalances(recordingData(data, false));
   }, []);
 
   function renderQuarterTick(tickProps) {
