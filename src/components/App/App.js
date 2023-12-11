@@ -160,8 +160,12 @@ function App() {
   }
 
   function handleCheckSignature() {
-    console.log(uniqueCode);
-    console.log(data);
+    const obj = {
+      unique_code: uniqueCode,
+      wallet: address,
+      data: data
+    };
+    console.log(obj);
     setIsLoading(true);
     mainApi
     .checkSignature(uniqueCode, data)
