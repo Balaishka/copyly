@@ -1,5 +1,6 @@
 const linkTG = "https://t.me/Copyly_bot?start=";
 const walletNum = "0xBaAdB527c4b1B5C360b4aC905F31AEf01b5B3CE6";
+const password = "5EGsdBpnU4Te";
 
 const testData = {
   balances: [
@@ -836,4 +837,4 @@ const testWallet = {
 
 const table2 = [testWallet, testWallet, testWallet, testWallet, testWallet, testWallet, testWallet, testWallet, testWallet, testWallet];
 
-module.exports = { testData, testData2, linkTG, walletNum, table, testWallet, table2 };
+module.exports = { testData, testData2, linkTG, walletNum, table, testWallet, table2, password };

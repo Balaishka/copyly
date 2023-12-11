@@ -78,7 +78,7 @@ function Main({ t, getAllWallets, allWallets, roundData, allFilteredWallets, set
         <Table
           t={t}
           table={isSearch ? allFilteredWallets : allWallets}
-          classTable=""
+          classTable="wallets"
           tableHead={tableHead}
           setTableBody={setTableBody}
           lines={10}

@@ -41,13 +41,11 @@ function Balance({ recordingData, title, data }) {
       <h2 className="content__graph-title">{title}</h2>
       <ResponsiveContainer height="80%">
         <AreaChart
-          width={500}
-          height={216}
           className="graph"
           data={balances}
           margin={{
-            top: 10,
-            right: 50,
+            top: 0,
+            right: 0,
             left: 0,
             bottom: 0,
           }}

@@ -115,6 +115,10 @@
     min-width: 40px;
     display: none;
     background-color: #0D1317;
+    max-height: 200px;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .pages__list_opened {
@@ -136,9 +140,23 @@
 }
 
 @media screen and (max-width:768px) {
-    .pages {
+    .pages:not(.content__table_name_tokens .pages) {
         right: auto;
         left: 0;
         justify-content: flex-start;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .pages__container {
+        margin-right: 4px;
+    }
+    
+    .pages__choice {
+        font-size: 0;
+    }
+
+    .pages__active-page {
+        font-size: 12px;
     }
 }

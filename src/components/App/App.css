@@ -4,7 +4,7 @@
 
 html {
   min-height: 100vh;
-  height: max-content;
+  height: 100vh;
 }
 
 body {
@@ -12,17 +12,17 @@ body {
   font-weight: 400;
   background-color: #0D1317;
   min-height: 100vh;
-  height: max-content;
+  height: 100vh;
 }
 
 #root {
   min-height: 100vh;
-  height: max-content;
+  height: 100vh;
 }
 
 .page {
   min-height: 100vh;
-  height: max-content;
+  height: 100vh;
 }
 
 .page_name_auth {
@@ -33,7 +33,7 @@ body {
 
 .content {
   min-height: calc(100vh - 65px);
-  height: max-content;
+  height: calc(100vh - 65px);
   width: 100%;
   padding: 32px 40px 70px;
 }
@@ -69,8 +69,9 @@ body {
 }
 
 .content__table_name_tokens {
-  max-height: calc(100vh - 565px);
-  height: calc(100vh - 565px);
+  max-height: 376px;
+  height: 376px;
+  min-height: 200px;
   max-width: 50.29vw;
   min-width: 100%;
 }
@@ -104,12 +105,18 @@ body {
   }
 }
 
+@media screen and (max-width:1024px) {
+  .content__graph {
+    height: 292px;
+  }
+}
+
 @media screen and (max-width:768px) {
   .content {
     padding-bottom: 50px;
   }
 
-  .content__table {
+  .content__table:not(.content__table_name_tokens) {
     padding-right: 40px;
   }
 }

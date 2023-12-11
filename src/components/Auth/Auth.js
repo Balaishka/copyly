@@ -18,7 +18,7 @@ function Auth({
       <div className="auth__container">
         <h1 className="auth__title">
           {t("welcome")}
-          {telegramIn && `, ${userName}`}
+          {walletIn && telegramIn && `, ${userName}`}
         </h1>
         {!walletIn && (
           <>

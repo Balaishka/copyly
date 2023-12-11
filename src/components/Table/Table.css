@@ -54,6 +54,16 @@ table .table__empty {
     text-align: center !important;
 }
 
+/* Wallets */
+
+.table-wallets td {
+    padding: 0;
+}
+
+.table-wallets td a {
+    padding: 12px;
+}
+
 /* Tokens */
 
 .table-tokens th {
@@ -73,10 +83,12 @@ table .table__empty {
 
 .table-tokens__green td {
     background-color: rgba(41, 178, 119, 0.1);
+    color: #29B277;
 }
 
 .table-tokens__red td {
     background-color: rgba(221, 57, 62, 0.1);
+    color: #DD393E;
 }
 
 .table-tokens td a {
@@ -93,7 +105,7 @@ table .table__empty {
 }
 
 @media screen and (max-width:768px) {
-    .table {
+    .table:not(.table-tokens) {
         width: calc(100% - 40px);
     }
 }

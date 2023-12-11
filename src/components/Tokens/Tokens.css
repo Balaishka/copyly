@@ -55,7 +55,8 @@
 
 .tokens__body {
     position: relative;
-    height: calc(100% - 45px);
+    max-height: 376px;
+    height: 376px;
 }
 
 .tokens__pie {
@@ -63,4 +64,10 @@
     align-items: center;
     justify-content: center;
     height: 100%;
+}
+
+@media screen and (max-width:500px) {
+    .tokens__pie {
+        max-width: calc(100vw - 64px);
+    }
 }

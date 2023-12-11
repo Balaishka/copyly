@@ -27,7 +27,7 @@ function App() {
   const months = setMonths(t);
 
   // Заглушка
-  const [isRepair, setIsRepair] = useState(false);
+  const [isRepair, setIsRepair] = useState(true);
 
   // Загрузка
   const [isLoading, setIsLoading] = useState(false);
@@ -41,15 +41,13 @@ function App() {
 
   // Кошелек
   const [walletIn, setWalletIn] = useState(
-    //localStorage.getItem("wallet") ? true : false
-    true
+    localStorage.getItem("wallet") ? true : false
+    //true
   );
-  const [myMessage, setMyMessage] = useState("");
+  const [uniqueCode, setUniqueCode] = useState("");
 
   const { address, status } = useAccount();
-  const { data, isError, isSuccess, signMessage } = useSignMessage({
-    message: myMessage,
-  });
+  const { data, isError, isSuccess, signMessage } = useSignMessage();
 
   // Телеграм
   const [telegramIn, setTelegramIn] = useState(true);
@@ -92,16 +90,17 @@ function App() {
   });
 
   useEffect(() => {
+    const prominent = localStorage.getItem("prominent");
+    if (prominent) {
+      setIsRepair(false);
+    }
+  }, [isRepair]);
+
+  useEffect(() => {
     if (loggedIn && pathname === "/auth") {
       history.push("/");
     }
   }, [loggedIn]);
-
-  useEffect(() => {
-    if (isRepair) {
-      history.push("/repair");
-    }
-  }, [isRepair]);
 
   useEffect(() => {
     //checkToken();
@@ -112,50 +111,33 @@ function App() {
       removeWallet();
     }
     if (
-      !localStorage.getItem("wallet") &&
       !walletIn &&
       status === "connected"
     ) {
-      console.log("Задаем вопрос:");
-      console.log(address);
+      console.log("Задаем вопрос: " + address);
       handleRegister(address);
-      //signMessage();
     }
   }, [status, walletIn]);
 
-  /* useEffect(() => {
-    if (address && isSuccess) {
-      const newAddress = ethers.verifyMessage(myMessage, data);
-      if (address === newAddress) {
-        addWallet();
-      }
+  useEffect(() => {
+    if (data && isSuccess && uniqueCode.length !== 0) {
+      console.log("Подписал сообщение!");
+      console.log(data);
+      handleCheckSignature();
     }
-  }, [data]); */
-
-  /* useEffect(() => {
-    if (isError) {
-      setIsPopupError(true);
-      setErrorText(t("error_wallet"));
-    }
-  }, [isError]); */
+  }, [data, isSuccess]);
 
   useEffect(() => {
     if (walletIn && telegramIn && subscriptionIn) {
       setLoggedIn(true);
     } else {
-      //setLoggedIn(false);
+      setLoggedIn(false);
     }
   }, [walletIn, telegramIn, subscriptionIn]);
 
-  function askMessage() {
-    console.log("Задаем сообщение");
-    signMessage();
-
-    if (data && isSuccess) {
-      console.log("Подписал сообщение!");
-      console.log(data);
-      return data;
-    }
+  function askMessage(message) {
+    console.log("Запрашиваем подпись");
+    signMessage({message: `Подпишите следующее сообщение, чтобы авторизироваться: ${message}`});
   }
 
   function handleRegister(wallet) {
@@ -164,8 +146,8 @@ function App() {
       .register(wallet)
       .then((res) => {
         console.log(res);
-        setMyMessage(res.unique_code);
-        askMessage();
+        setUniqueCode(res.unique_code);
+        askMessage(res.unique_code);
       })
       .catch((err) => {
         console.log(err);
@@ -175,6 +157,25 @@ function App() {
       .finally(() => {
         setIsLoading(false);
       });
+  }
+
+  function handleCheckSignature() {
+    console.log(uniqueCode);
+    console.log(data);
+    setIsLoading(true);
+    mainApi
+    .checkSignature(uniqueCode, data)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+      setIsPopupError(true);
+      setErrorText(t("error_register"));
+    })
+    .finally(() => {
+      setIsLoading(false);
+    });
   }
 
   function checkToken() {
@@ -332,118 +333,106 @@ function App() {
     return `${strDate} ${strTime}`;
   }
 
-  return (
-    <CurrentUserContext.Provider value={{ currentUser }}>
-      <div className={`page ${loggedIn ? "" : "page_name_auth"}`}>
-        <Header
-          t={t}
-          i18n={i18n}
-          loggedIn={loggedIn}
-          link={linkTG}
-          logout={logout}
-          changeLang={changeLang}
-          setWalletIn={setWalletIn}
-        />
-
-        <main className="content">
-          <Switch>
-            <Route exact path="/auth">
-              {!loggedIn && (
-                <Auth
+  if (isRepair) {
+    return <Repair t={t} setIsRepair={setIsRepair} />;
+  } else {
+    return (
+      <CurrentUserContext.Provider value={{ currentUser }}>
+        <div className={`page ${loggedIn ? "" : "page_name_auth"}`}>
+          <Header
+            t={t}
+            i18n={i18n}
+            loggedIn={loggedIn}
+            link={linkTG}
+            logout={logout}
+            changeLang={changeLang}
+            setWalletIn={setWalletIn}
+          />
+  
+          <main className="content">
+            <Switch>
+              <Route exact path="/auth">
+                {!loggedIn && (
+                  <Auth
+                    t={t}
+                    walletIn={walletIn}
+                    telegramIn={telegramIn}
+                    userName={userName}
+                    openPopupTG={openPopupTG}
+                    subscriptionIn={subscriptionIn}
+                    openPopupSub={openPopupSub}
+                  />
+                )}
+              </Route>
+  
+              <ProtectedRoute loggedIn={loggedIn} exact path="/">
+                <Main
                   t={t}
-                  walletIn={walletIn}
-                  telegramIn={telegramIn}
-                  userName={userName}
-                  openPopupTG={openPopupTG}
-                  subscriptionIn={subscriptionIn}
-                  openPopupSub={openPopupSub}
+                  getAllWallets={getAllWallets}
+                  allWallets={allWallets}
+                  roundData={roundData}
+                  allFilteredWallets={allFilteredWallets}
+                  setAllFilteredWallets={setAllFilteredWallets}
+                  getDate={getDate}
                 />
-              )}
-            </Route>
-
-            <ProtectedRoute loggedIn={loggedIn} exact path="/">
-              <Main
-                t={t}
-                getAllWallets={getAllWallets}
-                allWallets={allWallets}
-                roundData={roundData}
-                allFilteredWallets={allFilteredWallets}
-                setAllFilteredWallets={setAllFilteredWallets}
-                getDate={getDate}
-              />
-            </ProtectedRoute>
-
-            <ProtectedRoute loggedIn={loggedIn} path="/wallet/:id">
-              <Wallet
-                t={t}
-                addZero={addZero}
-                recordingData={recordingData}
-                getWallet={getWallet}
-                wallet={wallet}
-                getDate={getDate}
-                roundData={roundData}
-                setWallet={setWallet}
-              />
-            </ProtectedRoute>
-
-            <Route exact path="/repair" />
-
-            {/* <Route exact path="/balance">
-              <Balance recordingData={recordingData} />
-            </Route>
-
-            <Route exact path="/pnl">
-              <PnL recordingData={recordingData} />
-            </Route>
-
-            <Route exact path="/cumulative">
-              <Cumulative recordingData={recordingData} />
-            </Route>
-
-            <Route exact path="/profile">
-              <Profile />
-            </Route> */}
-
-            <Route path="*">
-              <PageNotFound history={history} t={t} />
-            </Route>
-          </Switch>
-        </main>
-
-        <Preloader isLoading={isLoading} />
-
-        <PopupError
-          isPopupOpen={isPopupError}
-          title={t("error_title")}
-          closeAllPopups={closeAllPopups}
-          text={errorText}
-        />
-
-        <PopupTG
-          isPopupOpen={isPopupTG}
-          title={t("popup_tg_title")}
-          closeAllPopups={closeAllPopups}
-          text={t("popup_tg_text")}
-          textLink={t("popup_tg_link")}
-          link={linkTG}
-        />
-
-        <PopupSub
-          isPopupOpen={isPopupSub}
-          title={t("popup_sub_title")}
-          closeAllPopups={closeAllPopups}
-          text_1={t("popup_sub_text_1")}
-          text_2={t("popup_sub_text_2")}
-          text_3={t("popup_sub_text_3")}
-          link={walletNum}
-          textBtn={t("popup_sub_btn")}
-          addSubscription={addSubscription}
-        />
-
-        {isRepair && <Repair />}
-      </div>
-    </CurrentUserContext.Provider>
-  );
+              </ProtectedRoute>
+  
+              <ProtectedRoute loggedIn={loggedIn} path="/wallet/:id">
+                <Wallet
+                  t={t}
+                  addZero={addZero}
+                  recordingData={recordingData}
+                  getWallet={getWallet}
+                  wallet={wallet}
+                  getDate={getDate}
+                  roundData={roundData}
+                  setWallet={setWallet}
+                />
+              </ProtectedRoute>
+  
+              {/* <Route exact path="/balance">
+                <Balance recordingData={recordingData} />
+              </Route> */}
+  
+              <Route path="*">
+                <PageNotFound history={history} t={t} />
+              </Route>
+            </Switch>
+          </main>
+  
+          <Preloader isLoading={isLoading} />
+  
+          <PopupError
+            isPopupOpen={isPopupError}
+            title={t("error_title")}
+            closeAllPopups={closeAllPopups}
+            text={errorText}
+          />
+  
+          <PopupTG
+            isPopupOpen={isPopupTG}
+            title={t("popup_tg_title")}
+            closeAllPopups={closeAllPopups}
+            text={t("popup_tg_text")}
+            textLink={t("popup_tg_link")}
+            link={linkTG}
+          />
+  
+          <PopupSub
+            isPopupOpen={isPopupSub}
+            title={t("popup_sub_title")}
+            closeAllPopups={closeAllPopups}
+            text_1={t("popup_sub_text_1")}
+            text_2={t("popup_sub_text_2")}
+            text_3={t("popup_sub_text_3")}
+            link={walletNum}
+            textBtn={t("popup_sub_btn")}
+            addSubscription={addSubscription}
+          />
+        </div>
+      </CurrentUserContext.Provider>
+    );
+  }
 }
 
 export default App;

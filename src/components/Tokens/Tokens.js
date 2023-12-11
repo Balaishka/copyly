@@ -96,7 +96,7 @@ function Tokens({ t, tokens, getDate, roundData }) {
             classTable="tokens"
             tableHead={tableHead}
             setTableBody={setTableBody}
-            lines={10}
+            lines={9}
           />
         ) : (
           <div className="tokens__pie">

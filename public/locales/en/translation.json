@@ -67,5 +67,8 @@
     "error_register": "Registration error",
     "wallet_not_found": "Wallet not found",
     "page_not_found": "Page not found",
-    "back": "Back"
+    "back": "Back",
+    "sorry": "Sorry, the site is closed for maintenance",
+    "password": "Enter the password for test access",
+    "enter": "Enter"
 }

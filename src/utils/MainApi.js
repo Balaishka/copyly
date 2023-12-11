@@ -69,11 +69,11 @@ class MainApi {
     });
   }
 
-  // Авторизация
-  authorize({ email, password }) {
-    return this._fetchWithBody("/signin", "POST", {
-      email: email,
-      password: password,
+  // Проверка подписи
+  checkSignature(unique_code, sign) {
+    return this._fetchWithBody("/sign-up/check-signature/", "POST", {
+      unique_code: unique_code,
+      sign: sign,
     });
   }
 

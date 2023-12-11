@@ -13,4 +13,25 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+
+.repair__block{
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.repair form {
+    font-family: "Nunito Sans", Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-top:50px
+}
+
+.repair__input {
+    width: 400px;
 }

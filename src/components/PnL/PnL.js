@@ -43,12 +43,12 @@ function PnL({ recordingData, title, data }) {
       <ResponsiveContainer height="80%">
         <BarChart
           className="graph"
-          width={1550}
-          height={500}
           data={pnls}
+          stackOffset="sign"
+          maxBarSize={30}
           margin={{
-            top: 10,
-            right: 50,
+            top: 0,
+            right: 0,
             left: 0,
             bottom: 0,
           }}
@@ -65,7 +65,7 @@ function PnL({ recordingData, title, data }) {
           />
           <YAxis />
           <Tooltip />
-          <Bar dataKey="value" name="Значение" activeBar={{ stroke: "#ccc" }}>
+          <Bar dataKey="value" name="Значение" activeBar={{ stroke: "#ccc" }} stackId="value">
             {pnls.map((entry, index) => {
               return (
                 <Cell
