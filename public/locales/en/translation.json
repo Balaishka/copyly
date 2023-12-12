@@ -70,5 +70,7 @@
     "back": "Back",
     "sorry": "Sorry, the site is closed for maintenance",
     "password": "Enter the password for test access",
-    "enter": "Enter"
+    "enter": "Enter",
+    "error_signature": "You did not sign the message and we were unable to verify your wallet. Please refresh the page and try again.",
+    "sorting": "Sorting"
 }

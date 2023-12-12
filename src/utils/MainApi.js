@@ -62,6 +62,21 @@ class MainApi {
     return this._fetchWithBody("/users/me", "PATCH", newUserInfo);
   }
 
+  getContent = (jwt) => {
+    return fetch(`${this._url}/users/me`, {
+      method: "GET",
+      headers: {
+        Accept: "applications/json",
+        "Content-type": "applications/json",
+        Authorization: `Bearer ${jwt}`,
+      },
+    }).then(this._checkResponse);
+  };
+
+
+
+
+
   // Регистрация
   register(wallet) {
     return this._fetchWithBody("/sign-up", "POST", {
@@ -77,16 +92,10 @@ class MainApi {
     });
   }
 
-  getContent = (jwt) => {
-    return fetch(`${this._url}/users/me`, {
-      method: "GET",
-      headers: {
-        Accept: "applications/json",
-        "Content-type": "applications/json",
-        Authorization: `Bearer ${jwt}`,
-      },
-    }).then(this._checkResponse);
-  };
+  // Проверка юзера
+  getUserInfo(unique_code) {
+    return this._fetch(`/sign_up/${unique_code}`, "GET");
+  }
 
   // Получаем таблицу
   getWalletsTable() {

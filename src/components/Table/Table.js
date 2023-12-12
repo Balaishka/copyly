@@ -3,7 +3,7 @@ import "./Table.css";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import Pages from "../Pages/Pages";
 
-function Table({ t, table, classTable, tableHead, setTableBody, lines }) {
+function Table({ t, table, classTable, columns, setTableBody, setTableHead, lines }) {
     const [pages, setPages] = useState([]);
     const [activePage, setActivePage] = useState(1);
     const [valuesPerPage, setValuesPerPage] = useState([]);
@@ -111,15 +111,11 @@ function Table({ t, table, classTable, tableHead, setTableBody, lines }) {
         <div className={`content__table ${classTable !== "" ? `content__table_name_${classTable}`:""}`} ref={heightTable}>
             <table className={`table ${classTable !== "" ? `table-${classTable}`:""}`}>
                 <thead>
-                    <tr>
-                        {tableHead.map((th) => {
-                            return <th key={th}>{th}</th>;
-                        })}
-                    </tr>
+                    {setTableHead()}
                 </thead>
 
                 <tbody>
-                    {valuesPerPage.length !== 0 ? setTableBody(valuesPerPage):<tr><td className="table__empty" colSpan={tableHead.length}>Ничего не найдено</td></tr>}
+                    {valuesPerPage.length !== 0 ? setTableBody(valuesPerPage):<tr><td className="table__empty" colSpan={columns}>Ничего не найдено</td></tr>}
                 </tbody>
             </table>
 

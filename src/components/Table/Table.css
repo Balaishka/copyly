@@ -54,6 +54,37 @@ table .table__empty {
     text-align: center !important;
 }
 
+table .table__th-sort {
+    cursor: pointer;
+    position: relative;
+}
+
+table .table__th-sort_active {
+    padding: 6px 12px;
+    line-height: 24px;
+}
+
+.table__img-sort {
+    display: none;
+    width: 24px;
+    height: 24px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    margin: 0 4px -7px 0;
+}
+
+.table__th-sort_active .table__img-sort:not(.table__img-sort_type_none) {
+    display: inline-block;
+}
+
+.table__img-sort_type_down {
+    background-image: url(../../images/sorting-down.svg);
+}
+
+.table__img-sort_type_up {
+    background-image: url(../../images/sorting-up.svg);
+}
+
 /* Wallets */
 
 .table-wallets td {

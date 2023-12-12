@@ -41,8 +41,8 @@ function App() {
 
   // Кошелек
   const [walletIn, setWalletIn] = useState(
-    localStorage.getItem("wallet") ? true : false
-    //true
+    //localStorage.getItem("wallet") ? true : false
+    true
   );
   const [uniqueCode, setUniqueCode] = useState("");
 
@@ -122,23 +122,24 @@ function App() {
   useEffect(() => {
     if (data && isSuccess && uniqueCode.length !== 0) {
       console.log("Подписал сообщение!");
-      console.log(data);
       handleCheckSignature();
     }
   }, [data, isSuccess]);
 
   useEffect(() => {
+    if (isError) {
+      setIsPopupError(true);
+      setErrorText(t("error_signature"));
+    }
+  }, [isError]);
+
+  useEffect(() => {
     if (walletIn && telegramIn && subscriptionIn) {
       setLoggedIn(true);
     } else {
-      setLoggedIn(false);
+      //setLoggedIn(false);
     }
   }, [walletIn, telegramIn, subscriptionIn]);
-
-  function askMessage(message) {
-    console.log("Запрашиваем подпись");
-    signMessage({message: `Подпишите следующее сообщение, чтобы авторизироваться: ${message}`});
-  }
 
   function handleRegister(wallet) {
     setIsLoading(true);
@@ -147,7 +148,7 @@ function App() {
       .then((res) => {
         console.log(res);
         setUniqueCode(res.unique_code);
-        askMessage(res.unique_code);
+        signMessage({message: res.unique_code});
       })
       .catch((err) => {
         console.log(err);
@@ -157,6 +158,24 @@ function App() {
       .finally(() => {
         setIsLoading(false);
       });
+  }
+
+  function checkUser(uniqueCode) {
+    console.log("Проверяем, зареган ли юзер");
+    setIsLoading(true);
+    mainApi
+    .getUserInfo(uniqueCode)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+      setIsPopupError(true);
+      setErrorText(t("error_register"));
+    })
+    .finally(() => {
+      setIsLoading(false);
+    });
   }
 
   function handleCheckSignature() {
@@ -170,7 +189,12 @@ function App() {
     mainApi
     .checkSignature(uniqueCode, data)
     .then((res) => {
-      console.log(res);
+      if (res.is_valid) {
+        console.log("Юзер зарегистрирован");
+        //checkUser(uniqueCode);
+      } else {
+        console.log("Юзер не зарегистрирован");
+      }
     })
     .catch((err) => {
       console.log(err);
