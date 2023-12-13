@@ -6,7 +6,6 @@ function Auth({
   t,
   walletIn,
   telegramIn,
-  userName,
   openPopupTG,
   subscriptionIn,
   openPopupSub
@@ -18,7 +17,6 @@ function Auth({
       <div className="auth__container">
         <h1 className="auth__title">
           {t("welcome")}
-          {walletIn && telegramIn && `, ${userName}`}
         </h1>
         {!walletIn && (
           <>

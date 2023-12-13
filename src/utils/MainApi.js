@@ -114,6 +114,15 @@ class MainApi {
     };
     return this._fetch(`/insider/${address}`, "GET");
   }
+
+  // Подписка
+  subscriptWallet(address) {
+    this._headers = {
+      ...this._headers,
+      authorization: `Token ${localStorage.getItem("jwt")}`,
+    };
+    return this._fetch(`/insider/${address}/follow`, "GET");
+  }
 }
 
 // Создаем класс апи

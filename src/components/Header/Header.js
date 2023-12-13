@@ -71,7 +71,7 @@ function Header({ t, i18n, loggedIn, link, logout, changeLang, setWalletIn }) {
         }`}
       >
         {loggedIn && (
-          <a href={link} className="header__link">
+          <a href="https://t.me/Copyly_bot" className="header__link" target="_blank">
             <img alt="Telegram" src={telegram} className="header__link-img" />
             <span className="header__link-text">Telegram</span>
           </a>

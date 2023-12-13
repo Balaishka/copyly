@@ -15,11 +15,11 @@ function Wallet({
   wallet,
   getDate,
   roundData,
-  setWallet
+  setWallet,
+  subWallet
 }) {
   const [lastActivity, setLastActivity] = useState("");
   const [lastTime, setLastTime] = useState(0);
-  const [isSign, setIsSign] = useState(false);
 
   const { id } = useParams();
 
@@ -69,7 +69,7 @@ function Wallet({
   }, []);
 
   function toggleSign() {
-    setIsSign(!isSign);
+    subWallet(wallet.address);
   }
 
   if (wallet.address.length === 0) {
@@ -128,7 +128,7 @@ function Wallet({
             className="content__btn wallet__btn"
             onClick={toggleSign}
           >
-            {isSign ? t("wallet_button_remove") : t("wallet_button_add")}
+            {wallet.user_followed ? t("wallet_button_remove") : t("wallet_button_add")}
           </button>
         </section>
 

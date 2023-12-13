@@ -11,7 +11,7 @@ import Main from "../Main/Main";
 import Auth from "../Auth/Auth";
 import setMonths from "../../configs/translate";
 import PopupTG from "../PopupTG/PopupTG";
-import { linkTG, walletNum } from "../../configs/constants";
+import { walletNum } from "../../configs/constants";
 import PopupSub from "../PopupSub/PopupSub";
 import { useAccount, useSignMessage } from "wagmi";
 import { ethers } from "ethers";
@@ -41,8 +41,8 @@ function App() {
 
   // Кошелек
   const [walletIn, setWalletIn] = useState(
-    //localStorage.getItem("wallet") ? true : false
-    true
+    localStorage.getItem("wallet") ? true : false
+    //true
   );
   const [uniqueCode, setUniqueCode] = useState("");
 
@@ -50,8 +50,9 @@ function App() {
   const { data, isError, isSuccess, signMessage } = useSignMessage();
 
   // Телеграм
-  const [telegramIn, setTelegramIn] = useState(true);
+  const [telegramIn, setTelegramIn] = useState(false);
   const [userName, setUserName] = useState("Username");
+  const [linkTG, setLinkTG] = useState("");
 
   // Подписка
   const [subscriptionIn, setSubscriptionIn] = useState(true);
@@ -137,7 +138,7 @@ function App() {
     if (walletIn && telegramIn && subscriptionIn) {
       setLoggedIn(true);
     } else {
-      //setLoggedIn(false);
+      setLoggedIn(false);
     }
   }, [walletIn, telegramIn, subscriptionIn]);
 
@@ -148,7 +149,7 @@ function App() {
       .then((res) => {
         console.log(res);
         setUniqueCode(res.unique_code);
-        signMessage({message: `Подпишите следующее сообщение, чтобы авторизироваться: ${res.unique_code}`});
+        signMessage({message: `Подпишите следующее сообщение, чтобы авторизоваться: ${res.unique_code}`});
       })
       .catch((err) => {
         console.log(err);
@@ -165,7 +166,20 @@ function App() {
     mainApi
     .getUserInfo(uniqueCode)
     .then((res) => {
-      console.log(res);
+      if (res.key === null) {
+        setIsPopupTG(true);
+        setLinkTG(`https://t.me/Copyly_bot?start=${uniqueCode}`);
+      } else {
+        console.log(res);
+        console.log("Юзер зарегистрирован");
+
+        localStorage.setItem("jwt", res.key);
+        localStorage.getItem("wallet", true);
+        setWalletIn(true);
+        setTelegramIn(true);
+        setLoggedIn(true);
+        closeAllPopups();
+      }
     })
     .catch((err) => {
       console.log(err);
@@ -191,8 +205,7 @@ function App() {
       console.log(res);
       if (res.is_valid) {
         console.log("Кошелек подтвержден, проверим юзера");
-        console.log(uniqueCode);
-        //checkUser(uniqueCode);
+        checkUser(uniqueCode);
       } else {
         console.log("Кошелек не подтвержден");
       }
@@ -208,22 +221,10 @@ function App() {
   }
 
   function checkToken() {
-    localStorage.setItem("jwt", "7afc375615454b0a9a8522a73be5c277ef51e457");
+    //localStorage.setItem("jwt", "7afc375615454b0a9a8522a73be5c277ef51e457");
     const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      mainApi
-        .getContent(jwt)
-        .then((res) => {
-          console.log(res);
-          /* setCurrentUser(res);
-          setLoggedIn(true);
-          history.push(pathname); */
-        })
-        .catch((err) => {
-          //handleLogout();
-          console.log(`Ошибка`);
-          console.log(err);
-        });
+    if (!jwt) {
+      logout();
     }
   }
 
@@ -251,6 +252,7 @@ function App() {
     mainApi
       .getWalletInfo(address)
       .then((res) => {
+        console.log(res);
         setWallet(res);
       })
       .catch((err) => {
@@ -260,6 +262,23 @@ function App() {
       .finally(() => {
         setIsLoading(false);
       });
+  }
+
+  function subWallet(address) {
+    setIsLoading(true);
+    mainApi
+    .subscriptWallet(address)
+    .then((res) => {
+      console.log(res);
+      setWallet(res);
+    })
+    .catch((err) => {
+      console.log("Я в ошибке");
+      console.log(err);
+    })
+    .finally(() => {
+      setIsLoading(false);
+    });
   }
 
   function addZero(num) {
@@ -337,6 +356,7 @@ function App() {
 
   function logout() {
     localStorage.removeItem("wallet");
+    localStorage.removeItem("jwt");
     setLoggedIn(false);
     setWalletIn(false);
     setTelegramIn(false);
@@ -386,7 +406,6 @@ function App() {
                     t={t}
                     walletIn={walletIn}
                     telegramIn={telegramIn}
-                    userName={userName}
                     openPopupTG={openPopupTG}
                     subscriptionIn={subscriptionIn}
                     openPopupSub={openPopupSub}
@@ -416,6 +435,7 @@ function App() {
                   getDate={getDate}
                   roundData={roundData}
                   setWallet={setWallet}
+                  subWallet={subWallet}
                 />
               </ProtectedRoute>
   
@@ -445,6 +465,8 @@ function App() {
             text={t("popup_tg_text")}
             textLink={t("popup_tg_link")}
             link={linkTG}
+            uniqueCode={uniqueCode}
+            checkUser={checkUser}
           />
   
           <PopupSub
