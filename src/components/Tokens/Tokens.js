@@ -5,18 +5,23 @@ import PieGraph from "../PieGraph/PieGraph";
 
 function Tokens({ t, tokens, getDate, roundData }) {
   const [isTable, setIsTable] = useState(true);
-  const tableHead = [
-    t("name"),
-    t("purchased"),
-    t("sells"),
-    "P&L",
-    "ROI",
-    t("date"),
-    t("scam_title"),
-  ];
 
   function toggleTokens() {
     setIsTable(!isTable);
+  }
+
+  function setTableHead() {
+    return (
+      <tr>
+        <th>{t("name")}</th>
+        <th>{t("purchased")}</th>
+        <th>{t("sells")}</th>
+        <th>P&L</th>
+        <th>ROI</th>
+        <th>{t("date")}</th>
+        <th>{t("scam_title")}</th>
+      </tr>
+    );
   }
 
   function setTableBody(data) {
@@ -94,7 +99,7 @@ function Tokens({ t, tokens, getDate, roundData }) {
             t={t}
             table={tokens}
             classTable="tokens"
-            tableHead={tableHead}
+            setTableHead={setTableHead}
             setTableBody={setTableBody}
             lines={9}
           />

@@ -87,7 +87,7 @@ table .table__th-sort_active {
 
 /* Wallets */
 
-.table-wallets td {
+.table-wallets td:not(.table__empty) {
     padding: 0;
 }
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./Main.css";
 import Table from "../Table/Table";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
+import WalletsSortingTh from "../WalletsSortingTh/WalletsSortingTh";
 
 function Main({
   t,
@@ -24,34 +25,50 @@ function Main({
   }, []);
 
   useEffect(() => {
-    if (wallet.length !== 0 && sorting.value !== "none") {
+    if (wallet.length !== 0) {
       setIsSearch(true);
-    } else {
+    } else if (sorting.value === "none") {
       setIsSearch(false);
+      setAllFilteredWallets([]);
     }
   }, [wallet]);
 
   useEffect(() => {
     if (sorting.value !== "none") {
-      const arr = isSearch ? allFilteredWallets : allWallets;
-      console.log(arr);
-      arr.sort(sortDown(sorting.name));
+      const arr = isSearch ? [...allFilteredWallets] : [...allWallets];
+      if (sorting.value === "down") {
+        arr.sort(sortDown(sorting.name));
+      } else if (sorting.value === "up") {
+        arr.sort(sortUp(sorting.name));
+      }
+      
       setIsSearch(true);
       setAllFilteredWallets(arr);
+    } else if (wallet.length === 0) {
+      setIsSearch(false);
+      setAllFilteredWallets([]);
     }
-  
   }, [sorting]);
 
   function sortDown(name){
-    return (a, b) => a[name] > b[name] ? 1 : -1;
+    return (a, b) => Number(a[name]) > Number(b[name]) ? 1 : -1;
+  }
+
+  function sortUp(name){
+    return (a, b) => Number(a[name]) < Number(b[name]) ? 1 : -1;
   }
 
   function handleChangeWallet(e) {
     setWallet(e.target.value);
+    const arr = allWallets.filter((wallet) => wallet.address.includes(e.target.value));
 
-    setAllFilteredWallets(
-      allWallets.filter((wallet) => wallet.address.includes(e.target.value))
-    );
+    if (sorting.value === "down") {
+      arr.sort(sortDown(sorting.name));
+    } else if (sorting.value === "up") {
+      arr.sort(sortUp(sorting.name));
+    }
+
+    setAllFilteredWallets(arr);
   }
 
   function reductionWallet(w) {
@@ -84,56 +101,11 @@ function Main({
     return (
       <tr>
         <th id="walletId">{t("table_th_1")}</th>
-        <th
-          className={`table__th-sort ${
-            sorting.name === "pnl" ? "table__th-sort_active" : ""
-          }`}
-          id="pnl"
-          onClick={sortTable}
-        >
-          <span className={`table__img-sort table__img-sort_type_${sorting.value}`}></span>
-          {t("table_th_2")}
-        </th>
-        <th
-          className={`table__th-sort ${
-            sorting.name === "growthId" ? "table__th-sort_active" : ""
-          }`}
-          id="growthId"
-          onClick={sortTable}
-        >
-          <span className={`table__img-sort table__img-sort_type_${sorting.value}`}></span>
-          {t("table_th_3")}
-        </th>
-        <th
-          className={`table__th-sort ${
-            sorting.name === "procentId" ? "table__th-sort_active" : ""
-          }`}
-          id="procentId"
-          onClick={sortTable}
-        >
-          <span className={`table__img-sort table__img-sort_type_${sorting.value}`}></span>
-          {t("table_th_4")}
-        </th>
-        <th
-          className={`table__th-sort ${
-            sorting.name === "quantityId" ? "table__th-sort_active" : ""
-          }`}
-          id="quantityId"
-          onClick={sortTable}
-        >
-          <span className={`table__img-sort table__img-sort_type_${sorting.value}`}></span>
-          {t("table_th_5")}
-        </th>
-        <th
-          className={`table__th-sort ${
-            sorting.name === "dateId" ? "table__th-sort_active" : ""
-          }`}
-          id="dateId"
-          onClick={sortTable}
-        >
-          <span className={`table__img-sort table__img-sort_type_${sorting.value}`}></span>
-          {t("table_th_6")}
-        </th>
+        <WalletsSortingTh name="pnl" sortTable={sortTable} sorting={sorting} text={t("table_th_2")} />
+        <WalletsSortingTh name="profit_factor" sortTable={sortTable} sorting={sorting} text={t("table_th_3")} />
+        <WalletsSortingTh name="win_rate_perc" sortTable={sortTable} sorting={sorting} text={t("table_th_4")} />
+        <WalletsSortingTh name="overall_tokens" sortTable={sortTable} sorting={sorting} text={t("table_th_5")} />
+        <WalletsSortingTh name="last_activity" sortTable={sortTable} sorting={sorting} text={t("table_th_6")} />
       </tr>
     );
   }
@@ -182,7 +154,7 @@ function Main({
               className="main__table-link"
               to={`/wallet/${item.address}`}
             >
-              {roundData(item.overall_tokens)}
+              {Number(item.overall_tokens).toFixed()}
             </NavLink>
           </td>
           <td>

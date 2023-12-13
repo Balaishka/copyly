@@ -148,7 +148,7 @@ function App() {
       .then((res) => {
         console.log(res);
         setUniqueCode(res.unique_code);
-        signMessage({message: res.unique_code});
+        signMessage({message: `Подпишите следующее сообщение, чтобы авторизироваться: ${res.unique_code}`});
       })
       .catch((err) => {
         console.log(err);
@@ -161,7 +161,6 @@ function App() {
   }
 
   function checkUser(uniqueCode) {
-    console.log("Проверяем, зареган ли юзер");
     setIsLoading(true);
     mainApi
     .getUserInfo(uniqueCode)
@@ -189,11 +188,13 @@ function App() {
     mainApi
     .checkSignature(uniqueCode, data)
     .then((res) => {
+      console.log(res);
       if (res.is_valid) {
-        console.log("Юзер зарегистрирован");
+        console.log("Кошелек подтвержден, проверим юзера");
+        console.log(uniqueCode);
         //checkUser(uniqueCode);
       } else {
-        console.log("Юзер не зарегистрирован");
+        console.log("Кошелек не подтвержден");
       }
     })
     .catch((err) => {

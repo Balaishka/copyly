@@ -94,7 +94,7 @@ class MainApi {
 
   // Проверка юзера
   getUserInfo(unique_code) {
-    return this._fetch(`/sign_up/${unique_code}`, "GET");
+    return this._fetch(`/sign-up/${unique_code}`, "GET");
   }
 
   // Получаем таблицу
