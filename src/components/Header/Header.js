@@ -4,7 +4,7 @@ import logo from "../../images/logo.svg";
 import { useEffect, useState } from "react";
 import telegram from "../../images/telegram.svg";
 import arrow from "../../images/arrow-down.svg";
-import logoutImg from "../../images/logout.svg";
+//import logoutImg from "../../images/logout.svg";
 import { ConnectKitButton } from "connectkit";
 
 function Header({ t, i18n, loggedIn, link, logout, changeLang, setWalletIn }) {

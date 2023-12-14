@@ -29,54 +29,6 @@ class MainApi {
     }).then(this._checkResponse);
   }
 
-  // Получаем массив всех сохраненных фильмов
-  getAllFilms() {
-    this._headers = {
-      ...this._headers,
-      authorization: `Bearer ${localStorage.getItem("jwt")}`,
-    };
-    return this._fetch("/movies", "GET");
-  }
-
-  // Создаем фильм
-  addNewFilm(newFilm) {
-    return this._fetchWithBody("/movies", "POST", newFilm);
-  }
-
-  // Удаляем фильм из сохраненных
-  deleteMovie(movieId) {
-    return this._fetch(`/movies/${movieId}`, "DELETE");
-  }
-
-  // Получаем всю информацию о пользователе
-  getUserInfo() {
-    this._headers = {
-      ...this._headers,
-      authorization: `Bearer ${localStorage.getItem("jwt")}`,
-    };
-    return this._fetch("/users/me", "GET");
-  }
-
-  // Обновляем информацию пользователя
-  setUserInfo(newUserInfo) {
-    return this._fetchWithBody("/users/me", "PATCH", newUserInfo);
-  }
-
-  getContent = (jwt) => {
-    return fetch(`${this._url}/users/me`, {
-      method: "GET",
-      headers: {
-        Accept: "applications/json",
-        "Content-type": "applications/json",
-        Authorization: `Bearer ${jwt}`,
-      },
-    }).then(this._checkResponse);
-  };
-
-
-
-
-
   // Регистрация
   register(wallet) {
     return this._fetchWithBody("/sign-up", "POST", {
@@ -123,6 +75,15 @@ class MainApi {
     };
     return this._fetch(`/insider/${address}/follow`, "GET");
   }
+
+  // Сортировка
+  sortTable(param) {
+    this._headers = {
+      ...this._headers,
+      authorization: `Token ${localStorage.getItem("jwt")}`,
+    };
+    return this._fetch(`/top?ordering=${param}`, "GET");
+  }
 }
 
 // Создаем класс апи
@@ -131,7 +92,6 @@ const mainApi = new MainApi({
   //baseUrl: "http://localhost:3005",
   headers: {
     "content-type": "application/json",
-    authorization: `Token ${localStorage.getItem("jwt")}`,
   },
 });
 

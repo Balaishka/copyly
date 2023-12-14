@@ -5,7 +5,6 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import Header from "../Header/Header";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import Preloader from "../Preloader/Preloader";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useTranslation } from "react-i18next";
 import Main from "../Main/Main";
 import Auth from "../Auth/Auth";
@@ -14,7 +13,6 @@ import PopupTG from "../PopupTG/PopupTG";
 import { walletNum } from "../../configs/constants";
 import PopupSub from "../PopupSub/PopupSub";
 import { useAccount, useSignMessage } from "wagmi";
-import { ethers } from "ethers";
 import Wallet from "../Wallet/Wallet";
 import mainApi from "../../utils/MainApi";
 import PopupError from "../PopupError/PopupError";
@@ -37,13 +35,10 @@ function App() {
   const [errorText, setErrorText] = useState(t("error_text"));
 
   // Авторизация
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   // Кошелек
-  const [walletIn, setWalletIn] = useState(
-    localStorage.getItem("wallet") ? true : false
-    //true
-  );
+  const [walletIn, setWalletIn] = useState(false);
   const [uniqueCode, setUniqueCode] = useState("");
 
   const { address, status } = useAccount();
@@ -51,11 +46,10 @@ function App() {
 
   // Телеграм
   const [telegramIn, setTelegramIn] = useState(false);
-  const [userName, setUserName] = useState("Username");
   const [linkTG, setLinkTG] = useState("");
 
   // Подписка
-  const [subscriptionIn, setSubscriptionIn] = useState(true);
+  const [subscriptionIn, setSubscriptionIn] = useState(false);
 
   // Попапы
   const [isPopupTG, setIsPopupTG] = useState(false);
@@ -82,12 +76,9 @@ function App() {
     tokens: [],
     balance_chart: [],
     pnl_chart: [],
-  });
-
-  // Пользователь
-  const [currentUser, setCurrentUser] = useState({
-    name: "",
-    wallet: "",
+    user_followed: false,
+    cur_balance: 0,
+    rugged_perc: 0
   });
 
   useEffect(() => {
@@ -104,21 +95,22 @@ function App() {
   }, [loggedIn]);
 
   useEffect(() => {
-    //checkToken();
+    checkToken();
   }, []);
 
   useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
     if (status === "disconnected") {
-      removeWallet();
+      logout();
     }
     if (
-      !walletIn &&
+      !jwt &&
       status === "connected"
     ) {
       console.log("Задаем вопрос: " + address);
       handleRegister(address);
     }
-  }, [status, walletIn]);
+  }, [status, address]);
 
   useEffect(() => {
     if (data && isSuccess && uniqueCode.length !== 0) {
@@ -135,12 +127,10 @@ function App() {
   }, [isError]);
 
   useEffect(() => {
-    if (walletIn && telegramIn && subscriptionIn) {
-      setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
+    if (!address) {
+      logout();
     }
-  }, [walletIn, telegramIn, subscriptionIn]);
+  }, [address]);
 
   function handleRegister(wallet) {
     setIsLoading(true);
@@ -174,7 +164,6 @@ function App() {
         console.log("Юзер зарегистрирован");
 
         localStorage.setItem("jwt", res.key);
-        localStorage.getItem("wallet", true);
         setWalletIn(true);
         setTelegramIn(true);
         setLoggedIn(true);
@@ -221,15 +210,18 @@ function App() {
   }
 
   function checkToken() {
-    //localStorage.setItem("jwt", "7afc375615454b0a9a8522a73be5c277ef51e457");
     const jwt = localStorage.getItem("jwt");
-    if (!jwt) {
+    if (jwt && address) {
+      setLoggedIn(true);
+      setWalletIn(true);
+      setTelegramIn(true);
+      setSubscriptionIn(true);
+    } else {
       logout();
     }
   }
 
   function getAllWallets() {
-    localStorage.setItem("jwt", "7afc375615454b0a9a8522a73be5c277ef51e457");
     setIsLoading(true);
     mainApi
       .getWalletsTable()
@@ -281,6 +273,22 @@ function App() {
     });
   }
 
+  function sortWallets(param) {
+    setIsLoading(true);
+    mainApi
+    .sortTable(param)
+    .then((res) => {
+      setAllWallets(res.results);
+    })
+    .catch((err) => {
+      console.log("Я в ошибке");
+      console.log(err);
+    })
+    .finally(() => {
+      setIsLoading(false);
+    });
+  }
+
   function addZero(num) {
     return String(num).length === 1 ? `0${num}` : String(num);
   }
@@ -301,13 +309,13 @@ function App() {
       if (isCumulative) {
         res.push({
           date: newDay,
-          value: roundData(item.value),
-          cumValue: roundData(data.cumulative_pnl[index].value),
+          value: roundData2(item.value),
+          cumValue: roundData2(data.cumulative_pnl[index].value),
         });
       } else {
         res.push({
           date: newDay,
-          value: roundData(item.value),
+          value: roundData2(item.value),
         });
       }
     });
@@ -319,25 +327,6 @@ function App() {
     setIsPopupTG(false);
     setIsPopupSub(false);
     setIsPopupError(false);
-  }
-
-  function addWallet() {
-    //setWalletIn(true);
-    //localStorage.setItem("wallet", address);
-    console.log("Добавляем кошелек");
-
-    if (!telegramIn) {
-      setIsPopupTG(true);
-    }
-
-    if (telegramIn && !subscriptionIn) {
-      setIsPopupSub(true);
-    }
-  }
-
-  function removeWallet() {
-    setWalletIn(false);
-    localStorage.removeItem("wallet");
   }
 
   function addSubscription() {
@@ -355,7 +344,6 @@ function App() {
   }
 
   function logout() {
-    localStorage.removeItem("wallet");
     localStorage.removeItem("jwt");
     setLoggedIn(false);
     setWalletIn(false);
@@ -370,7 +358,15 @@ function App() {
   }
 
   function roundData(str) {
+    return Number(str).toFixed();
+  }
+
+  function roundData2(str) {
     return Number(str).toFixed(2);
+  }
+
+  function roundData4(str) {
+    return Number(str).toFixed(4);
   }
 
   function getDate(str) {
@@ -386,7 +382,6 @@ function App() {
     return <Repair t={t} setIsRepair={setIsRepair} />;
   } else {
     return (
-      <CurrentUserContext.Provider value={{ currentUser }}>
         <div className={`page ${loggedIn ? "" : "page_name_auth"}`}>
           <Header
             t={t}
@@ -419,9 +414,9 @@ function App() {
                   getAllWallets={getAllWallets}
                   allWallets={allWallets}
                   roundData={roundData}
-                  allFilteredWallets={allFilteredWallets}
-                  setAllFilteredWallets={setAllFilteredWallets}
+                  roundData2={roundData2}
                   getDate={getDate}
+                  sortWallets={sortWallets}
                 />
               </ProtectedRoute>
   
@@ -434,6 +429,8 @@ function App() {
                   wallet={wallet}
                   getDate={getDate}
                   roundData={roundData}
+                  roundData2={roundData2}
+                  roundData4={roundData4}
                   setWallet={setWallet}
                   subWallet={subWallet}
                 />
@@ -481,7 +478,6 @@ function App() {
             addSubscription={addSubscription}
           />
         </div>
-      </CurrentUserContext.Provider>
     );
   }
 }

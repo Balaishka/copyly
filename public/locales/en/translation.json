@@ -72,5 +72,7 @@
     "password": "Enter the password for test access",
     "enter": "Enter",
     "error_signature": "You did not sign the message and we were unable to verify your wallet. Please refresh the page and try again.",
-    "sorting": "Sorting"
+    "sorting": "Sorting",
+    "reset": "Reset",
+    "apply": "Apply"
 }

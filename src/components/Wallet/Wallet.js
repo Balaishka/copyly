@@ -15,6 +15,8 @@ function Wallet({
   wallet,
   getDate,
   roundData,
+  roundData2,
+  roundData4,
   setWallet,
   subWallet
 }) {
@@ -25,18 +27,21 @@ function Wallet({
 
   useEffect(() => {
     setWallet({
-      "pnl": 0,
-      "profit_factor": "",
-      "win_rate_perc": "",
-      "overall_tokens": "",
-      "win_rate_amount": "",
-      "profits": "",
-      "losses": "",
-      "last_activity": 0,
-      "address": "",
-      "tokens": [],
-      "balance_chart": [],
-      "pnl_chart": []
+      pnl: 0,
+      profit_factor: "",
+      win_rate_perc: "",
+      overall_tokens: "",
+      win_rate_amount: "",
+      profits: "",
+      losses: "",
+      last_activity: 0,
+      address: "",
+      tokens: [],
+      balance_chart: [],
+      pnl_chart: [],
+      user_followed: false,
+      cur_balance: 0,
+      rugged_perc: 0
     });
     getWallet(id);
   }, []);
@@ -133,26 +138,26 @@ function Wallet({
         </section>
 
         <section className="wallet__info">
-          <Fact title={t("balance")} info={wallet.cur_balance} />
-          <Fact title={t("table_th_2")} info={wallet.pnl} />
-          <Fact title={t("table_th_3")} info={wallet.profit_factor} />
+          <Fact title={t("balance")} info={`${roundData2(wallet.cur_balance)} ETH`} />
+          <Fact title={t("table_th_2")} info={`${roundData2(wallet.pnl)} ETH`} />
+          <Fact title={t("table_th_3")} info={`${roundData(wallet.roi)}%`} />
 
           <Fact
             title={t("succesfull")}
-            info={wallet.win_rate_amount}
+            info={`${roundData(wallet.win_rate_amount)}`}
             type="desctop"
           />
           <Fact
             title={t("amount")}
-            info={wallet.overall_tokens}
+            info={`${roundData(wallet.overall_tokens)}`}
             type="desctop"
           />
 
-          <Fact title={t("profit")} info={wallet.profits} type="mobile" />
-          <Fact title={t("losts")} info={wallet.losses} type="mobile" />
+          <Fact title={t("profit")} info={`${roundData2(wallet.profits)} ETH`} type="mobile" />
+          <Fact title={t("losts")} info={`${roundData2(wallet.losses)} ETH`} type="mobile" />
           <Fact
             title={t("profit_factor")}
-            info={wallet.profit_factor}
+            info={roundData(wallet.profit_factor)}
             type="mobile"
           />
         </section>
@@ -175,27 +180,27 @@ function Wallet({
               t={t}
               tokens={wallet.tokens}
               getDate={getDate}
-              roundData={roundData}
+              roundData={roundData2}
             />
 
             <div className="wallet__info wallet__info_type_bottom">
-              <Fact title={t("profit")} info={wallet.profits} type="desctop" />
-              <Fact title={t("losts")} info={wallet.losses} type="desctop" />
+              <Fact title={t("profit")} info={`${roundData2(wallet.profits)} ETH`} type="desctop" />
+              <Fact title={t("losts")} info={`${roundData2(wallet.losses)} ETH`} type="desctop" />
               <Fact
                 title={t("profit_factor")}
-                info={wallet.profit_factor}
+                info={roundData(wallet.profit_factor)}
                 type="desctop"
               />
-              <Fact title={t("scam")} info={wallet.rugged_perc} />
+              <Fact title={t("scam")} info={`${roundData(wallet.rugged_perc)}%`} />
 
               <Fact
                 title={t("succesfull")}
-                info={wallet.win_rate_amount}
+                info={`${roundData(wallet.win_rate_amount)}%`}
                 type="mobile"
               />
               <Fact
                 title={t("amount")}
-                info={wallet.overall_tokens}
+                info={`${roundData(wallet.overall_tokens)}`}
                 type="mobile"
               />
             </div>
