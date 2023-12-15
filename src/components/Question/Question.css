@@ -1,0 +1,14 @@
+.question {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 2px;
+    margin-left: 4px;
+    cursor: pointer;
+    background: url(../../images/question.svg) no-repeat;
+}
+
+.question__text {
+    display: none;
+}

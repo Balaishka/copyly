@@ -18,7 +18,9 @@ function Wallet({
   roundData2,
   roundData4,
   setWallet,
-  subWallet
+  subWallet,
+  showClue,
+  hideClue
 }) {
   const [lastActivity, setLastActivity] = useState("");
   const [lastTime, setLastTime] = useState(0);
@@ -130,7 +132,7 @@ function Wallet({
 
           <button
             type="button"
-            className="content__btn wallet__btn"
+            className={`content__btn wallet__btn ${wallet.user_followed ? "wallet__btn_active":""}`}
             onClick={toggleSign}
           >
             {wallet.user_followed ? t("wallet_button_remove") : t("wallet_button_add")}
@@ -139,7 +141,7 @@ function Wallet({
 
         <section className="wallet__info">
           <Fact title={t("balance")} info={`${roundData2(wallet.cur_balance)} ETH`} />
-          <Fact title={t("table_th_2")} info={`${roundData2(wallet.pnl)} ETH`} />
+          <Fact title={t("table_th_2")} info={`${roundData2(wallet.pnl)} ETH`} isQuestion={true} questionText="Тестовый текст" showClue={showClue} hideClue={hideClue} />
           <Fact title={t("table_th_3")} info={`${roundData(wallet.roi)}%`} />
 
           <Fact

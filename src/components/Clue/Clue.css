@@ -1,0 +1,9 @@
+.clue {
+    border-radius: 8px;
+    padding: 8px 12px;
+    background-color: #0D1317;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #FFFFFF;
+    position: absolute;
+}

@@ -80,6 +80,11 @@
     margin: 0;
 }
 
+.wallet__btn_active {
+    background-color: #202D36;
+    color: #fff;
+}
+
 /* Graphs */
 
 .wallet__graphs {

@@ -17,6 +17,7 @@ import Wallet from "../Wallet/Wallet";
 import mainApi from "../../utils/MainApi";
 import PopupError from "../PopupError/PopupError";
 import Repair from "../Repair/Repair";
+import Clue from "../Clue/Clue";
 
 function App() {
   const history = useHistory();
@@ -79,6 +80,13 @@ function App() {
     user_followed: false,
     cur_balance: 0,
     rugged_perc: 0
+  });
+
+  // Подсказки
+  const [isClue, setIsClue] = useState(false);
+  const [coordinates, setCoordinates] = useState({
+    x: 0,
+    y: 0
   });
 
   useEffect(() => {
@@ -378,6 +386,24 @@ function App() {
     return `${strDate} ${strTime}`;
   }
 
+  function showClue(e) {
+    setIsClue(true);
+    setCoordinates({
+      x: e.clientX + 8,
+      y: e.clientY + 8,
+      text: e.target.firstChild.innerText
+    });
+  }
+
+  function hideClue() {
+    setIsClue(false);
+    setCoordinates({
+      x: 0,
+      y: 0,
+      text: ""
+    });
+  }
+
   if (isRepair) {
     return <Repair t={t} setIsRepair={setIsRepair} />;
   } else {
@@ -433,6 +459,8 @@ function App() {
                   roundData4={roundData4}
                   setWallet={setWallet}
                   subWallet={subWallet}
+                  showClue={showClue}
+                  hideClue={hideClue}
                 />
               </ProtectedRoute>
   
@@ -477,6 +505,8 @@ function App() {
             textBtn={t("popup_sub_btn")}
             addSubscription={addSubscription}
           />
+
+          {isClue && <Clue coordinates={coordinates} />}
         </div>
     );
   }

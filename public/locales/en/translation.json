@@ -29,7 +29,7 @@
     "popup_sub_text_3": "You will be able to take advantage of all the benefits of the platform immediately after transfer",
     "popup_sub_btn": "Transfer sent",
     "main_title": "All wallets",
-    "main_text": "Fish is a text that will need to be inserted when it is ready, but for now the auxiliary text will be enough to make it clear that there will be text in this place",
+    "main_text": "Approach the choice with great caution and attentiveness. It's better not to use more than 3 wallets for tracking. Before subscribing, determine if you could have endured the losses that the wallet had previously.",
     "search": "Enter wallet address",
     "table_th_1": "Wallet",
     "table_th_2": "P&L",
@@ -74,5 +74,6 @@
     "error_signature": "You did not sign the message and we were unable to verify your wallet. Please refresh the page and try again.",
     "sorting": "Sorting",
     "reset": "Reset",
-    "apply": "Apply"
+    "apply": "Apply",
+    "info": "Information"
 }
