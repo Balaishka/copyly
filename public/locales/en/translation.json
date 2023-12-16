@@ -32,7 +32,7 @@
     "main_text": "Approach the choice with great caution and attentiveness. It's better not to use more than 3 wallets for tracking. Before subscribing, determine if you could have endured the losses that the wallet had previously.",
     "search": "Enter wallet address",
     "table_th_1": "Wallet",
-    "table_th_2": "Income",
+    "table_th_2": "P&L",
     "table_th_3": "ROI",
     "table_th_4": "Win Rates",
     "table_th_5": "Amount of tokens",
@@ -82,5 +82,6 @@
     "info_losses": "Losses excluding income",
     "info_profit_factor": "Profit / Loss",
     "info_scam": "The percentage of tokens in the wallet portfolio whose value has dropped to 0",
-    "auth_tg": "I'm logged in"
+    "auth_tg": "I'm logged in",
+    "income": "Income"
 }

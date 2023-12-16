@@ -141,7 +141,7 @@ function Wallet({
 
         <section className="wallet__info">
           <Fact title={t("balance")} info={`${roundData2(wallet.cur_balance)} ETH`} />
-          <Fact title={t("table_th_2")} info={`${roundData2(wallet.pnl)} ETH`} />
+          <Fact title={t("income")} info={`${roundData2(wallet.pnl)} ETH`} />
           <Fact title={t("table_th_3")} info={`${roundData(wallet.roi)}%`} isQuestion={true} questionText={t("info_roi")} showClue={showClue} hideClue={hideClue} />
 
           <Fact

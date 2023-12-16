@@ -8,7 +8,7 @@ function Question({ text, showClue, hideClue }) {
     function test(e) {
         setMyTimeout(setTimeout(() => {
             showClue(e);
-        }, 1000));
+        }, 300));
     }
 
     function test2() {
