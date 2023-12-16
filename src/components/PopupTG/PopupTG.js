@@ -1,7 +1,7 @@
 import QRCode from "react-qr-code";
 import Popup from "../Popup/Popup";
 
-function PopupTG({ isPopupOpen, title, closeAllPopups, text, textLink, link, checkUser, uniqueCode }) {
+function PopupTG({ isPopupOpen, title, closeAllPopups, text, textLink, link, checkUser, uniqueCode, t }) {
     function handleCheckUser() {
         checkUser(uniqueCode);
     }
@@ -22,7 +22,9 @@ function PopupTG({ isPopupOpen, title, closeAllPopups, text, textLink, link, che
                         className="popup__qr-code"
                     />
                 </div>
-                <button type="button" onClick={handleCheckUser}>Я авторизовался</button>
+            </div>
+            <div className="popup__footer">
+                <button type="button" onClick={handleCheckUser} className="content__btn">{t("auth_tg")}</button>
             </div>
         </Popup>
     );

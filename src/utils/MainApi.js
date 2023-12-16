@@ -49,15 +49,6 @@ class MainApi {
     return this._fetch(`/sign-up/${unique_code}`, "GET");
   }
 
-  // Получаем таблицу
-  getWalletsTable() {
-    this._headers = {
-      ...this._headers,
-      authorization: `Token ${localStorage.getItem("jwt")}`,
-    };
-    return this._fetch("/top", "GET");
-  }
-
   // Получаем информацию о конкретном кошельке
   getWalletInfo(address) {
     this._headers = {
@@ -76,13 +67,44 @@ class MainApi {
     return this._fetch(`/insider/${address}/follow`, "GET");
   }
 
-  // Сортировка
-  sortTable(param) {
+    // Получаем таблицу
+    getWalletsTable(parameters) {
+      this._headers = {
+        ...this._headers,
+        authorization: `Token ${localStorage.getItem("jwt")}`,
+      };
+      if (!parameters.isParameters) {
+        return this._fetch("/top", "GET");
+      } else {
+        return this.sortTable(parameters);
+      }
+    }
+
+  // Сортировка и фильтрация
+  sortTable(parameters) {
     this._headers = {
       ...this._headers,
       authorization: `Token ${localStorage.getItem("jwt")}`,
     };
-    return this._fetch(`/top?ordering=${param}`, "GET");
+
+    const sortingName = parameters.sorting.name;
+    const sortingValue = parameters.sorting.value;
+    const filters = parameters.filters;
+
+    let res = "";
+
+    if (sortingName.length !== 0) {
+      res += `&ordering=${sortingValue === "up" ? "-":""}${sortingName}`;
+    }
+    if (filters.length !== 0) {
+      filters.map((filter) => {
+        res += `&${filter.name}=${filter.value}`;
+      });
+    }
+
+    res = res.substr(1, res.length);
+
+    return this._fetch(`/top?${res}`, "GET");
   }
 }
 

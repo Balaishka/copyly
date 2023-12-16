@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Main.css";
 import Table from "../Table/Table";
-import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import WalletsSortingTh from "../WalletsSortingTh/WalletsSortingTh";
 import WalletsSortingTd from "../WalletsSortingTd/WalletsSortingTd";
 
@@ -12,28 +11,48 @@ function Main({
   roundData,
   roundData2,
   getDate,
-  sortWallets
+  parameters,
+  setParameters,
+  minMaxFilters
 }) {
   const [wallet, setWallet] = useState("");
   const [sorting, setSorting] = useState({
-    name: "",
-    value: "none",
+    name: parameters.sorting.name,
+    value: parameters.sorting.value,
   });
 
   useEffect(() => {
-    getAllWallets();
-    //sortWallets("pnl");
+    getAllWallets(parameters);
   }, []);
 
   useEffect(() => {
-      if (sorting.value === "down") {
-        sortWallets(sorting.name);
-      } else if (sorting.value === "up") {
-        sortWallets("-" + sorting.name);
+    if (sorting.name.length !== 0) {
+      let res = parameters;
+
+      res.sorting.value = sorting.value;
+
+      if (sorting.value === "down" || sorting.value === "up") {
+        res.sorting.name = sorting.name;
       } else {
-        getAllWallets();
+        res.sorting.name = "";
       }
+
+      res.isParameters = checkParameters(res);
+
+      localStorage.setItem("parameters", JSON.stringify(res));
+      setParameters(res);
+      getAllWallets(res);
+    }
+    
   }, [sorting]);
+
+  function checkParameters(param) {
+    if (param.sorting.name.length === 0 && param.sorting.value === "none" && param.filters.length === 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   function handleChangeWallet(e) {
     setWallet(e.target.value);
@@ -58,19 +77,14 @@ function Main({
     if (sorting.name !== newName) {
       newValue = "down";
     } else {
-      if (sorting.value === "down") {
+      if (parameters.sorting.value === "down") {
         newValue = "up";
-      } else if (sorting.value === "up") {
+      } else if (parameters.sorting.value === "up") {
         newValue = "none";
-      } else if (sorting.value === "none") {
+      } else if (parameters.sorting.value === "none") {
         newValue = "down";
       }
     }
-    
-    console.log({
-      name: newName,
-      value: newValue,
-    });
 
     setSorting({
       name: newName,
@@ -78,15 +92,135 @@ function Main({
     });
   }
 
+  function filterTable(name, min, max) {
+    let res = parameters;
+
+    const nameMin = `${name}__gte`;
+    const nameMax = `${name}__lte`;
+
+    if (res.filters.length === 0) {
+      res.filters.push({
+        name: nameMin,
+        value: min
+      });
+      res.filters.push({
+        name: nameMax,
+        value: max
+      });
+    } else {
+      let isNew = true;
+
+      res.filters.map((filter) => {
+        if (filter.name === nameMin) {
+          isNew = false;
+          return filter.value = min;
+        } else if (filter.name === nameMax) {
+          isNew = false;
+          return filter.value = max;
+        }
+      });
+
+      if (isNew) {
+        res.filters.push({
+          name: nameMin,
+          value: min
+        });
+        res.filters.push({
+          name: nameMax,
+          value: max
+        });
+      }
+    }
+
+    res.isParameters = checkParameters(res);
+
+    localStorage.setItem("parameters", JSON.stringify(res));
+    setParameters(res);
+    getAllWallets(res);
+  }
+
+  function clearFilterTable(name) {
+    if (parameters.filters.length !== 0) {
+      let res = parameters;
+
+      const nameMin = `${name}__gte`;
+      const nameMax = `${name}__lte`;
+
+      res.filters = res.filters.filter((item) => {
+        if (item.name !== nameMin && item.name !== nameMax) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+
+      res.isParameters = checkParameters(res);
+
+      localStorage.setItem("parameters", JSON.stringify(res));
+      setParameters(res);
+      getAllWallets(res);
+    }
+  }
+
   function setTableHead() {
     return (
       <tr>
         <th id="walletId">{t("table_th_1")}</th>
-        <WalletsSortingTh name="pnl" sortTable={sortTable} sorting={sorting} text={t("table_th_2")} isFilter={true} t={t} />
-        <WalletsSortingTh name="profit_factor" sortTable={sortTable} sorting={sorting} text={t("table_th_3")} isFilter={true} t={t} />
-        <WalletsSortingTh name="win_rate_perc" sortTable={sortTable} sorting={sorting} text={t("table_th_4")} isFilter={true} t={t} />
-        <WalletsSortingTh name="overall_tokens" sortTable={sortTable} sorting={sorting} text={t("table_th_5")} isFilter={true} t={t} />
-        <WalletsSortingTh name="last_activity" sortTable={sortTable} sorting={sorting} text={t("table_th_6")} isFilter={false} t={t} />
+        <WalletsSortingTh
+          name="pnl"
+          sortTable={sortTable}
+          sorting={sorting}
+          text={t("table_th_2")}
+          isFilter={true}
+          t={t}
+          minMaxFilters={minMaxFilters}
+          filterTable={filterTable}
+          clearFilterTable={clearFilterTable}
+        />
+        <WalletsSortingTh
+          name="profit_factor"
+          sortTable={sortTable}
+          sorting={sorting}
+          text={t("table_th_3")}
+          isFilter={true}
+          t={t}
+          minMaxFilters={minMaxFilters}
+          filterTable={filterTable}
+          clearFilterTable={clearFilterTable}
+        />
+        <WalletsSortingTh
+          name="win_rate_perc"
+          sortTable={sortTable}
+          sorting={sorting}
+          text={t("table_th_4")}
+          isFilter={true}
+          t={t}
+          minMaxFilters={minMaxFilters}
+          filterTable={filterTable}
+          clearFilterTable={clearFilterTable}
+        />
+        <WalletsSortingTh
+          name="overall_tokens"
+          sortTable={sortTable}
+          sorting={sorting}
+          text={t("table_th_5")}
+          isFilter={true}
+          t={t}
+          minMaxFilters={minMaxFilters}
+          filterTable={filterTable}
+          clearFilterTable={clearFilterTable}
+        />
+        <WalletsSortingTh
+          name="last_activity"
+          sortTable={sortTable}
+          sorting={sorting}
+          text={t("table_th_6")}
+          isFilter={false}
+          t={t}
+          minMaxFilters={minMaxFilters}
+          filterTable={filterTable}
+          clearFilterTable={clearFilterTable}
+        />
       </tr>
     );
   }
@@ -95,12 +229,27 @@ function Main({
     return data.map((item) => {
       return (
         <tr key={item.address}>
-          <WalletsSortingTd link={item.address} text={reductionWallet(item.address)} />
+          <WalletsSortingTd
+            link={item.address}
+            text={reductionWallet(item.address)}
+          />
           <WalletsSortingTd link={item.address} text={roundData2(item.pnl)} />
-          <WalletsSortingTd link={item.address} text={roundData2(item.profit_factor)} />
-          <WalletsSortingTd link={item.address} text={roundData2(Number(item.win_rate_perc) * 100)} />
-          <WalletsSortingTd link={item.address} text={roundData(item.overall_tokens)} />
-          <WalletsSortingTd link={item.address} text={getDate(Number(item.last_activity) * 1000)} />
+          <WalletsSortingTd
+            link={item.address}
+            text={roundData2(item.profit_factor)}
+          />
+          <WalletsSortingTd
+            link={item.address}
+            text={roundData2(Number(item.win_rate_perc) * 100)}
+          />
+          <WalletsSortingTd
+            link={item.address}
+            text={roundData(item.overall_tokens)}
+          />
+          <WalletsSortingTd
+            link={item.address}
+            text={getDate(Number(item.last_activity) * 1000)}
+          />
         </tr>
       );
     });

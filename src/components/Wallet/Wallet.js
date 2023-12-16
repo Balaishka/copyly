@@ -141,13 +141,14 @@ function Wallet({
 
         <section className="wallet__info">
           <Fact title={t("balance")} info={`${roundData2(wallet.cur_balance)} ETH`} />
-          <Fact title={t("table_th_2")} info={`${roundData2(wallet.pnl)} ETH`} isQuestion={true} questionText="Тестовый текст" showClue={showClue} hideClue={hideClue} />
-          <Fact title={t("table_th_3")} info={`${roundData(wallet.roi)}%`} />
+          <Fact title={t("table_th_2")} info={`${roundData2(wallet.pnl)} ETH`} />
+          <Fact title={t("table_th_3")} info={`${roundData(wallet.roi)}%`} isQuestion={true} questionText={t("info_roi")} showClue={showClue} hideClue={hideClue} />
 
           <Fact
             title={t("succesfull")}
             info={`${roundData(wallet.win_rate_amount)}`}
             type="desctop"
+            isQuestion={true} questionText={t("info_win_rate_amount")} showClue={showClue} hideClue={hideClue}
           />
           <Fact
             title={t("amount")}
@@ -155,12 +156,13 @@ function Wallet({
             type="desctop"
           />
 
-          <Fact title={t("profit")} info={`${roundData2(wallet.profits)} ETH`} type="mobile" />
-          <Fact title={t("losts")} info={`${roundData2(wallet.losses)} ETH`} type="mobile" />
+          <Fact title={t("profit")} info={`${roundData2(wallet.profits)} ETH`} type="mobile" isQuestion={true} questionText={t("info_profits")} showClue={showClue} hideClue={hideClue} />
+          <Fact title={t("losts")} info={`${roundData2(wallet.losses)} ETH`} type="mobile" isQuestion={true} questionText={t("info_losses")} showClue={showClue} hideClue={hideClue} />
           <Fact
             title={t("profit_factor")}
             info={roundData(wallet.profit_factor)}
             type="mobile"
+            isQuestion={true} questionText={t("info_profit_factor")} showClue={showClue} hideClue={hideClue}
           />
         </section>
 
@@ -186,19 +188,21 @@ function Wallet({
             />
 
             <div className="wallet__info wallet__info_type_bottom">
-              <Fact title={t("profit")} info={`${roundData2(wallet.profits)} ETH`} type="desctop" />
-              <Fact title={t("losts")} info={`${roundData2(wallet.losses)} ETH`} type="desctop" />
+              <Fact title={t("profit")} info={`${roundData2(wallet.profits)} ETH`} type="desctop" isQuestion={true} questionText={t("info_profits")} showClue={showClue} hideClue={hideClue} />
+              <Fact title={t("losts")} info={`${roundData2(wallet.losses)} ETH`} type="desctop" isQuestion={true} questionText={t("info_losses")} showClue={showClue} hideClue={hideClue} />
               <Fact
                 title={t("profit_factor")}
                 info={roundData(wallet.profit_factor)}
                 type="desctop"
+                isQuestion={true} questionText={t("info_profit_factor")} showClue={showClue} hideClue={hideClue}
               />
-              <Fact title={t("scam")} info={`${roundData(wallet.rugged_perc)}%`} />
+              <Fact title={t("scam")} info={`${roundData(wallet.rugged_perc)}%`} isQuestion={true} questionText={t("info_scam")} showClue={showClue} hideClue={hideClue} />
 
               <Fact
                 title={t("succesfull")}
                 info={`${roundData(wallet.win_rate_amount)}%`}
                 type="mobile"
+                isQuestion={true} questionText={t("info_win_rate_amount")} showClue={showClue} hideClue={hideClue}
               />
               <Fact
                 title={t("amount")}

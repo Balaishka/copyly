@@ -80,3 +80,8 @@
 .filter__btn_name_submit {
     background-color: #89D2DC;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}

@@ -81,12 +81,23 @@ function App() {
     cur_balance: 0,
     rugged_perc: 0
   });
+  const [minMaxFilters, setMinMaxFilters] = useState({});
 
   // Подсказки
   const [isClue, setIsClue] = useState(false);
   const [coordinates, setCoordinates] = useState({
     x: 0,
     y: 0
+  });
+
+  // Параметры фильтров и сортировки
+  const [parameters, setParameters] = useState(localStorage.getItem("parameters") ? JSON.parse(localStorage.getItem("parameters")):{
+    isParameters: false,
+    sorting: {
+      name: "",
+      value: "none"
+    },
+    filters: []
   });
 
   useEffect(() => {
@@ -104,6 +115,9 @@ function App() {
 
   useEffect(() => {
     checkToken();
+    //localStorage.removeItem("parameters");
+    /* const obj = JSON.parse(localStorage.getItem("parameters"));
+    console.log(obj); */
   }, []);
 
   useEffect(() => {
@@ -232,9 +246,10 @@ function App() {
   function getAllWallets() {
     setIsLoading(true);
     mainApi
-      .getWalletsTable()
+      .getWalletsTable(parameters)
       .then((res) => {
         setAllWallets(res.results);
+        setMinMaxFilters(res.filters);
       })
       .catch((err) => {
         console.log("Я в ошибке");
@@ -252,7 +267,6 @@ function App() {
     mainApi
       .getWalletInfo(address)
       .then((res) => {
-        console.log(res);
         setWallet(res);
       })
       .catch((err) => {
@@ -281,21 +295,6 @@ function App() {
     });
   }
 
-  function sortWallets(param) {
-    setIsLoading(true);
-    mainApi
-    .sortTable(param)
-    .then((res) => {
-      setAllWallets(res.results);
-    })
-    .catch((err) => {
-      console.log("Я в ошибке");
-      console.log(err);
-    })
-    .finally(() => {
-      setIsLoading(false);
-    });
-  }
 
   function addZero(num) {
     return String(num).length === 1 ? `0${num}` : String(num);
@@ -353,6 +352,7 @@ function App() {
 
   function logout() {
     localStorage.removeItem("jwt");
+    localStorage.removeItem("parameters");
     setLoggedIn(false);
     setWalletIn(false);
     setTelegramIn(false);
@@ -389,8 +389,8 @@ function App() {
   function showClue(e) {
     setIsClue(true);
     setCoordinates({
-      x: e.clientX + 8,
-      y: e.clientY + 8,
+      x: e.pageX - 70,
+      y: e.pageY + 20,
       text: e.target.firstChild.innerText
     });
   }
@@ -442,7 +442,9 @@ function App() {
                   roundData={roundData}
                   roundData2={roundData2}
                   getDate={getDate}
-                  sortWallets={sortWallets}
+                  parameters={parameters}
+                  setParameters={setParameters}
+                  minMaxFilters={minMaxFilters}
                 />
               </ProtectedRoute>
   
@@ -492,6 +494,7 @@ function App() {
             link={linkTG}
             uniqueCode={uniqueCode}
             checkUser={checkUser}
+            t={t}
           />
   
           <PopupSub

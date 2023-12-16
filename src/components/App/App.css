@@ -129,7 +129,7 @@ body {
 
   .content__table {
     padding-right: 16px;
-    max-height: calc(100vh - 310px);
-    height: calc(100vh - 310px);
+    /* max-height: calc(100vh - 310px);
+    height: calc(100vh - 310px); */
   }
 }

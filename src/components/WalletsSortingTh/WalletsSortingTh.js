@@ -1,16 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Filter from "../Filter/Filter";
 
-function WalletsSortingTh({ name, sortTable, sorting, text, isFilter, t }) {
-  const [filter, setFilter] = useState({
-    name: "",
-    min: 0,
-    max: 0,
-  });
+function WalletsSortingTh({ name, sortTable, sorting, text, isFilter, t, minMaxFilters, filterTable, clearFilterTable }) {
+
   const [isOpen, setIsOpen] = useState(false);
+  
+  useEffect(() => {
+    if (isOpen) {
+      window.addEventListener("click", closeFilter);
+      return () => window.removeEventListener("click", closeFilter);
+    }
+  }, [isOpen]);
 
   function toggleFilter() {
     setIsOpen(!isOpen);
+  }
+
+  function closeFilter(e) {
+    if (
+      e.target.classList[1] !== `table__img-filter_name_${name}` && 
+      e.target.className !== "filter" && 
+      e.target.className !== "filter__container" && 
+      e.target.className !== "filter__block" && 
+      e.target.className !== "filter__label" && 
+      e.target.className !== "filter__input" && 
+      e.target.className !== "filter__delimiter" && 
+      e.target.className !== "filter__buttons" && 
+      e.target.classList[0] !== "filter__btn"
+    ) {
+      setIsOpen(false);
+    }
   }
 
   return (
@@ -29,11 +48,11 @@ function WalletsSortingTh({ name, sortTable, sorting, text, isFilter, t }) {
         <>
           <span
             onClick={toggleFilter}
-            className={`table__img-filter ${
+            className={`table__img-filter table__img-filter_name_${name} ${
               isOpen ? "table__img-filter_opened" : ""
             }`}
           ></span>
-          {isOpen && <Filter t={t} />}
+          {isOpen && <Filter t={t} name={name} minMaxFilters={minMaxFilters} filterTable={filterTable} setIsOpen={setIsOpen} clearFilterTable={clearFilterTable} />}
         </>
       )}
     </th>
