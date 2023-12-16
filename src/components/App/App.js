@@ -26,7 +26,7 @@ function App() {
   const months = setMonths(t);
 
   // Заглушка
-  const [isRepair, setIsRepair] = useState(true);
+  const [isRepair, setIsRepair] = useState(false);
 
   // Загрузка
   const [isLoading, setIsLoading] = useState(false);
