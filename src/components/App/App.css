@@ -10,6 +10,11 @@ body {
   height: max-content;
 }
 
+.page {
+  min-height: 100vh;
+  height: max-content;
+}
+
 .page_name_auth {
   background: url(../../images/bg.svg) no-repeat;
   background-size: 100% 100%;

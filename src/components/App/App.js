@@ -257,6 +257,8 @@ function App() {
         filters.last_activity_min = res.filters.last_activity_min * 1000;
         filters.last_activity_max = res.filters.last_activity_max * 1000;
 
+        console.log(res);
+
         setMinMaxFilters(filters);
       })
       .catch((err) => {

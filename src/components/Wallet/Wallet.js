@@ -185,6 +185,7 @@ function Wallet({
             <Tokens
               t={t}
               tokens={wallet.tokens}
+              tokensByDate={wallet.tokens_by_date}
               getDate={getDate}
               roundData={roundData2}
             />

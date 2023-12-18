@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./Filter.css";
 
 function Filter({ t, name, minMaxFilters, filterTable, setIsOpen, clearFilterTable, setIsFilled, roundData }) {
@@ -17,12 +17,14 @@ function Filter({ t, name, minMaxFilters, filterTable, setIsOpen, clearFilterTab
     e.preventDefault();
     filterTable(name, minValue, maxValue);
     setIsOpen(false);
+    localStorage.setItem(`filled_${name}`, true);
     setIsFilled(true);
   }
 
   function handleClearFilter() {
     clearFilterTable(name);
     setIsOpen(false);
+    localStorage.removeItem(`filled_${name}`);
     setIsFilled(false);
   }
 

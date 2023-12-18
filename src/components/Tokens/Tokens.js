@@ -3,7 +3,7 @@ import "./Tokens.css";
 import Table from "../Table/Table";
 import PieGraph from "../PieGraph/PieGraph";
 
-function Tokens({ t, tokens, getDate, roundData }) {
+function Tokens({ t, tokens, getDate, roundData, tokensByDate }) {
   const [isTable, setIsTable] = useState(true);
 
   function toggleTokens() {
@@ -94,10 +94,10 @@ function Tokens({ t, tokens, getDate, roundData }) {
         </button>
       </div>
       <div className="tokens__body">
-        {isTable && tokens.length !== 0 ? (
+        {isTable && tokensByDate.length !== 0 ? (
           <Table
             t={t}
-            table={tokens}
+            table={tokensByDate}
             classTable="tokens"
             setTableHead={setTableHead}
             setTableBody={setTableBody}

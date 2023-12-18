@@ -14,9 +14,12 @@ function WalletsSortingTh({
   roundData
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isFilled, setIsFilled] = useState(false);
+  const [isFilled, setIsFilled] = useState(localStorage.getItem(`filled_${name}`) ? true:false);
 
   useEffect(() => {
+    if (name === "win_rate_perc") {
+      console.log(text);
+    }
     if (isOpen) {
       window.addEventListener("click", closeFilter);
       return () => window.removeEventListener("click", closeFilter);

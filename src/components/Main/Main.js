@@ -191,7 +191,7 @@ function Main({
           roundData={roundData2}
         />
         <WalletsSortingTh
-          name="win_rate_perc"
+          name="win_rate_amount"
           sortTable={sortTable}
           sorting={sorting}
           text={t("table_th_4")}
