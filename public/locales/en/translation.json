@@ -34,7 +34,7 @@
     "table_th_1": "Wallet",
     "table_th_2": "P&L",
     "table_th_3": "ROI",
-    "table_th_4": "Win Rates",
+    "table_th_4": "Win Rate",
     "table_th_5": "Amount of tokens",
     "table_th_6": "Last activity",
     "table_pages": "Go to:",
@@ -84,5 +84,6 @@
     "info_scam": "Percentage of tokens in the wallet's portfolio that have decreased to zero",
     "auth_tg": "I'm logged in",
     "income": "P&L",
-    "value": "Value"
+    "value": "Value",
+    "profit_factor_no_losses": "No Losses"
 }

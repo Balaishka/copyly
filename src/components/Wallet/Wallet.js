@@ -194,7 +194,7 @@ function Wallet({
               <Fact title={t("losts")} info={`${roundData2(wallet.losses)} ETH`} type="desctop" isQuestion={true} questionText={t("info_losses")} showClue={showClue} hideClue={hideClue} />
               <Fact
                 title={t("profit_factor")}
-                info={roundData(wallet.profit_factor)}
+                info={roundData(wallet.profit_factor) === "999" ? t("profit_factor_no_losses"):roundData(wallet.profit_factor)}
                 type="desctop"
                 isQuestion={true} questionText={t("info_profit_factor")} showClue={showClue} hideClue={hideClue}
               />

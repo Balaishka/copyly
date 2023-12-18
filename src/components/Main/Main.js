@@ -234,14 +234,14 @@ function Main({
             link={item.address}
             text={reductionWallet(item.address)}
           />
-          <WalletsSortingTd link={item.address} text={roundData2(item.pnl)} />
+          <WalletsSortingTd link={item.address} text={`${roundData2(item.pnl)} ETH`} />
           <WalletsSortingTd
             link={item.address}
             text={`${roundData2(Number(item.roi))}%`}
           />
           <WalletsSortingTd
             link={item.address}
-            text={roundData(Number(item.win_rate_amount))}
+            text={`${roundData(Number(item.win_rate_amount))}%`}
           />
           <WalletsSortingTd
             link={item.address}

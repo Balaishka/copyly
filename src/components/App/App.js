@@ -375,15 +375,18 @@ function App() {
   }
 
   function roundData(str) {
-    return Number(str).toFixed();
+    const num = Number(str);
+    return num.toFixed();
   }
 
   function roundData2(str) {
-    return Number(str).toFixed(2);
+    const num = Number(str);
+    return (num.toFixed(2) % 1) === 0 ? num.toFixed() : num.toFixed(2);
   }
 
   function roundData4(str) {
-    return Number(str).toFixed(4);
+    const num = Number(str);
+    return (num.toFixed(4) % 1) === 0 ? num.toFixed() : num.toFixed(4);
   }
 
   function getDate(str) {
