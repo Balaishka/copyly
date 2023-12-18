@@ -11,7 +11,7 @@ import {
 } from "recharts";
 import QuarterTick from "../QuarterTick/QuarterTick";
 
-function Balance({ recordingData, title, data }) {
+function Balance({ t, recordingData, title, data }) {
   const [balances, setBalances] = useState([]);
   let month = 12;
 
@@ -69,10 +69,11 @@ function Balance({ recordingData, title, data }) {
           <YAxis />
           <Tooltip />
           <Area
-            name="Значение"
+            name={t("value")}
             dataKey="value"
             stroke="#315aad"
             fill="url(#gradient1)"
+            stackId="value"
           />
         </AreaChart>
       </ResponsiveContainer>

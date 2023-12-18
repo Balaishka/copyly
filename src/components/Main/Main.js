@@ -176,9 +176,10 @@ function Main({
           minMaxFilters={minMaxFilters}
           filterTable={filterTable}
           clearFilterTable={clearFilterTable}
+          roundData={roundData2}
         />
         <WalletsSortingTh
-          name="profit_factor"
+          name="roi"
           sortTable={sortTable}
           sorting={sorting}
           text={t("table_th_3")}
@@ -187,6 +188,7 @@ function Main({
           minMaxFilters={minMaxFilters}
           filterTable={filterTable}
           clearFilterTable={clearFilterTable}
+          roundData={roundData2}
         />
         <WalletsSortingTh
           name="win_rate_perc"
@@ -198,6 +200,7 @@ function Main({
           minMaxFilters={minMaxFilters}
           filterTable={filterTable}
           clearFilterTable={clearFilterTable}
+          roundData={roundData2}
         />
         <WalletsSortingTh
           name="overall_tokens"
@@ -209,6 +212,7 @@ function Main({
           minMaxFilters={minMaxFilters}
           filterTable={filterTable}
           clearFilterTable={clearFilterTable}
+          roundData={roundData}
         />
         <WalletsSortingTh
           name="last_activity"
@@ -217,9 +221,6 @@ function Main({
           text={t("table_th_6")}
           isFilter={false}
           t={t}
-          minMaxFilters={minMaxFilters}
-          filterTable={filterTable}
-          clearFilterTable={clearFilterTable}
         />
       </tr>
     );
@@ -236,11 +237,11 @@ function Main({
           <WalletsSortingTd link={item.address} text={roundData2(item.pnl)} />
           <WalletsSortingTd
             link={item.address}
-            text={roundData2(item.profit_factor)}
+            text={`${roundData2(Number(item.roi))}%`}
           />
           <WalletsSortingTd
             link={item.address}
-            text={roundData2(Number(item.win_rate_perc) * 100)}
+            text={roundData(Number(item.win_rate_amount))}
           />
           <WalletsSortingTd
             link={item.address}
@@ -248,7 +249,7 @@ function Main({
           />
           <WalletsSortingTd
             link={item.address}
-            text={getDate(Number(item.last_activity) * 1000)}
+            text={getDate(item.last_activity)}
           />
         </tr>
       );

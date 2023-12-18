@@ -12,7 +12,7 @@ import {
 } from "recharts";
 import QuarterTick from "../QuarterTick/QuarterTick";
 
-function PnL({ recordingData, title, data }) {
+function PnL({ t, recordingData, title, data }) {
   const [pnls, setPnls] = useState([]);
   let month = 12;
 
@@ -65,7 +65,7 @@ function PnL({ recordingData, title, data }) {
           />
           <YAxis />
           <Tooltip />
-          <Bar dataKey="value" name="Значение" activeBar={{ stroke: "#ccc" }} stackId="value">
+          <Bar dataKey="value" name={t("value")} activeBar={{ stroke: "#ccc" }} stackId="value">
             {pnls.map((entry, index) => {
               return (
                 <Cell

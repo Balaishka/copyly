@@ -36,7 +36,7 @@ function App() {
   const [errorText, setErrorText] = useState(t("error_text"));
 
   // Авторизация
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(localStorage.getItem("jwt") ? true:false);
 
   // Кошелек
   const [walletIn, setWalletIn] = useState(false);
@@ -63,7 +63,6 @@ function App() {
 
   // Кошельки
   const [allWallets, setAllWallets] = useState([]);
-  const [allFilteredWallets, setAllFilteredWallets] = useState([]);
   const [wallet, setWallet] = useState({
     pnl: 0,
     profit_factor: "",
@@ -109,6 +108,7 @@ function App() {
 
   useEffect(() => {
     if (loggedIn && pathname === "/auth") {
+      console.log("Я здесь");
       history.push("/");
     }
   }, [loggedIn]);
@@ -249,7 +249,15 @@ function App() {
       .getWalletsTable(parameters)
       .then((res) => {
         setAllWallets(res.results);
-        setMinMaxFilters(res.filters);
+
+        let filters = res.filters;
+        filters.win_rate_perc_min = res.filters.win_rate_perc_min * 100;
+        filters.win_rate_perc_max = res.filters.win_rate_perc_max * 100;
+        
+        filters.last_activity_min = res.filters.last_activity_min * 1000;
+        filters.last_activity_max = res.filters.last_activity_max * 1000;
+
+        setMinMaxFilters(filters);
       })
       .catch((err) => {
         console.log("Я в ошибке");
@@ -267,6 +275,7 @@ function App() {
     mainApi
       .getWalletInfo(address)
       .then((res) => {
+        console.log(res);
         setWallet(res);
       })
       .catch((err) => {
@@ -378,7 +387,7 @@ function App() {
   }
 
   function getDate(str) {
-    const date = new Date(str);
+    const date = new Date(str * 1000);
     const strDate = `${addZero(date.getDate())}.${addZero(
       date.getMonth()
     )}.${addZero(date.getFullYear())}`;

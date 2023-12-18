@@ -23,7 +23,7 @@ function Header({ t, i18n, loggedIn, link, logout, changeLang, setWalletIn }) {
       e.target.className !== "header__list header__list_opened" &&
       e.target.className !== "header__item" &&
       e.target.className !== "header__lang-btn" &&
-      e.target.className !== "header__lang-img"
+      e.target.classList[0] !== "header__lang-img"
     ) {
       setLangOpened(false);
     }

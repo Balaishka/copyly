@@ -1,10 +1,21 @@
 import { useEffect, useState } from "react";
 import Filter from "../Filter/Filter";
 
-function WalletsSortingTh({ name, sortTable, sorting, text, isFilter, t, minMaxFilters, filterTable, clearFilterTable }) {
-
+function WalletsSortingTh({
+  name,
+  sortTable,
+  sorting,
+  text,
+  isFilter,
+  t,
+  minMaxFilters,
+  filterTable,
+  clearFilterTable,
+  roundData
+}) {
   const [isOpen, setIsOpen] = useState(false);
-  
+  const [isFilled, setIsFilled] = useState(false);
+
   useEffect(() => {
     if (isOpen) {
       window.addEventListener("click", closeFilter);
@@ -18,14 +29,14 @@ function WalletsSortingTh({ name, sortTable, sorting, text, isFilter, t, minMaxF
 
   function closeFilter(e) {
     if (
-      e.target.classList[1] !== `table__img-filter_name_${name}` && 
-      e.target.className !== "filter" && 
-      e.target.className !== "filter__container" && 
-      e.target.className !== "filter__block" && 
-      e.target.className !== "filter__label" && 
-      e.target.className !== "filter__input" && 
-      e.target.className !== "filter__delimiter" && 
-      e.target.className !== "filter__buttons" && 
+      e.target.classList[1] !== `table__img-filter_name_${name}` &&
+      e.target.className !== "filter" &&
+      e.target.className !== "filter__container" &&
+      e.target.className !== "filter__block" &&
+      e.target.className !== "filter__label" &&
+      e.target.className !== "filter__input" &&
+      e.target.className !== "filter__delimiter" &&
+      e.target.className !== "filter__buttons" &&
       e.target.classList[0] !== "filter__btn"
     ) {
       setIsOpen(false);
@@ -50,9 +61,20 @@ function WalletsSortingTh({ name, sortTable, sorting, text, isFilter, t, minMaxF
             onClick={toggleFilter}
             className={`table__img-filter table__img-filter_name_${name} ${
               isOpen ? "table__img-filter_opened" : ""
-            }`}
+            } ${isFilled ? "table__img-filter_filled" : ""}`}
           ></span>
-          {isOpen && <Filter t={t} name={name} minMaxFilters={minMaxFilters} filterTable={filterTable} setIsOpen={setIsOpen} clearFilterTable={clearFilterTable} />}
+          {isOpen && (
+            <Filter
+              t={t}
+              name={name}
+              minMaxFilters={minMaxFilters}
+              filterTable={filterTable}
+              setIsOpen={setIsOpen}
+              clearFilterTable={clearFilterTable}
+              setIsFilled={setIsFilled}
+              roundData={roundData}
+            />
+          )}
         </>
       )}
     </th>

@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Filter.css";
 
-function Filter({ t, name, minMaxFilters, filterTable, setIsOpen, clearFilterTable }) {
-  const [minValue, setMinValue] = useState(Number(minMaxFilters[`${name}_min`]).toFixed() ? Number(minMaxFilters[`${name}_min`]).toFixed():0);
-  const [maxValue, setMaxValue] = useState(Number(minMaxFilters[`${name}_max`]).toFixed() ? Number(minMaxFilters[`${name}_max`]).toFixed():0);
+function Filter({ t, name, minMaxFilters, filterTable, setIsOpen, clearFilterTable, setIsFilled, roundData }) {
+  const [minValue, setMinValue] = useState(roundData(minMaxFilters[`${name}_min`]) ? roundData(minMaxFilters[`${name}_min`]):0);
+  const [maxValue, setMaxValue] = useState(roundData(minMaxFilters[`${name}_max`]) ? roundData(minMaxFilters[`${name}_max`]):0);
 
   function changeValueMin(e) {
     setMinValue(e.target.value);
@@ -17,11 +17,13 @@ function Filter({ t, name, minMaxFilters, filterTable, setIsOpen, clearFilterTab
     e.preventDefault();
     filterTable(name, minValue, maxValue);
     setIsOpen(false);
+    setIsFilled(true);
   }
 
   function handleClearFilter() {
     clearFilterTable(name);
     setIsOpen(false);
+    setIsFilled(false);
   }
 
   return (
@@ -31,10 +33,11 @@ function Filter({ t, name, minMaxFilters, filterTable, setIsOpen, clearFilterTab
           <label className="filter__label">Min</label>
           <input
             className="filter__input"
-            placeholder={Number(`${minMaxFilters[`${name}_min`]}`).toFixed()}
+            placeholder={roundData(`${minMaxFilters[`${name}_min`]}`)}
             value={minValue}
             onChange={changeValueMin}
             type="number"
+            step="any"
           ></input>
         </div>
         <div className="filter__delimiter">-</div>
@@ -42,10 +45,11 @@ function Filter({ t, name, minMaxFilters, filterTable, setIsOpen, clearFilterTab
           <label className="filter__label">Max</label>
           <input
             className="filter__input"
-            placeholder={Number(`${minMaxFilters[`${name}_max`]}`).toFixed()}
+            placeholder={roundData(`${minMaxFilters[`${name}_max`]}`)}
             value={maxValue}
             onChange={changeValueMax}
             type="number"
+            step="any"
           ></input>
         </div>
       </div>

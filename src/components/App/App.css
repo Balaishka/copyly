@@ -2,27 +2,12 @@
   box-sizing: border-box;
 }
 
-html {
-  min-height: 100vh;
-  height: 100vh;
-}
-
 body {
   font-family: "Nunito Sans", Arial, Helvetica, sans-serif;
   font-weight: 400;
   background-color: #0D1317;
   min-height: 100vh;
-  height: 100vh;
-}
-
-#root {
-  min-height: 100vh;
-  height: 100vh;
-}
-
-.page {
-  min-height: 100vh;
-  height: 100vh;
+  height: max-content;
 }
 
 .page_name_auth {
@@ -32,8 +17,6 @@ body {
 }
 
 .content {
-  min-height: calc(100vh - 65px);
-  height: calc(100vh - 65px);
   width: 100%;
   padding: 32px 40px 70px;
 }
@@ -55,17 +38,9 @@ body {
 }
 
 .content__table {
-  max-height: calc(100vh - 354px);
-  height: calc(100vh - 354px);
+  max-width: 100%;
   overflow: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  padding-bottom: 32px;
-}
-
-/* хром, сафари */
-.content__table::-webkit-scrollbar {
-  width: 0;
+  min-height: 200px;
 }
 
 .content__table_name_tokens {
@@ -76,13 +51,7 @@ body {
   min-width: 100%;
 }
 
-.content__graph {/* 
-  width: 100% !important;
-  max-width: 100% !important;
-  min-width: 100% !important;
-  height: 100% !important;
-  min-height: 100% !important;
-  max-height: 100% !important; */
+.content__graph {
   background-color: #162027;
   border-radius: 8px;
   padding: 16px;
@@ -124,12 +93,9 @@ body {
 @media screen and (max-width:500px) {
   .content {
     padding: 20px 16px 40px;
-    min-height: calc(100vh - 66px);
   }
 
   .content__table {
     padding-right: 16px;
-    /* max-height: calc(100vh - 310px);
-    height: calc(100vh - 310px); */
   }
 }

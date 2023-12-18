@@ -89,7 +89,6 @@ table .table__th-sort_active {
 
 .table__th-block {
     display: inline-block;
-    width: calc(100% - 20px);
 }
 
 .table__img-filter {
@@ -105,6 +104,11 @@ table .table__th-sort_active {
 
 .table__img-filter_opened {
     transform: rotate(180deg);
+}
+
+.table__img-filter_filled {
+    background-image: url(../../images/filled.svg);
+    transform: none;
 }
 
 .table-wallets td:not(.table__empty) {

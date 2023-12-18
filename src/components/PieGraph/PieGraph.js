@@ -44,7 +44,7 @@ function PieGraph({ tokens, roundData }) {
         {pnls.map((entry, index) => (
           <Cell
             key={`cell-${index}`}
-            stroke={entry.isGreen ? colors["green"] : colors["red"]}
+            stroke="#162027"
             fill={entry.isGreen ? colors["green"] : colors["red"]}
           />
         ))}

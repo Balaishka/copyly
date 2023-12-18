@@ -26,6 +26,7 @@ function Tokens({ t, tokens, getDate, roundData }) {
 
   function setTableBody(data) {
     return data.map((item) => {
+      console.log(item);
       return (
         <tr
           key={item.address}

@@ -73,7 +73,7 @@ function Wallet({
         );
       }
     }
-  }, []);
+  }, [wallet]);
 
   function toggleSign() {
     subWallet(wallet.address);
@@ -146,7 +146,7 @@ function Wallet({
 
           <Fact
             title={t("succesfull")}
-            info={`${roundData(wallet.win_rate_amount)}`}
+            info={`${roundData(wallet.win_rate_amount)}%`}
             type="desctop"
             isQuestion={true} questionText={t("info_win_rate_amount")} showClue={showClue} hideClue={hideClue}
           />
@@ -169,11 +169,13 @@ function Wallet({
         <section className="wallet__graphs">
           <div className="wallet__left">
             <Balance
+              t={t}
               recordingData={recordingData}
               title={t("graph_balance")}
               data={wallet.balance_chart}
             />
             <PnL
+              t={t}
               recordingData={recordingData}
               title={"Profit and Loss"}
               data={wallet.pnl_chart}
