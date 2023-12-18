@@ -191,7 +191,7 @@ function Main({
           roundData={roundData2}
         />
         <WalletsSortingTh
-          name="win_rate_amount"
+          name="win_rate_perc"
           sortTable={sortTable}
           sorting={sorting}
           text={t("table_th_4")}
@@ -241,7 +241,7 @@ function Main({
           />
           <WalletsSortingTd
             link={item.address}
-            text={`${roundData(Number(item.win_rate_amount))}%`}
+            text={`${roundData(Number(item.win_rate_perc))}%`}
           />
           <WalletsSortingTd
             link={item.address}

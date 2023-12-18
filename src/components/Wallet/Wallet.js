@@ -146,7 +146,7 @@ function Wallet({
 
           <Fact
             title={t("succesfull")}
-            info={`${roundData(wallet.win_rate_amount)}%`}
+            info={`${roundData(wallet.win_rate_perc)}%`}
             type="desctop"
             isQuestion={true} questionText={t("info_win_rate_amount")} showClue={showClue} hideClue={hideClue}
           />
