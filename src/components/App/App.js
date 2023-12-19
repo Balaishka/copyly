@@ -254,7 +254,7 @@ function App() {
       .then((res) => {
         console.log(res);
         setAllWallets(res.results);
-        setPages(res.count);
+        setPages(Math.ceil(res.count / 10));
 
         let filters = res.filters;
         
