@@ -87,9 +87,12 @@ class MainApi {
       authorization: `Token ${localStorage.getItem("jwt")}`,
     };
 
+    console.log(parameters);
+
     const sortingName = parameters.sorting.name;
     const sortingValue = parameters.sorting.value;
     const filters = parameters.filters;
+    const page = parameters.page;
 
     let res = "";
 
@@ -101,10 +104,33 @@ class MainApi {
         res += `&${filter.name}=${filter.value}`;
       });
     }
+    if (page && page !== 1) {
+      res += `&page=${page}`;
+    }
 
     res = res.substr(1, res.length);
 
+    console.log(res);
+
     return this._fetch(`/top?${res}`, "GET");
+  }
+
+  searchWalletUuid(address) {
+    this._headers = {
+      ...this._headers,
+      authorization: `Token ${localStorage.getItem("jwt")}`,
+    };
+
+    return this._fetch(`/search?address=${address}`, "GET");
+  }
+
+  searchWallet(uuid) {
+    this._headers = {
+      ...this._headers,
+      authorization: `Token ${localStorage.getItem("jwt")}`,
+    };
+
+    return this._fetch(`/ticket/${uuid}`, "GET");
   }
 }
 

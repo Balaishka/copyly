@@ -1,7 +1,4 @@
-.pages {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+.pages-wallets {
     background-color: #0D1317;
     display: flex;
     align-items: center;
@@ -11,39 +8,37 @@
     z-index: 10;
 }
 
-.content__table_name_tokens .pages {
-    background-color: #162027;
-}
-
-.pages__container {
+.pages-wallets__container {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     margin-right: 12px;
 }
 
-.pages__arrow {
+.pages-wallets__arrow {
     width: 20px;
     height: 20px;
     cursor: pointer;
 }
 
-.pages__arrow_disabled {
+.pages-wallets__arrow_disabled {
     cursor: default;
 }
 
-.pages__arrow_route_left {
+.pages-wallets__arrow_route_left {
     transform: rotate(180deg);
     margin-right: 4px;
 }
 
-.pages__arrow_route_down {
+.pages-wallets__arrow_route_down {
     transform: rotate(90deg);
 }
 
-.pages__num {
+.pages-wallets__num {
     width: 20px;
     height: 20px;
+    min-width: max-content;
+    padding: 0 2px;
     border-radius: 4px;
     display: flex;
     align-items: center;
@@ -56,17 +51,17 @@
     color: #95B0B4;
 }
 
-.pages__num:hover,
-.pages__num_active {
+.pages-wallets__num:hover,
+.pages-wallets__num_active {
     border: 1px solid #89D2DC;
     color: #89D2DC;
 }
 
-.pages__num_active:hover {
+.pages-wallets__num_active:hover {
     cursor: default;
 }
 
-.pages__ellipsis {
+.pages-wallets__ellipsis {
     width: 20px;
     height: 20px;
     display: flex;
@@ -78,11 +73,11 @@
     color: #95B0B4;
 }
 
-.pages__ellipsis + .pages__ellipsis {
+.pages-wallets__ellipsis + .pages-wallets__ellipsis {
     display: none;
 }
 
-.pages__choice {
+.pages-wallets__choice {
     font-size: 12px;
     line-height: 16px;
     color: #95B0B4;
@@ -92,7 +87,7 @@
     position: relative;
 }
 
-.pages__active-page {
+.pages-wallets__active-page {
     border: 1px solid #314D6B;
     border-radius: 4px;
     display: flex;
@@ -102,7 +97,7 @@
     margin-left: 4px;
 }
 
-.pages__list {
+.pages-wallets__list {
     list-style: none;
     padding: 6px;
     border: 1px solid #314D6B;
@@ -121,15 +116,15 @@
     scrollbar-width: none;
 }
 
-.pages__list::-webkit-scrollbar {
+.pages-wallets__list::-webkit-scrollbar {
     width: 0;
   }
 
-.pages__list_opened {
+.pages-wallets__list_opened {
     display: block;
 }
 
-.pages__item {
+.pages-wallets__item {
     font-size: 12px;
     line-height: 16px;
     color: #95B0B4;
@@ -138,13 +133,13 @@
     transition: all .2s ease-in-out;
 }
 
-.pages__item:hover,
-.pages__item_active {
+.pages-wallets__item:hover,
+.pages-wallets__item_active {
     color: #fff;
 }
 
 @media screen and (max-width:768px) {
-    .pages:not(.content__table_name_tokens .pages) {
+    .pages-wallets:not(.content__table_name_tokens .pages-wallets) {
         right: auto;
         left: 0;
         justify-content: flex-start;
@@ -152,15 +147,15 @@
 }
 
 @media screen and (max-width: 500px) {
-    .pages__container {
+    .pages-wallets__container {
         margin-right: 4px;
     }
     
-    .pages__choice {
+    .pages-wallets__choice {
         font-size: 0;
     }
 
-    .pages__active-page {
+    .pages-wallets__active-page {
         font-size: 12px;
     }
 }

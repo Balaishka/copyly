@@ -17,9 +17,6 @@ function WalletsSortingTh({
   const [isFilled, setIsFilled] = useState(localStorage.getItem(`filled_${name}`) ? true:false);
 
   useEffect(() => {
-    if (name === "win_rate_perc") {
-      console.log(text);
-    }
     if (isOpen) {
       window.addEventListener("click", closeFilter);
       return () => window.removeEventListener("click", closeFilter);

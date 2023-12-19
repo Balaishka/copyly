@@ -18,7 +18,7 @@ function PopupSub({
 
   useEffect(() => {
     const date = new Date(new Date().getTime() + 604800000);
-    setNewDate(`${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`);
+    setNewDate(`${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`);
   }, []);
 
   return (

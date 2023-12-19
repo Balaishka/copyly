@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Main.css";
-import Table from "../Table/Table";
+import TableWallets from "../TableWallets/TableWallets";
 import WalletsSortingTh from "../WalletsSortingTh/WalletsSortingTh";
 import WalletsSortingTd from "../WalletsSortingTd/WalletsSortingTd";
 
@@ -13,38 +13,19 @@ function Main({
   getDate,
   parameters,
   setParameters,
-  minMaxFilters
+  minMaxFilters,
+  searchAddressUuid,
+  pages
 }) {
   const [wallet, setWallet] = useState("");
   const [sorting, setSorting] = useState({
     name: parameters.sorting.name,
-    value: parameters.sorting.value,
+    value: parameters.sorting.value
   });
 
   useEffect(() => {
     getAllWallets(parameters);
   }, []);
-
-  useEffect(() => {
-    if (sorting.name.length !== 0) {
-      let res = parameters;
-
-      res.sorting.value = sorting.value;
-
-      if (sorting.value === "down" || sorting.value === "up") {
-        res.sorting.name = sorting.name;
-      } else {
-        res.sorting.name = "";
-      }
-
-      res.isParameters = checkParameters(res);
-
-      localStorage.setItem("parameters", JSON.stringify(res));
-      setParameters(res);
-      getAllWallets(res);
-    }
-    
-  }, [sorting]);
 
   function checkParameters(param) {
     if (param.sorting.name.length === 0 && param.sorting.value === "none" && param.filters.length === 0) {
@@ -59,7 +40,7 @@ function Main({
   }
 
   function reductionWallet(w) {
-    return `${w[0]}${w[1]}${w[2]}${w[3]}...${w[w.length - 2]}${
+    return `${w[0]}${w[1]}${w[2]}${w[3]}${w[4]}${w[5]}...${w[w.length - 4]}${w[w.length - 3]}${w[w.length - 2]}${
       w[w.length - 1]
     }`;
   }
@@ -86,9 +67,28 @@ function Main({
       }
     }
 
+    // 2 часть
+
+    let res = parameters;
+
+    res.sorting.value = newValue;
+
+    if (newValue === "down" || newValue === "up") {
+      res.sorting.name = newName;
+    } else {
+      res.sorting.name = "";
+    }
+
+    res.isParameters = checkParameters(res);
+    res.page = 1;
+
+    localStorage.setItem("parameters", JSON.stringify(res));
+    setParameters(res);
+    getAllWallets(res);
+
     setSorting({
       name: newName,
-      value: newValue,
+      value: newValue
     });
   }
 
@@ -133,6 +133,7 @@ function Main({
     }
 
     res.isParameters = checkParameters(res);
+    res.page = 1;
 
     localStorage.setItem("parameters", JSON.stringify(res));
     setParameters(res);
@@ -155,6 +156,7 @@ function Main({
       });
 
       res.isParameters = checkParameters(res);
+      res.page = 1;
 
       localStorage.setItem("parameters", JSON.stringify(res));
       setParameters(res);
@@ -256,27 +258,40 @@ function Main({
     });
   }
 
+  function searchWallet(e) {
+    e.preventDefault();
+    if (wallet.length !== 0) {
+      searchAddressUuid(wallet);
+    }
+  }
+
   return (
     <div className="main">
       <h1 className="main__title">{t("main_title")}</h1>
       <p className="main__text">{t("main_text")}</p>
-      <input
-        className="main__search"
-        type="text"
-        value={wallet}
-        placeholder={t("search")}
-        onChange={handleChangeWallet}
-      />
+      <form onSubmit={searchWallet}>
+        <input
+          className="main__search"
+          type="text"
+          value={wallet}
+          placeholder={t("search")}
+          onChange={handleChangeWallet}
+        />
+      </form>
+      
 
       <div className="main__table">
-        <Table
+        <TableWallets
           t={t}
           table={allWallets}
           classTable="wallets"
           columns={6}
           setTableHead={setTableHead}
           setTableBody={setTableBody}
-          lines={10}
+          setParameters={setParameters}
+          parameters={parameters}
+          pages={pages}
+          getAllWallets={getAllWallets}
         />
       </div>
     </div>

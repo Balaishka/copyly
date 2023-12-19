@@ -38,10 +38,10 @@ function Tokens({ t, tokens, getDate, roundData, tokensByDate }) {
               {item["info"]["token_name"]}
             </a>
           </td>
-          <td>{roundData(item.bought)}</td>
-          <td>{roundData(item.sold)}</td>
-          <td>{roundData(item.pnl)}</td>
-          <td>{roundData(item.roi)}</td>
+          <td>{roundData(item.bought)} ETH</td>
+          <td>{roundData(item.sold)} ETH</td>
+          <td>{roundData(item.pnl)} ETH</td>
+          <td>{roundData(item.roi)}%</td>
           <td>{getDate(item.timestamp)}</td>
           <td>{item.rugpulled ? t("yes") : t("no")}</td>
         </tr>

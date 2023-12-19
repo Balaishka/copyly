@@ -20,7 +20,7 @@ function Wallet({
   setWallet,
   subWallet,
   showClue,
-  hideClue
+  hideClue,
 }) {
   const [lastActivity, setLastActivity] = useState("");
   const [lastTime, setLastTime] = useState(0);
@@ -52,28 +52,31 @@ function Wallet({
     if (wallet.address.length !== 0) {
       const date = new Date(wallet.last_activity * 1000);
       const today = new Date();
+
       const diffDay = Math.floor(
-        (today.getTime() - date.getTime()) / (1000 * 60 * 60 * 24)
+        (today.getTime() - date.getTime()) / (1000 * 3600 * 24)
       );
       const diffHours =
-        Math.floor((today.getTime() - date.getTime()) / (1000 * 60 * 60)) -
+        Math.floor((today.getTime() - date.getTime()) / (1000 * 3600)) -
         diffDay * 24;
 
       setLastActivity(
-        `${addZero(date.getDate())}.${addZero(date.getMonth())}.${addZero(
+        `${addZero(date.getDate())}.${addZero(date.getMonth() + 1)}.${addZero(
           date.getFullYear()
         )} ${addZero(date.getHours())}:${addZero(date.getMinutes())}`
       );
 
       if (diffDay || diffHours) {
         setLastTime(
-          `${diffDay ? diffDay + " " + t("day") + " " : ""}${
-            diffHours ? diffHours + " " + t("hours") + " " : ""
+          `${diffDay ? diffDay + t("day") + " " : ""}${
+            diffHours ? diffHours + t("hours") + " " : ""
           }${t("ago")}`
         );
+      } else {
+        setLastTime("");
       }
     }
-  }, [wallet]);
+  }, [wallet, t]);
 
   function toggleSign() {
     subWallet(wallet.address);

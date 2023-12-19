@@ -96,8 +96,12 @@ function App() {
       name: "",
       value: "none"
     },
-    filters: []
+    filters: [],
+    page: 1
   });
+  
+  // Переключение страниц 
+  const [pages, setPages] = useState(1);
 
   useEffect(() => {
     const prominent = localStorage.getItem("prominent");
@@ -248,16 +252,14 @@ function App() {
     mainApi
       .getWalletsTable(parameters)
       .then((res) => {
+        console.log(res);
         setAllWallets(res.results);
+        setPages(res.count);
 
         let filters = res.filters;
-        filters.win_rate_perc_min = res.filters.win_rate_perc_min * 100;
-        filters.win_rate_perc_max = res.filters.win_rate_perc_max * 100;
         
         filters.last_activity_min = res.filters.last_activity_min * 1000;
         filters.last_activity_max = res.filters.last_activity_max * 1000;
-
-        console.log(res);
 
         setMinMaxFilters(filters);
       })
@@ -306,6 +308,41 @@ function App() {
     });
   }
 
+  function searchAddress(uuid) {
+    mainApi
+    .searchWallet(uuid)
+    .then((res) => {
+      if (res.result.address.length !== 0) {
+        history.push(`/wallet/${res.result.address}`);
+      }
+    })
+    .catch((err) => {
+      console.log("Я в ошибке");
+      console.log(err);
+      setIsPopupError(true);
+      setErrorText(t("error_search"));
+    })
+    .finally(() => {
+      setIsLoading(false);
+    });
+  }
+
+  function searchAddressUuid(address) {
+    setIsLoading(true);
+    mainApi
+    .searchWalletUuid(address)
+    .then((res) => {
+      console.log(res);
+      if (res.uuid.length !== 0) {
+        searchAddress(res.uuid);
+      }
+    })
+    .catch((err) => {
+      console.log("Я в ошибке");
+      console.log(err);
+      setIsLoading(false);
+    });
+  }
 
   function addZero(num) {
     return String(num).length === 1 ? `0${num}` : String(num);
@@ -394,7 +431,7 @@ function App() {
   function getDate(str) {
     const date = new Date(str * 1000);
     const strDate = `${addZero(date.getDate())}.${addZero(
-      date.getMonth()
+      date.getMonth() + 1
     )}.${addZero(date.getFullYear())}`;
     const strTime = `${addZero(date.getHours())}:${addZero(date.getMinutes())}`;
     return `${strDate} ${strTime}`;
@@ -459,6 +496,8 @@ function App() {
                   parameters={parameters}
                   setParameters={setParameters}
                   minMaxFilters={minMaxFilters}
+                  searchAddressUuid={searchAddressUuid}
+                  pages={pages}
                 />
               </ProtectedRoute>
   

@@ -1,0 +1,184 @@
+.table {
+    width: 100%;
+    border-spacing: 0 4px;
+}
+
+.table th {
+    padding: 8px 12px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.5;
+    letter-spacing: -0.011em;
+    color: #95B0B4;
+    text-align: right;
+    white-space: nowrap;
+    width: calc(100% / 6);
+}
+
+.table th:first-child {
+    text-align: left;
+}
+
+.table:not(.table-tokens) tbody tr {
+    cursor: pointer;
+}
+
+.table td {
+    background-color: #162027;
+    padding: 12px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #FFFFFF;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table td:first-child {
+    border-radius: 8px 0 0 8px;
+    text-align: left;
+}
+
+.table td:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+.table:not(.table-tokens) tbody tr:hover td {
+    background-color: rgba(22, 32, 39, .7);
+}
+
+table .table__empty {
+    background-color: #162027 !important;
+    cursor: default;
+    text-align: center !important;
+}
+
+/* Wallets */
+
+table .table__th-sort {
+    cursor: pointer;
+    position: relative;
+}
+
+table .table__th-sort_active {
+    padding: 6px 12px;
+    line-height: 24px;
+}
+
+.table__img-sort {
+    display: none;
+    width: 24px;
+    height: 24px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    margin: 0 4px -7px 0;
+}
+
+.table__th-sort_active .table__img-sort:not(.table__img-sort_type_none) {
+    display: inline-block;
+}
+
+.table__img-sort_type_down {
+    background-image: url(../../images/sorting-down.svg);
+}
+
+.table__img-sort_type_up {
+    background-image: url(../../images/sorting-up.svg);
+}
+
+.table__th-block {
+    display: inline-block;
+}
+
+.table__img-filter {
+    margin-left: 4px;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url(../../images/arrow-down.svg) no-repeat;
+    background-size: 100%;
+    position: relative;
+    top: 3px;
+}
+
+.table__img-filter_opened {
+    transform: rotate(180deg);
+}
+
+.table__img-filter_filled {
+    background-image: url(../../images/filled.svg);
+    transform: none;
+}
+
+.table-wallets td:not(.table__empty) {
+    padding: 0;
+}
+
+.table-wallets td a {
+    padding: 12px;
+}
+
+/* Tokens */
+
+.table-tokens th {
+    padding: 4px 12px;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: normal;
+    width: calc(100% / 7);
+}
+
+.table-tokens td {
+    padding: 7px 12px;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.table-tokens__green td {
+    background-color: rgba(41, 178, 119, 0.1);
+    color: #29B277;
+}
+
+.table-tokens__red td {
+    background-color: rgba(221, 57, 62, 0.1);
+    color: #DD393E;
+}
+
+.table-tokens td a {
+    color: #89D2DC;
+    text-decoration: underline;
+    max-width: 200px;
+    overflow: hidden;
+    display: block;
+}
+
+.table-tokens td a:hover {
+    color: #89D2DC;
+    text-decoration: none;
+}
+
+@media screen and (max-width:768px) {
+    .table:not(.table-tokens) {
+        width: calc(100% - 40px);
+    }
+}
+
+@media screen and (max-width:500px) {
+    .table {
+        width: calc(100% - 16px);
+    }
+
+    .table th {
+        padding: 4px 12px;
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .table td {
+        padding: 7px 12px;
+        font-size: 12px;
+        line-height: 16px;
+    }
+}
