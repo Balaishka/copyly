@@ -202,7 +202,7 @@ function Wallet({
                 type="desctop"
                 isQuestion={true} questionText={t("info_profit_factor")} showClue={showClue} hideClue={hideClue}
               />
-              <Fact title={t("scam")} info={`${roundData(wallet.rugged_perc)}%`} isQuestion={true} questionText={t("info_scam")} showClue={showClue} hideClue={hideClue} />
+              <Fact title={t("scam")} info={`${roundData(wallet.rugged_perc * 100)}%`} isQuestion={true} questionText={t("info_scam")} showClue={showClue} hideClue={hideClue} />
 
               <Fact
                 title={t("succesfull")}

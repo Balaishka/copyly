@@ -415,17 +415,32 @@ function App() {
 
   function roundData(str) {
     const num = Number(str);
-    return num.toFixed();
+    const res = num.toFixed();
+    if (res === -0 || res === "-0") {
+      return 0;
+    } else {
+      return res;
+    }
   }
 
   function roundData2(str) {
     const num = Number(str);
-    return (num.toFixed(2) % 1) === 0 ? num.toFixed() : num.toFixed(2);
+    const res = (num.toFixed(2) % 1) === 0 ? num.toFixed() : num.toFixed(2);
+    if (res === -0 || res === "-0") {
+      return 0;
+    } else {
+      return res;
+    }
   }
 
   function roundData4(str) {
     const num = Number(str);
-    return (num.toFixed(4) % 1) === 0 ? num.toFixed() : num.toFixed(4);
+    const res = (num.toFixed(4) % 1) === 0 ? num.toFixed() : num.toFixed(4);
+    if (res === -0 || res === "-0") {
+      return 0;
+    } else {
+      return res;
+    }
   }
 
   function getDate(str) {
