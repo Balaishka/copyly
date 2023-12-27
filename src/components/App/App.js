@@ -58,7 +58,7 @@ function App() {
 
   // Язык
   const [lang, setLang] = useState(
-    localStorage.getItem("lang") ? localStorage.getItem("lang") : "ru"
+    localStorage.getItem("lang") ? localStorage.getItem("lang") : "en"
   );
 
   // Кошельки

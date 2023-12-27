@@ -51,9 +51,9 @@ function Header({ t, i18n, loggedIn, link, logout, changeLang, setWalletIn }) {
 
   return (
     <header className={`header ${!loggedIn ? "header_type_auth" : ""}`}>
-      <NavLink to="/" className="header__logo">
+      <a href="https://copyly.xyz/" className="header__logo">
         <img src={logo} alt={t("logo")} className="header__logo-img" />
-      </NavLink>
+      </a>
 
       {loggedIn && (
         <button

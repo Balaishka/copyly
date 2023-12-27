@@ -86,5 +86,6 @@
     "income": "P&L",
     "value": "Value",
     "profit_factor_no_losses": "No Losses",
-    "error_search": "Address not found, please check the address for correctness and try again"
+    "error_search": "Address not found, please check the address for correctness and try again",
+    "coming_soon": "Coming soon"
 }
