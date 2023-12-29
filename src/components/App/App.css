@@ -13,6 +13,7 @@ body {
 .page {
   min-height: 100vh;
   height: max-content;
+  position: relative;
 }
 
 .page_name_auth {

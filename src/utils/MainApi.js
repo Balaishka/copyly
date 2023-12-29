@@ -49,6 +49,15 @@ class MainApi {
     return this._fetch(`/sign-up/${unique_code}`, "GET");
   }
 
+  // Проверка подписки на сервис
+  checkSubscription() {
+    this._headers = {
+      ...this._headers,
+      authorization: `Token ${localStorage.getItem("jwt")}`,
+    };
+    return this._fetch(`/api_users_is_subscribed_retrieve`, "GET");
+  }
+
   // Получаем информацию о конкретном кошельке
   getWalletInfo(address) {
     this._headers = {
@@ -58,7 +67,7 @@ class MainApi {
     return this._fetch(`/insider/${address}`, "GET");
   }
 
-  // Подписка
+  // Подписка на кошелек
   subscriptWallet(address) {
     this._headers = {
       ...this._headers,
@@ -115,6 +124,7 @@ class MainApi {
     return this._fetch(`/top?${res}`, "GET");
   }
 
+  // Поиск 
   searchWalletUuid(address) {
     this._headers = {
       ...this._headers,

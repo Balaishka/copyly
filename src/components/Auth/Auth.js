@@ -28,15 +28,15 @@ function Auth({
                 show,
                 truncatedAddress,
               }) => {
-                /* return (
+                return (
                   <button onClick={show} className="content__btn auth__btn">
                     {isConnected ? truncatedAddress : t("auth_btn_wallet")}
                   </button>
-                ); */
-
-                return (
-                  <button className="content__btn auth__btn auth__btn_disabled" type="button" disabled="disabled">{t("coming_soon")}</button>
                 );
+
+                /* return (
+                  <button className="content__btn auth__btn auth__btn_disabled" type="button" disabled="disabled">{t("coming_soon")}</button>
+                ); */
               }}
             </ConnectKitButton.Custom>
           </>

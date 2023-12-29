@@ -13,12 +13,13 @@ function PopupSub({
   link,
   textBtn,
   addSubscription,
+  addZero
 }) {
   const [newDate, setNewDate] = useState("");
 
   useEffect(() => {
     const date = new Date(new Date().getTime() + 604800000);
-    setNewDate(`${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`);
+    setNewDate(`${addZero(date.getDate())}.${addZero(date.getMonth() + 1)}.${date.getFullYear()}`);
   }, []);
 
   return (

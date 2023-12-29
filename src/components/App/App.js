@@ -178,11 +178,13 @@ function App() {
   }
 
   function checkUser(uniqueCode) {
+    console.log(uniqueCode);
     setIsLoading(true);
     mainApi
     .getUserInfo(uniqueCode)
     .then((res) => {
       if (res.key === null) {
+        console.log("Я здесь");
         setIsPopupTG(true);
         setLinkTG(`https://t.me/Copyly_bot?start=${uniqueCode}`);
       } else {
@@ -192,8 +194,10 @@ function App() {
         localStorage.setItem("jwt", res.key);
         setWalletIn(true);
         setTelegramIn(true);
-        setLoggedIn(true);
-        closeAllPopups();
+
+        addSubscription();
+        //setLoggedIn(true);
+        //closeAllPopups();
       }
     })
     .catch((err) => {
@@ -235,13 +239,38 @@ function App() {
     });
   }
 
+  function addSubscription() {
+    setIsLoading(true);
+    mainApi
+    .checkSubscription()
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      closeAllPopups();
+      setLoggedIn(false);
+      setSubscriptionIn(false);
+
+      console.log("Я в ошибке");
+      console.log(err);
+    })
+    .finally(() => {
+      setIsLoading(false);
+    });
+
+    /* setSubscriptionIn(true);
+    closeAllPopups();
+    history.push("/"); */
+  }
+
   function checkToken() {
     const jwt = localStorage.getItem("jwt");
     if (jwt && address) {
-      setLoggedIn(true);
       setWalletIn(true);
       setTelegramIn(true);
-      setSubscriptionIn(true);
+      /* setSubscriptionIn(true);
+      setLoggedIn(true); */
+      addSubscription();
     } else {
       logout();
     }
@@ -382,12 +411,6 @@ function App() {
     setIsPopupTG(false);
     setIsPopupSub(false);
     setIsPopupError(false);
-  }
-
-  function addSubscription() {
-    setSubscriptionIn(true);
-    closeAllPopups();
-    history.push("/");
   }
 
   function openPopupTG() {
@@ -575,6 +598,7 @@ function App() {
             link={walletNum}
             textBtn={t("popup_sub_btn")}
             addSubscription={addSubscription}
+            addZero={addZero}
           />
 
           {isClue && <Clue coordinates={coordinates} />}
