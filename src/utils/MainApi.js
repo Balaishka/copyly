@@ -96,7 +96,7 @@ class MainApi {
       authorization: `Token ${localStorage.getItem("jwt")}`,
     };
 
-    console.log(parameters);
+    //console.log(parameters);
 
     const sortingName = parameters.sorting.name;
     const sortingValue = parameters.sorting.value;
@@ -119,7 +119,7 @@ class MainApi {
 
     res = res.substr(1, res.length);
 
-    console.log(res);
+    //console.log(res);
 
     return this._fetch(`/top?${res}`, "GET");
   }
@@ -146,6 +146,7 @@ class MainApi {
 
 // Создаем класс апи
 const mainApi = new MainApi({
+  //baseUrl: "http://92.118.112.123:8000/api",
   baseUrl: "https://0c9a-178-70-163-195.ngrok-free.app/api",
   //baseUrl: "http://localhost:3005",
   headers: {

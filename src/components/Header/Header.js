@@ -44,8 +44,6 @@ function Header({ t, i18n, loggedIn, link, logout, changeLang, setWalletIn }) {
   }
 
   function toggleMenu() {
-    console.log("Я тут");
-    console.log(menuOpened);
     setMenuOpened(!menuOpened);
   }
 

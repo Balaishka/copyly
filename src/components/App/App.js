@@ -112,7 +112,6 @@ function App() {
 
   useEffect(() => {
     if (loggedIn && pathname === "/auth") {
-      console.log("Я здесь");
       history.push("/");
     }
   }, [loggedIn]);
@@ -133,14 +132,14 @@ function App() {
       !jwt &&
       status === "connected"
     ) {
-      console.log("Задаем вопрос: " + address);
+      //console.log("Задаем вопрос: " + address);
       handleRegister(address);
     }
   }, [status, address]);
 
   useEffect(() => {
     if (data && isSuccess && uniqueCode.length !== 0) {
-      console.log("Подписал сообщение!");
+      //console.log("Подписал сообщение!");
       handleCheckSignature();
     }
   }, [data, isSuccess]);
@@ -163,7 +162,7 @@ function App() {
     mainApi
       .register(wallet)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         setUniqueCode(res.unique_code);
         signMessage({message: `Подпишите следующее сообщение, чтобы авторизоваться: ${res.unique_code}`});
       })
@@ -178,26 +177,25 @@ function App() {
   }
 
   function checkUser(uniqueCode) {
-    console.log(uniqueCode);
     setIsLoading(true);
     mainApi
     .getUserInfo(uniqueCode)
     .then((res) => {
+      //console.log(res);
       if (res.key === null) {
-        console.log("Я здесь");
         setIsPopupTG(true);
         setLinkTG(`https://t.me/Copyly_bot?start=${uniqueCode}`);
       } else {
-        console.log(res);
-        console.log("Юзер зарегистрирован");
+        //console.log(res);
+        //console.log("Юзер зарегистрирован");
 
         localStorage.setItem("jwt", res.key);
         setWalletIn(true);
         setTelegramIn(true);
 
-        addSubscription();
-        //setLoggedIn(true);
-        //closeAllPopups();
+        //addSubscription();
+        setLoggedIn(true);
+        closeAllPopups();
       }
     })
     .catch((err) => {
@@ -216,17 +214,20 @@ function App() {
       wallet: address,
       data: data
     };
-    console.log(obj);
+    //console.log(obj);
     setIsLoading(true);
     mainApi
     .checkSignature(uniqueCode, data)
     .then((res) => {
-      console.log(res);
+      //console.log(res);
       if (res.is_valid) {
-        console.log("Кошелек подтвержден, проверим юзера");
+        //console.log("Кошелек подтвержден, проверим юзера");
+        /* setTimeout(() => {
+          checkUser(uniqueCode);
+        }, 2000); */
         checkUser(uniqueCode);
       } else {
-        console.log("Кошелек не подтвержден");
+        //console.log("Кошелек не подтвержден");
       }
     })
     .catch((err) => {
@@ -240,7 +241,7 @@ function App() {
   }
 
   function addSubscription() {
-    setIsLoading(true);
+    /* setIsLoading(true);
     mainApi
     .checkSubscription()
     .then((res) => {
@@ -256,11 +257,11 @@ function App() {
     })
     .finally(() => {
       setIsLoading(false);
-    });
+    }); */
 
-    /* setSubscriptionIn(true);
+    setSubscriptionIn(true);
     closeAllPopups();
-    history.push("/"); */
+    history.push("/");
   }
 
   function checkToken() {
@@ -268,9 +269,9 @@ function App() {
     if (jwt && address) {
       setWalletIn(true);
       setTelegramIn(true);
-      /* setSubscriptionIn(true);
-      setLoggedIn(true); */
-      addSubscription();
+      setSubscriptionIn(true);
+      setLoggedIn(true);
+      //addSubscription();
     } else {
       logout();
     }
@@ -281,7 +282,7 @@ function App() {
     mainApi
       .getWalletsTable(parameters)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         setAllWallets(res.results);
         setPages(Math.ceil(res.count / 10));
 
@@ -293,7 +294,7 @@ function App() {
         setMinMaxFilters(filters);
       })
       .catch((err) => {
-        console.log("Я в ошибке");
+        //console.log("Я в ошибке");
         console.log(err);
         setIsPopupError(true);
         setErrorText(t("error_table"));
@@ -308,11 +309,11 @@ function App() {
     mainApi
       .getWalletInfo(address)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         setWallet(res);
       })
       .catch((err) => {
-        console.log("Я в ошибке");
+        //console.log("Я в ошибке");
         console.log(err);
       })
       .finally(() => {
@@ -325,11 +326,11 @@ function App() {
     mainApi
     .subscriptWallet(address)
     .then((res) => {
-      console.log(res);
+      //console.log(res);
       setWallet(res);
     })
     .catch((err) => {
-      console.log("Я в ошибке");
+      //console.log("Я в ошибке");
       console.log(err);
     })
     .finally(() => {
@@ -346,7 +347,7 @@ function App() {
       }
     })
     .catch((err) => {
-      console.log("Я в ошибке");
+      //console.log("Я в ошибке");
       console.log(err);
       setIsPopupError(true);
       setErrorText(t("error_search"));
@@ -361,13 +362,13 @@ function App() {
     mainApi
     .searchWalletUuid(address)
     .then((res) => {
-      console.log(res);
+      //console.log(res);
       if (res.uuid.length !== 0) {
         searchAddress(res.uuid);
       }
     })
     .catch((err) => {
-      console.log("Я в ошибке");
+      //console.log("Я в ошибке");
       console.log(err);
       setIsLoading(false);
     });
@@ -378,31 +379,35 @@ function App() {
   }
 
   function recordingData(data, isCumulative) {
+    //console.log(data);
     let res = [];
 
-    data.map((item, index) => {
-      const newDate = new Date(Number(item.date) * 1000);
+    if (data !== undefined) {
+      data.map((item, index) => {
+        const newDate = new Date(Number(item.date) * 1000);
 
-      const hours = addZero(newDate.getHours());
-      const minutes = addZero(newDate.getMinutes());
+        const hours = addZero(newDate.getHours());
+        const minutes = addZero(newDate.getMinutes());
 
-      let newDay = `${newDate.getDate()} ${
-        months[newDate.getMonth()]
-      } ${hours}:${minutes}`;
+        let newDay = `${newDate.getDate()} ${
+          months[newDate.getMonth()]
+        } ${hours}:${minutes}`;
 
-      if (isCumulative) {
-        res.push({
-          date: newDay,
-          value: roundData2(item.value),
-          cumValue: roundData2(data.cumulative_pnl[index].value),
-        });
-      } else {
-        res.push({
-          date: newDay,
-          value: roundData2(item.value),
-        });
-      }
-    });
+        if (isCumulative) {
+          res.push({
+            date: newDay,
+            value: roundData2(item.value),
+            cumValue: roundData2(data.cumulative_pnl[index].value),
+          });
+        } else {
+          res.push({
+            date: newDay,
+            value: roundData2(item.value),
+          });
+        }
+      });
+    }
+    
 
     return res;
   }
