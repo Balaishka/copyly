@@ -429,6 +429,10 @@ function App() {
   function logout() {
     localStorage.removeItem("jwt");
     localStorage.removeItem("parameters");
+    localStorage.removeItem("filled_pnl");
+    localStorage.removeItem("filled_roi");
+    localStorage.removeItem("filled_win_rate_perc");
+    localStorage.removeItem("filled_overall_tokens");
     setLoggedIn(false);
     setWalletIn(false);
     setTelegramIn(false);
@@ -559,6 +563,7 @@ function App() {
                   subWallet={subWallet}
                   showClue={showClue}
                   hideClue={hideClue}
+                  isLoading={isLoading}
                 />
               </ProtectedRoute>
   

@@ -80,7 +80,8 @@
     margin: 0;
 }
 
-.wallet__btn_active {
+.wallet__btn_active,
+.wallet__btn_active:hover {
     background-color: #202D36;
     color: #fff;
 }

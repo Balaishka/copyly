@@ -115,7 +115,7 @@ function Table({ t, table, classTable, columns, setTableBody, setTableHead, line
                 </thead>
 
                 <tbody>
-                    {valuesPerPage.length !== 0 ? setTableBody(valuesPerPage):<tr><td className="table__empty" colSpan={columns}>Ничего не найдено</td></tr>}
+                    {valuesPerPage.length !== 0 ? setTableBody(valuesPerPage):<tr><td className="table__empty" colSpan={columns}>{t("error_table_not_found")}</td></tr>}
                 </tbody>
             </table>
 

@@ -88,5 +88,7 @@
     "profit_factor_no_losses": "No Losses",
     "error_search": "Address not found, please check the address for correctness and try again",
     "coming_soon": "Coming soon",
-    "error_sub": "You have not subscribed"
+    "error_sub": "You have not subscribed",
+    "error_wallet_not_found": "Wallet not found",
+    "error_table_not_found": "Data not found"
 }

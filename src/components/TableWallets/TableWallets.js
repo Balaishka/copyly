@@ -30,7 +30,7 @@ function TableWallets({
           ) : (
             <tr>
               <td className="table__empty" colSpan={columns}>
-                Ничего не найдено
+                {t("error_table_not_found")}
               </td>
             </tr>
           )}

@@ -21,6 +21,7 @@ function Wallet({
   subWallet,
   showClue,
   hideClue,
+  isLoading,
 }) {
   const [lastActivity, setLastActivity] = useState("");
   const [lastTime, setLastTime] = useState(0);
@@ -82,9 +83,7 @@ function Wallet({
     subWallet(wallet.address);
   }
 
-  if (wallet.address.length === 0) {
-    return <div className="wallet-error">Кошелек не найден</div>;
-  } else {
+  if (wallet.address.length !== 0) {
     return (
       <div className="wallet">
         <section className="wallet__header">
@@ -220,6 +219,10 @@ function Wallet({
         </section>
       </div>
     );
+  } else if (!isLoading) {
+    return <div className="wallet-error">{t("error_wallet_not_found")}</div>;
+  } else {
+    return (<></>);
   }
 }
 
