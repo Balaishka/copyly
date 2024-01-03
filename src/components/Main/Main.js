@@ -56,14 +56,14 @@ function Main({
     }
 
     if (sorting.name !== newName) {
-      newValue = "down";
+      newValue = "up";
     } else {
-      if (parameters.sorting.value === "down") {
-        newValue = "up";
-      } else if (parameters.sorting.value === "up") {
+      if (parameters.sorting.value === "up") {
+        newValue = "down";
+      } else if (parameters.sorting.value === "down") {
         newValue = "none";
       } else if (parameters.sorting.value === "none") {
-        newValue = "down";
+        newValue = "up";
       }
     }
 
@@ -73,7 +73,7 @@ function Main({
 
     res.sorting.value = newValue;
 
-    if (newValue === "down" || newValue === "up") {
+    if (newValue === "up" || newValue === "down") {
       res.sorting.name = newName;
     } else {
       res.sorting.name = "";
