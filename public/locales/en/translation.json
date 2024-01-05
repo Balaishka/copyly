@@ -81,7 +81,7 @@
     "info_profits": "Total Profit among all trades",
     "info_losses": "Total Losses among all trades",
     "info_profit_factor": "Total Profits / Total Losses",
-    "info_scam": "Percentage of tokens in the wallet's portfolio that have decreased to zero",
+    "info_scam": "Percentage of tokens in the wallet's portfolio that price decreased to zero",
     "auth_tg": "I'm logged in",
     "income": "P&L",
     "value": "Value",

@@ -10,7 +10,7 @@ import Main from "../Main/Main";
 import Auth from "../Auth/Auth";
 import setMonths from "../../configs/translate";
 import PopupTG from "../PopupTG/PopupTG";
-import { walletNum } from "../../configs/constants";
+import { messageText, walletNum } from "../../configs/constants";
 import PopupSub from "../PopupSub/PopupSub";
 import { useAccount, useSignMessage } from "wagmi";
 import Wallet from "../Wallet/Wallet";
@@ -164,7 +164,7 @@ function App() {
       .then((res) => {
         //console.log(res);
         setUniqueCode(res.unique_code);
-        signMessage({message: `Подпишите следующее сообщение, чтобы авторизоваться: ${res.unique_code}`});
+        signMessage({message: `${messageText}${res.unique_code}`});
       })
       .catch((err) => {
         console.log(err);

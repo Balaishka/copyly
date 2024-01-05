@@ -147,10 +147,12 @@ class MainApi {
 // Создаем класс апи
 const mainApi = new MainApi({
   //baseUrl: "http://92.118.112.123:8000/api",
-  baseUrl: "https://0c9a-178-70-163-195.ngrok-free.app/api",
+  //baseUrl: "https://0c9a-178-70-163-195.ngrok-free.app/api",
+  baseUrl: "https://api.copyly.xyz/api",
   //baseUrl: "http://localhost:3005",
   headers: {
     "content-type": "application/json",
+    //"Access-Control-Allow-Origin": "*"
   },
 });
 
