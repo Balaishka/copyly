@@ -379,7 +379,7 @@ function App() {
   }
 
   function recordingData(data, isCumulative) {
-    //console.log(data);
+    //console.log(typeof data);
     let res = [];
 
     if (data !== undefined) {
@@ -408,6 +408,7 @@ function App() {
       });
     }
     
+    console.log(res);
 
     return res;
   }
@@ -476,6 +477,7 @@ function App() {
   }
 
   function getDate(str) {
+    console.log(str);
     const date = new Date(str * 1000);
     const strDate = `${addZero(date.getDate())}.${addZero(
       date.getMonth() + 1

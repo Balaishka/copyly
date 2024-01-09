@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Filter from "../Filter/Filter";
+import FilterDate from "../FilterDate/FilterDate";
 
 function WalletsSortingTh({
   name,
@@ -7,11 +8,13 @@ function WalletsSortingTh({
   sorting,
   text,
   isFilter,
+  isFilterDate,
   t,
   minMaxFilters,
   filterTable,
   clearFilterTable,
-  roundData
+  roundData,
+  getDate
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isFilled, setIsFilled] = useState(localStorage.getItem(`filled_${name}`) ? true:false);
@@ -55,7 +58,7 @@ function WalletsSortingTh({
         ></span>
         {text}
       </div>
-      {isFilter && (
+      {isFilter && !isFilterDate && (
         <>
           <span
             onClick={toggleFilter}
@@ -73,6 +76,29 @@ function WalletsSortingTh({
               clearFilterTable={clearFilterTable}
               setIsFilled={setIsFilled}
               roundData={roundData}
+            />
+          )}
+        </>
+      )}
+
+      {isFilter && isFilterDate && (
+        <>
+          <span
+            onClick={toggleFilter}
+            className={`table__img-filter table__img-filter_name_${name} ${
+              isOpen ? "table__img-filter_opened" : ""
+            } ${isFilled ? "table__img-filter_filled" : ""}`}
+          ></span>
+          {isOpen && (
+            <FilterDate 
+              t={t}
+              name={name}
+              minMaxFilters={minMaxFilters}
+              filterTable={filterTable}
+              setIsOpen={setIsOpen}
+              clearFilterTable={clearFilterTable}
+              setIsFilled={setIsFilled}
+              getDate={getDate}
             />
           )}
         </>

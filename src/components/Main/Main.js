@@ -174,11 +174,13 @@ function Main({
           sorting={sorting}
           text={t("table_th_2")}
           isFilter={true}
+          isFilterDate={false}
           t={t}
           minMaxFilters={minMaxFilters}
           filterTable={filterTable}
           clearFilterTable={clearFilterTable}
           roundData={roundData2}
+          getDate={getDate}
         />
         <WalletsSortingTh
           name="roi"
@@ -186,11 +188,13 @@ function Main({
           sorting={sorting}
           text={t("table_th_3")}
           isFilter={true}
+          isFilterDate={false}
           t={t}
           minMaxFilters={minMaxFilters}
           filterTable={filterTable}
           clearFilterTable={clearFilterTable}
           roundData={roundData2}
+          getDate={getDate}
         />
         <WalletsSortingTh
           name="win_rate_perc"
@@ -198,11 +202,13 @@ function Main({
           sorting={sorting}
           text={t("table_th_4")}
           isFilter={true}
+          isFilterDate={false}
           t={t}
           minMaxFilters={minMaxFilters}
           filterTable={filterTable}
           clearFilterTable={clearFilterTable}
           roundData={roundData2}
+          getDate={getDate}
         />
         <WalletsSortingTh
           name="overall_tokens"
@@ -210,19 +216,27 @@ function Main({
           sorting={sorting}
           text={t("table_th_5")}
           isFilter={true}
+          isFilterDate={false}
           t={t}
           minMaxFilters={minMaxFilters}
           filterTable={filterTable}
           clearFilterTable={clearFilterTable}
           roundData={roundData}
+          getDate={getDate}
         />
         <WalletsSortingTh
           name="last_activity"
           sortTable={sortTable}
           sorting={sorting}
           text={t("table_th_6")}
-          isFilter={false}
+          isFilter={true}
+          isFilterDate={true}
           t={t}
+          minMaxFilters={minMaxFilters}
+          filterTable={filterTable}
+          clearFilterTable={clearFilterTable}
+          roundData={roundData}
+          getDate={getDate}
         />
       </tr>
     );
