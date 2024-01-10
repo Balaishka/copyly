@@ -477,7 +477,6 @@ function App() {
   }
 
   function getDate(str) {
-    console.log(str);
     const date = new Date(str * 1000);
     const strDate = `${addZero(date.getDate())}.${addZero(
       date.getMonth() + 1

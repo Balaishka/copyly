@@ -1,35 +1,22 @@
 import { useEffect, useState } from "react";
 import "./FilterDate.css";
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 function FilterDate({ t, name, minMaxFilters, filterTable, setIsOpen, clearFilterTable, setIsFilled, getDate }) {
-  const [minValue, setMinValue] = useState(getDate(minMaxFilters[`${name}_min`]) ? getDate(minMaxFilters[`${name}_min`]):0);
-  const [maxValue, setMaxValue] = useState(getDate(minMaxFilters[`${name}_max`]) ? getDate(minMaxFilters[`${name}_max`]):0);
+
+  const [value, setValue] = useState(new Date());
 
   useEffect(() => {
-    console.log(minValue);
-    console.log(maxValue);
-  }, [minValue, maxValue]);
-
-  function changeValueMin(e) {
-    setMinValue(e.target.value);
-  }
-
-  function changeValueMax(e) {
-    setMaxValue(e.target.value);
-  }
-
-  function getTimestamp(str) {
-    const newDate = new Date(str);
-    return newDate.getTime() / 1000;
-  }
+    console.log(value);
+  }, [value]);
 
   function handleFilter(e) {
     e.preventDefault();
-    console.log(getTimestamp(minValue));
-    filterTable(name, getTimestamp(minValue), getTimestamp(maxValue));
+    /* filterTable(name, reserved.startDate, reserved.endDate);
     setIsOpen(false);
     localStorage.setItem(`filled_${name}`, true);
-    setIsFilled(true);
+    setIsFilled(true); */
   }
 
   function handleClearFilter() {
@@ -43,27 +30,7 @@ function FilterDate({ t, name, minMaxFilters, filterTable, setIsOpen, clearFilte
     <form onSubmit={handleFilter} className="filter">
       <div className="filter__container">
         <div className="filter__block">
-          <label className="filter__label">From</label>
-          <input
-            className="filter__input"
-            placeholder={getDate(`${minMaxFilters[`${name}_min`]}`)}
-            value={minValue}
-            onChange={changeValueMin}
-            type="date"
-            step="any"
-          ></input>
-        </div>
-        <div className="filter__delimiter">-</div>
-        <div className="filter__block">
-          <label className="filter__label">To</label>
-          <input
-            className="filter__input"
-            placeholder={getDate(`${minMaxFilters[`${name}_max`]}`)}
-            value={maxValue}
-            onChange={changeValueMax}
-            type="date"
-            step="any"
-          ></input>
+        <Calendar onChange={setValue} value={value} selectRange={true} />
         </div>
       </div>
 
