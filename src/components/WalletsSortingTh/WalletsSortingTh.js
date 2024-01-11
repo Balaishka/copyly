@@ -31,7 +31,6 @@ function WalletsSortingTh({
   }
 
   function closeFilter(e) {
-    console.log(e.target.className);
     if (
       e.target.classList[1] !== `table__img-filter_name_${name}` &&
       e.target.className !== "filter" &&
@@ -42,7 +41,8 @@ function WalletsSortingTh({
       e.target.className !== "filter__delimiter" &&
       e.target.className !== "filter__buttons" &&
       e.target.classList[0] !== "filter__btn" && 
-      !e.target.className.includes("react-calendar")
+      !e.target.className.includes("react-calendar") && 
+      !e.target.parentElement.className.includes("react-calendar")
     ) {
       setIsOpen(false);
     }
