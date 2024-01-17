@@ -90,5 +90,6 @@
     "coming_soon": "Скоро запуск",
     "error_sub": "Вы не оформили подписку",
     "error_wallet_not_found": "Кошелек не найден",
-    "error_table_not_found": "Ничего не найдено"
+    "error_table_not_found": "Ничего не найдено",
+    "inactive": "Показывать неактивные кошельки"
 }

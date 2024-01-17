@@ -28,7 +28,7 @@ function Main({
   }, []);
 
   function checkParameters(param) {
-    if (param.sorting.name.length === 0 && param.sorting.value === "none" && param.filters.length === 0) {
+    if (param.sorting.name.length === 0 && param.sorting.value === "none" && param.filters.length === 0 && !param.inactive) {
       return false;
     } else {
       return true;
@@ -229,8 +229,8 @@ function Main({
           sortTable={sortTable}
           sorting={sorting}
           text={t("table_th_6")}
-          isFilter={true}
-          isFilterDate={true}
+          isFilter={false}
+          isFilterDate={false}
           t={t}
           minMaxFilters={minMaxFilters}
           filterTable={filterTable}
@@ -279,11 +279,23 @@ function Main({
     }
   }
 
+  function changeInactive(e) {
+    let res = parameters;
+    res.inactive = e.target.checked;
+
+    res.isParameters = checkParameters(res);
+    res.page = 1;
+
+    localStorage.setItem("parameters", JSON.stringify(res));
+    setParameters(res);
+    getAllWallets(res);
+  }
+
   return (
     <div className="main">
       <h1 className="main__title">{t("main_title")}</h1>
       <p className="main__text">{t("main_text")}</p>
-      <form onSubmit={searchWallet}>
+      <form className="main__search-form" onSubmit={searchWallet}>
         <input
           className="main__search"
           type="text"
@@ -291,6 +303,11 @@ function Main({
           placeholder={t("search")}
           onChange={handleChangeWallet}
         />
+
+        <div className="main__inactive">
+          <input className="main__inactive-input" type="checkbox" name="inactive" id="inactive" onChange={changeInactive} checked={parameters.inactive} />
+          <label className="main__inactive-label" htmlFor="inactive">{t("inactive")}</label>
+        </div>
       </form>
       
 

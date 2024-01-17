@@ -102,6 +102,7 @@ class MainApi {
     const sortingValue = parameters.sorting.value;
     const filters = parameters.filters;
     const page = parameters.page;
+    const inactive = parameters.inactive;
 
     let res = "";
 
@@ -116,10 +117,13 @@ class MainApi {
     if (page && page !== 1) {
       res += `&page=${page}`;
     }
+    if (inactive) {
+      res += "&show_inactive_addresses=true";
+    }
 
     res = res.substr(1, res.length);
 
-    //console.log(res);
+    console.log(res);
 
     return this._fetch(`/top?${res}`, "GET");
   }
@@ -149,7 +153,6 @@ const mainApi = new MainApi({
   //baseUrl: "http://92.118.112.123:8000/api",
   //baseUrl: "https://0c9a-178-70-163-195.ngrok-free.app/api",
   baseUrl: "https://api.copyly.xyz/api",
-  //baseUrl: "http://localhost:3005",
   headers: {
     "content-type": "application/json",
     //"Access-Control-Allow-Origin": "*"

@@ -91,13 +91,14 @@ function App() {
 
   // Параметры фильтров и сортировки
   const [parameters, setParameters] = useState(localStorage.getItem("parameters") ? JSON.parse(localStorage.getItem("parameters")):{
-    isParameters: false,
+    isParameters: true,
     sorting: {
-      name: "",
-      value: "none"
+      name: "last_activity",
+      value: "up"
     },
     filters: [],
-    page: 1
+    page: 1,
+    inactive: false
   });
   
   // Переключение страниц 
@@ -282,7 +283,7 @@ function App() {
     mainApi
       .getWalletsTable(parameters)
       .then((res) => {
-        //console.log(res);
+        console.log(res);
         setAllWallets(res.results);
         setPages(Math.ceil(res.count / 10));
 
@@ -434,6 +435,16 @@ function App() {
     localStorage.removeItem("filled_roi");
     localStorage.removeItem("filled_win_rate_perc");
     localStorage.removeItem("filled_overall_tokens");
+    setParameters({
+      isParameters: true,
+      sorting: {
+        name: "last_activity",
+        value: "up"
+      },
+      filters: [],
+      page: 1,
+      inactive: false
+    });
     setLoggedIn(false);
     setWalletIn(false);
     setTelegramIn(false);
