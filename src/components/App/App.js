@@ -283,9 +283,9 @@ function App() {
     mainApi
       .getWalletsTable(parameters)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         setAllWallets(res.results);
-        setPages(Math.ceil(res.count / 10));
+        setPages(Math.ceil(res.count / 30));
 
         let filters = res.filters;
         
@@ -343,6 +343,7 @@ function App() {
     mainApi
     .searchWallet(uuid)
     .then((res) => {
+      //console.log(res);
       if (res.result.address.length !== 0) {
         history.push(`/wallet/${res.result.address}`);
       }
@@ -409,7 +410,7 @@ function App() {
       });
     }
     
-    console.log(res);
+    //console.log(res);
 
     return res;
   }

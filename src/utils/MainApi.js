@@ -123,7 +123,7 @@ class MainApi {
 
     res = res.substr(1, res.length);
 
-    console.log(res);
+    //console.log(res);
 
     return this._fetch(`/top?${res}`, "GET");
   }

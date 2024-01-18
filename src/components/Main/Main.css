@@ -19,6 +19,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .main__search {
@@ -34,13 +35,14 @@
   background-size: 24px 24px;
   background-position: 12px center;
   outline: none !important;
-  margin-bottom: 20px;
+  margin-right: 20px;
 }
 
 .main__inactive {
   display: flex;
   align-items: center;
   position: relative;
+  white-space: nowrap;
 }
 
 .main__inactive-input {
@@ -115,13 +117,29 @@
     margin-bottom: 22px;
   }
 
-  .main__search {
+  .main__search-form {
     margin-bottom: 24px;
+  }
+
+  .main__search {
+    max-width: 334px;
   }
 
   .main__table {
     margin-right: -40px;
     max-width: calc(100% + 40px);
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .main__search-form {
+    display: block;
+  }
+
+  .main__search {
+    max-width: 100%;
+    margin-bottom: 16px;
+    margin-right: 0;
   }
 }
 
@@ -137,7 +155,7 @@
         margin-bottom: 16px;
       }
     
-      .main__search {
+      .main__search-form {
         margin-bottom: 20px;
       }
     

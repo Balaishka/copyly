@@ -11,6 +11,8 @@
 }
 
 .popup__container {
+    position: absolute;
+    top: 40vh;
     border: 1px solid #314D6B;
     padding: 24px;
     border-radius: 16px;
